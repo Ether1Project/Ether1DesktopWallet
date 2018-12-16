@@ -19,7 +19,7 @@ class Transactions {
             SyncProgress.setText(vsprintf("Syncing address transactions %d/%d, please wait...", [counter, addressList.length]));
 
             var startBlock = parseInt(counters.transactions) || 0;
-            var params = vsprintf('?address=%s&fromBlock=%d&toBlock=%d', [addressList[counter], startBlock, lastBlock]);
+            var params = vsprintf('?address=%s&fromBlock=%d&toBlock=%d', [addressList[counter].toLowerCase(), startBlock, lastBlock]);
             
             $.getJSON("https://richlist.ether1.org/transactions_list.php" + params,  function( result ) {
                 result.data.forEach(element => {
@@ -33,18 +33,18 @@ class Transactions {
                     ipcRenderer.send('storeTransaction', Transaction);
                 });
         
-                // update the counter and store it back to file system
-                counters.transactions = lastBlock;
-                ipcRenderer.sendSync('setJSONFile', 
-                { 
-                    file: 'counters.json',
-                    data: counters
-                });
-
                 // call the transaction sync for the next address
                 EthoTransactions.syncTransactionsForSingleAddress(addressList, counters, lastBlock, counter + 1);
             });  
         } else {
+            // update the counter and store it back to file system
+            counters.transactions = lastBlock;
+            ipcRenderer.sendSync('setJSONFile', 
+            { 
+                file: 'counters.json',
+                data: counters
+            });
+
             SyncProgress.setText("Syncing transactions is complete.");
             EthoTransactions.setIsSyncing(false);
         }

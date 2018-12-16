@@ -14,12 +14,8 @@ db.ensureIndex({ fieldName: 'block' }, function (err) {
 });
   
 ipcMain.on('storeTransaction', (event, arg) => {
-  db.find({ block: arg.block, fromaddr: arg.fromaddr, toaddr: arg.toaddr }, function (err, docs) {
-    if (docs.length == 0) {
-      db.insert(arg, function (err, newDoc) {
-        // do nothing
-      });
-    }
+  db.update({ block: arg.block, fromaddr: arg.fromaddr, toaddr: arg.toaddr }, arg, { upsert: true }, function (err, numReplaced, upsert) {
+    // do nothing for now
   });
 });
   
