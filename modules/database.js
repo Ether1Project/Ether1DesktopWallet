@@ -23,7 +23,7 @@ ipcMain.on('getTransactions', (event, arg) => {
   db.find({}).sort({ block: 1 }).exec(function (err, docs) {
     ResultData = [];
     
-    for (i = 0; i < 500; i++) {
+    for (i = 0; i < Math.min(docs.length, 500); i++) {
       ResultData.push([
         docs[i].block,
         docs[i].timestamp,
