@@ -156,7 +156,12 @@ $(document).on("onSyncInterval", function() {
 
                                     // call the next iteration for the next block 
                                     getNextBlockTransactions(blockNumber + 1 , maxBlock)    
+                                } else {
+                                    setTimeout(function() { 
+                                        doSyncRemainingBlocks();
+                                    }, 10000);                                    
                                 }
+                                
                             }
                         );
                     }
