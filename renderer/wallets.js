@@ -141,6 +141,17 @@ $(document).on("render_wallets", function() {
       }
     });                                
   });                
+
+  $(".btnCopyWalletAddress").off('click').on('click', function() {
+    EthoMainGUI.copyToClipboard($(this).attr('data-wallet'));
+
+    iziToast.success({
+      title: 'Copied',
+      message: 'Address was copied to clipboard',
+      position: 'topRight',
+      timeout: 2000
+    }); 
+  });
 });
 
 // event that tells us that geth is ready and up

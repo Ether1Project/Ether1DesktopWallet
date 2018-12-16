@@ -315,3 +315,7 @@ div.noWalletsWrapper {
   align-items: center;
   justify-content: center;
 }
+
+.btnCopyWalletAddress {
+  margin-right: 10px;
+}

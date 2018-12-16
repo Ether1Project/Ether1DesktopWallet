@@ -49,6 +49,14 @@ class MainGUI {
         $("#mainContent").empty();
         $("#mainContent").html(template(data));
     }
+
+    copyToClipboard(text) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(text).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
 }
 
 $("#mainNavBtnTransactions").click(function() {

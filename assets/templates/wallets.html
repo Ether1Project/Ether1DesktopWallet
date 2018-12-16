@@ -18,7 +18,7 @@
                     <tr>
                         <th scope="row" class="colEdit"><button type="button" class="btn btn-etho btnChangWalletName" data-wallet="{{address}}" data-name="{{name}}">Edit</button></th>
                         <td>{{name}}</td>
-                        <td>{{address}}</td>
+                        <td><button type="button" class="btn btn-etho btnCopyWalletAddress" data-wallet="{{address}}"><i class="far fa-copy"></i></button><span class="textAddress">{{address}}</span></td>
                         <td>{{balance}}</td>
                     </tr>
                 {{/addressData}}

@@ -148,7 +148,13 @@ $(document).on("render_send", function() {
                                     },
                                     function(data) {
                                         EthoSend.resetSendForm();
-                                        // use the transaction hash
+
+                                        iziToast.success({
+                                            title: 'Sent',
+                                            message: 'Transaction was succesfully sent to the chain',
+                                            position: 'topRight',
+                                            timeout: 5000
+                                          });                                         
                                     }
                                 );
                             }
