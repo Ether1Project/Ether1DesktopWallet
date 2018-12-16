@@ -1,6 +1,6 @@
 # Ether1 Desktop Wallet
 
-**Clone and run for a quick way to see Electron in action.**
+**Clone and run to see it in action.**
 
 This is a desktop wallet for the [Ether1](https://ether1.org/) project.
 
