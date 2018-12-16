@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ether-1 Desktop Wallet</title>
+    <link rel="stylesheet" href="./assets/styles/materialize.min.css">
+    <link rel="stylesheet" href="./assets/styles/datatables.min.css">
+    <link rel="stylesheet" href="./assets/styles/iziModal.min.css">    
+    <link rel="stylesheet" href="./assets/styles/transactions.css">    
+    <link rel="stylesheet" href="./assets/styles/please-wait.css">
+    <link rel="stylesheet" href="./assets/styles/all.min.css">
+    <link rel="stylesheet" href="./assets/styles/spinner.css">    
+    <link rel="stylesheet" href="./assets/styles/buttons.css">    
+    <link rel="stylesheet" href="./assets/styles/style.css">    
+    <link rel="stylesheet" href="./assets/styles/forms.css">    
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <!-- normal script imports etc  -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+    <script src="./assets/scripts/jquery.min.js"></script>    
+    <script src="./assets/scripts/handlebars.js"></script>    
+    <script src="./assets/scripts/materialize.min.js"></script>    
+    <script src="./assets/scripts/datatables.min.js"></script>    
+    <script src="./assets/scripts/iziModal.min.js"></script>    
+    <script src="./assets/scripts/progressbar.min.js"></script>    
+    <script src="./assets/scripts/sprintf.min.js"></script>        
+    <script src="./assets/scripts/please-wait.js "></script>       
+    <script src="./assets/scripts/moment.min.js"></script>       
+    <script src="./assets/scripts/jquery.floatThead.min.js"></script>           
+    <script src="./assets/scripts/all.min.js"></script>    
+
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+  </head>
+  <body>
+    <script>
+      var loading_screen = pleaseWait({
+        logo: "assets/images/logo.png",
+        backgroundColor: '#000000',
+        loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"
+      });
+  
+      $(document).on("onGethReady", function() {
+        loading_screen.finish();
+      });
+
+      $(window).on("beforeunload", function() { 
+        EthoBlockchain.closeConnection();
+      })
+    </script>  
+    <div class="inner">
+      <!-- The sidebar -->
+      <div class="sidebar">
+        <div class="sidebarIconWrapper iconSelected" id="mainNavBtnWalletsWrapper">
+          <a class="sidebarIcon" id="mainNavBtnWallets" href="#"><i class="fas fa-wallet fa-2x"></i></a>
+        </div>
+        <div class="sidebarIconWrapper" id="mainNavBtnSendWrapper">
+          <a class="sidebarIcon" id="mainNavBtnSend" href="#"><i class="fas fas fa-share-square fa-2x"></i></a>
+        </div>
+        <div class="sidebarIconWrapper" id="mainNavBtnTransactionsWrapper">
+          <a class="sidebarIcon" id="mainNavBtnTransactions" href="#"><i class="fas fa-exchange-alt fa-2x"></i></a>
+        </div>
+        <div class="sidebarIconWrapper" id="mainNavBtnSettingsWrapper">
+          <a class="sidebarIcon" id="mainNavBtnSettings" href="#"><i class="fas fa-cog fa-2x"></i></a>
+        </div>
+        <div id="peerCount">
+          Peer Count: 0
+        </div>
+      </div> 
+      <div id="mainContent"></div>
+      <div id="syncProgress"></div>
+      <script>
+        // You can also require other files to run in this process
+        require('./renderer/send.js');
+        require('./renderer/utils.js');
+        require('./renderer/maingui.js');
+        require('./renderer/syncing.js');
+        require('./renderer/settings.js');
+        require('./renderer/wallets.js');
+        require('./renderer/blockchain.js');
+        require('./renderer/transactions.js');
+      </script>
+    </div>
+
+    <!-- The modal for general error -->
+    <div id="dlgGeneralError" class="modalDialog" data-iziModal-title="Application Error" data-iziModal-subtitle="Something went wrong, don't kill the fish..." data-iziModal-icon="icon-home">
+      <div class="modalBodyPassword">
+        <div class="form-group">
+          <span id="txtGeneralError"></span>
+        </div>
+        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralErrorOK">OK</button>
+      </div>
+    </div>
+  </body>
+</html>

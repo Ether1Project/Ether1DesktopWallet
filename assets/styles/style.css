@@ -1,0 +1,317 @@
+html {
+  color: #aaa;
+}
+
+/* hide / show the body when the loader is finished */
+body > .inner {
+  display: none;
+}
+
+body.pg-loaded > .inner {
+  display: block;
+}
+
+/* Style the sidebar - fixed full height */
+.sidebar {
+  height: 100%;
+  width: 120px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+  
+/* Style sidebar links */
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+/* Style links on mouse-over */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+#peerCount {
+  bottom: 0;
+  height: 20px;
+  color: #aaa;
+  position: absolute;
+  font-size: 0.8em;
+  padding-left: 5px;
+}
+ 
+#syncProgress
+{
+  height: 20px;
+  position: fixed;
+  z-index: 1;
+  left: 120px;
+  right: 0;
+  bottom: 0;
+  background-color: #111;
+  border-top: 1px solid #111;
+}
+
+#mainContent
+{
+  position: fixed;
+  z-index: 1;
+  left: 120px;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  background-color: #212529;
+}
+
+/* Style the main content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+  
+/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.sidebarIcon {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+}
+
+.sidebarIconWrapper {
+  width: 100%;
+  height: 80px;  
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;  
+}
+
+#sumBalance {
+  float: right;
+  font-weight: bold;
+  line-height: 38px;  
+  margin-right: 10px;
+}
+
+.modalBodyPassword {
+  margin: 20px;
+}
+
+#dlgGeneralError .modalBodyPassword {
+  height: 100px;
+}
+
+#dlgCreateWalletPassword .modalBodyPassword,
+#dlgCreateWalletPassword .modalBodyPassword {
+    height: 200px;
+}
+
+#dlgSendWalletPassword .modalBodyPassword {
+  height: 300px;
+}
+
+#dlgChangeWalletName .modalBodyPassword {
+  height: 150px;
+}
+
+.btn-dialog-confirm {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+.modalDialog {
+  display: none;
+  border-bottom: 3px solid #7A1336 !important;
+  border-radius: 0px !important;
+}
+
+.iziModal-header {
+  background: #7A1336 !important;
+}
+
+#walletsToolbar {
+  padding: 10px;
+  border-bottom: 1px solid #111;
+  border-radius: 0px;
+  height: 60px;
+}
+
+
+#transactionsWrapper {
+  color: #aaa;
+  padding-top: 10px;
+}
+
+div.iconSelected {
+  background-color: ivory;
+  border: 1px solid slategray;  
+}
+
+div.loadingText {
+  color: #aaa;
+  margin-top: 50px;
+}
+
+#tableTransactionsForAll_wrapper .dataTables_scroll {
+  font-size: 0.9em;
+}
+
+div.sidebar svg {
+  color: #7A1336;
+}
+
+#tableTransactionsForAll_filter {
+  color: #aaa;
+  padding-right: 10px;
+}
+
+#tableTransactionsForAll_filter label {
+  color: #aaa;
+  font-size: 1em;
+}
+
+#tableTransactionsForAll_filter input {
+  width: 400px;  
+  color: #aaa;
+  padding: 12px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 2.5em;
+  box-sizing: border-box;
+}
+
+.floatThead-container {
+  background-color: #212529;
+}
+
+.dataTables_scrollBody .transactionsBlockNum {
+  color: #f92472;
+}
+
+.sendWrapper,
+.settingsWrapper
+{
+  padding: 30px;
+}
+
+#sendMaxAmmount {
+  margin-right: 5px;
+}
+
+#btnSendAll {
+  margin-left: 10px;
+}
+
+#addressList {
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+}
+
+#addressList .colEdit {
+  padding-left: 20px;
+}
+
+.sendTXInfo {
+  height: 30px;
+}
+
+.sendTXInfo label {
+  line-height: 30px;
+  font-size: 1.2em;
+}
+
+.sendTXdivider {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+#fromAddressInfo,
+#toAddressInfo,
+#valueToSendInfo,
+#feeToPayInfo {
+  color: #7A1336;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.accountName {
+  color: #7A1336;
+}
+
+.accountAddr {
+  font-size: 0.8em;
+}
+
+.pg-loading-screen .pg-loading-html {
+  margin-top: 0px;
+}
+
+.fromAddressSelect .dropdown-content {
+  width: 600px !important;
+}
+
+.loadingOverlay {
+  background-color: #212529;
+  display: none;
+  position: fixed;
+  left: 120px;
+  right: 0;
+  bottom: 20px;
+  top: 0;
+}
+
+.loadingOverlay .loadingWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loadingTextTransactions {
+  font-size: 1.3em;
+  margin-bottom: 30px;
+}
+
+.spinner .bounce {
+  background-color: #aaa;
+}
+
+.sumBalance {
+  color: white;
+  background-color: #7A1336;
+  border: 2px solid #991643;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.cleanText {
+  margin-left: 10px;
+}
+
+.cleanWrapper {
+  margin: 10px;
+}
+
+#noWalletsPresent {
+  font-size: 1.3em;
+}
+
+div.noWalletsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
