@@ -124,6 +124,12 @@ body.pg-loaded > .inner {
   height: 150px;
 }
 
+#dlgAddressListBody {
+  margin: 0px;
+  padding: 20px;
+  background-color: #333;
+}
+
 .btn-dialog-confirm {
   position: absolute;
   bottom: 10px;
@@ -316,6 +322,18 @@ div.noWalletsWrapper {
   justify-content: center;
 }
 
-.btnCopyWalletAddress {
-  margin-right: 10px;
+.textAddress {
+  cursor: pointer;
+}
+
+.addressInputWrapper {
+  display: flex;
+}
+
+#addressToolbar {
+  display: flex;
+}
+
+#addressListFilter {
+  color: #aaa;
 }

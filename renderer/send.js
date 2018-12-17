@@ -66,55 +66,40 @@ $(document).on("render_send", function() {
         web3Local.eth.getBalance(this.value, function(error, balance) {
             $("#sendMaxAmmount").html(parseFloat(web3Local.utils.fromWei(balance, 'ether')));
         });
-
-        /*
-        // list all transactions for this address
-        if (this.value) {
-            $("#cardTransactionsForAddress").css("display", "block");
-
-            setTimeout(() =>    {
-                // render the transactions
-                $('#tableTransactionsForAddress').DataTable({
-                    "paging": false,
-                    "scrollY": "calc(100vh - 115px)",
-                    "responsive": true,
-                    "processing": true,
-                    "order": [[ 0, "desc" ]],
-                    "data": ipcRenderer.sendSync('getTransactions', this.value),
-                    "columnDefs": [
-                        { 
-                            "className": "transactionsBlockNum",
-                            "targets": 0
-                        },
-                        {
-                            "targets": 1,
-                            "render": function ( data, type, row ) {
-                                return moment(data).format("MMM Do YYYY"); 
-                            }
-                        },
-                        {
-                            "targets": 4,
-                            "render": function ( data, type, row ) {
-                                return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), 'ether')).toFixed(2); 
-                            }
-                        }
-                    ],
-                    "drawCallback": function( settings ) {
-                        $("#loadingTransactionsOverlay").css("display", "none");  
-                    }
-                });                
-            }, 200);
-        } else {
-            $("#cardTransactionsForAddress").css("display", "none");
-        }
-        */
     });        
 
     $("#btnSendAll").off('click').on('click', function() {
         $("#sendAmmount").focus();
         $("#sendAmmount").val($("#sendMaxAmmount").html());
     });
+    
+    $("#btnLookForToAddress").off('click').on('click', function() {
+        EthoBlockchain.getAddressListData(
+            function(error) {
+              EthoMainGUI.showGeneralError(error);
+            },
+            function(data) {
+                $("#dlgAddressList").iziModal({ width: "800px" });
+                EthoMainGUI.renderTemplate("addresslist.html", data, $("#dlgAddressListBody")); 
+                $('#dlgAddressList').iziModal('open');
 
+                $(".btnSelectToAddress").off('click').on('click', function() {
+                    $("#sendToAddress").val($(this).attr('data-wallet'));
+                    $('#dlgAddressList').iziModal('close');
+                });
+
+                $('#addressListFilter').off('input').on('input',function(e){
+                    EthoUtils.filterTable($("#addressTable"), $('#addressListFilter').val());
+                });
+
+                $("#btnClearSearchField").off('click').on('click', function() {
+                    EthoUtils.filterTable($("#addressTable"), "");
+                    $('#addressListFilter').val("")
+                });                
+            }
+        );
+    });
+    
     $("#btnSendTransaction").off('click').on('click', function() {
         if (EthoSend.validateSendForm()) {
             EthoBlockchain.getTranasctionFee($("#sendFromAddress").val(), $("#sendToAddress").val(), $("#sendAmmount").val(),

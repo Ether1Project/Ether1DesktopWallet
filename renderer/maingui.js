@@ -43,11 +43,15 @@ class MainGUI {
         });
     }
 
-    renderTemplate(template, data) {
+    renderTemplate(template, data, container) {
         var template = Handlebars.compile(ipcRenderer.sendSync('getTemplateContent', template)); 
         
-        $("#mainContent").empty();
-        $("#mainContent").html(template(data));
+        if (!container) {
+            container = $("#mainContent") 
+        }
+
+        container.empty();
+        container.html(template(data));
     }
 
     copyToClipboard(text) {

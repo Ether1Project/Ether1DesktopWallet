@@ -18,7 +18,7 @@
                     <tr>
                         <th scope="row" class="colEdit"><button type="button" class="btn btn-etho btnChangWalletName" data-wallet="{{address}}" data-name="{{name}}">Edit</button></th>
                         <td>{{name}}</td>
-                        <td><button type="button" class="btn btn-etho btnCopyWalletAddress" data-wallet="{{address}}"><i class="far fa-copy"></i></button><span class="textAddress">{{address}}</span></td>
+                        <td><span class="textAddress">{{address}}</span></td>
                         <td>{{balance}}</td>
                     </tr>
                 {{/addressData}}
@@ -27,8 +27,6 @@
     {{else}}
       <div id="noWalletsPresent">You don't have any wallets, please import them, or create a new one</div>
     {{/if}}
-</div>
-<div id="transactionList">
 </div>
 
 <!-- The modal for new wallet -->

@@ -62,8 +62,8 @@ renderWalletsState() {
         EthoMainGUI.renderTemplate("wallets.html", data);          
         $(document).trigger("render_wallets");
       }
-  );
-}
+    );
+  }
 }
 
 // the event to tell us that the wallets are rendered
@@ -142,8 +142,8 @@ $(document).on("render_wallets", function() {
     });                                
   });                
 
-  $(".btnCopyWalletAddress").off('click').on('click', function() {
-    EthoMainGUI.copyToClipboard($(this).attr('data-wallet'));
+  $(".textAddress").off('click').on('click', function() {
+    EthoMainGUI.copyToClipboard($(this).html());
 
     iziToast.success({
       title: 'Copied',

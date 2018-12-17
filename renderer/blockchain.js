@@ -164,6 +164,34 @@ class Blockchain {
         }    
     }
 
+    getAddressListData(clbError, clbSuccess) {
+        var rendererData = {};
+        rendererData.addressData = [];
+      
+        var wallets = ipcRenderer.sendSync('getJSONFile', 'wallets.json');
+        var counter = 0;
+      
+        web3Local.eth.getAccounts(function(err, res) { 
+          if (err) {
+            clbError(err);
+          } else {
+            for (var i = 0; i < res.length; i++) {
+                var walletName =  vsprintf("Account %d", [i + 1]);
+                if (wallets) {
+                  walletName = wallets.names[res[i]] || walletName;
+                }
+        
+                var addressInfo = {};
+                addressInfo.address = res[i];
+                addressInfo.name = walletName;
+                rendererData.addressData.push(addressInfo);
+            }
+          
+            clbSuccess(rendererData);
+          }
+        });      
+    }
+
     createNewAccount(password, clbError, clbSuccess) {
         web3Local.eth.personal.newAccount(password, function(error, account) {
             if (error) {

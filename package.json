@@ -13,16 +13,14 @@
     "appId": "Ether1DesktopWallet",
     "win": {
       "icon": "build/icon.png",
-      "target": "portable"
+      "target": "7z"
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "Ether1",
+    "Desktop",
+    "Wallet"
   ],
   "author": "Ether1",
   "license": "CC0-1.0",

@@ -1,0 +1,28 @@
+<div id="addressToolbar">
+    <input id="addressListFilter" placeholder="enter search text" type="text">
+    <button type="button" class="btn btn-etho" id="btnClearSearchField"><i class="far fa-trash-alt"></i></button>
+</div>
+<div id="addressList" class="{{#if addressData.length}}walletsWrapper{{else}}noWalletsWrapper{{/if}}">
+    {{#if addressData.length}}
+        <table class="bordered" id="addressTable">
+            <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#addressData}}
+                    <tr>
+                        <th scope="row" class="colEdit"><button type="button" class="btn btn-etho btnSelectToAddress" data-wallet="{{address}}">Select</button></th>
+                        <td>{{name}}</td>
+                        <td><span class="textAddress">{{address}}</span></td>
+                    </tr>
+                {{/addressData}}
+            </tbody>
+        </table>
+    {{else}}
+        <div id="noWalletsPresent">You don't have any wallets, please import them, or create a new one</div>
+    {{/if}}
+</div>
