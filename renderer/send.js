@@ -136,10 +136,10 @@ $(document).on("render_send", function() {
 
                                         iziToast.success({
                                             title: 'Sent',
-                                            message: 'Transaction was succesfully sent to the chain',
+                                            message: 'Transaction was successfully sent to the chain',
                                             position: 'topRight',
                                             timeout: 5000
-                                          });                                         
+                                        });                                         
                                     }
                                 );
                             }

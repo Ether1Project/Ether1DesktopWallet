@@ -87,6 +87,13 @@ $(document).on("render_wallets", function() {
           function(account) {      
             EthoWallets.addAddressToList(account);
             EthoWallets.renderWalletsState();
+
+            iziToast.success({
+              title: 'Created',
+              message: 'New wallet was successfully created',
+              position: 'topRight',
+              timeout: 5000
+            });                                         
           }
         );
       }      
@@ -96,12 +103,11 @@ $(document).on("render_wallets", function() {
       doCreateNewWallet();
     });
 
-    $("dlgCreateWalletPassword").off('keypress').on('keypress', function(e) {
+    $("#dlgCreateWalletPassword").off('keypress').on('keypress', function(e) {
       if(e.which == 13) {
         doCreateNewWallet();
       }
     });                                
-
   });                
 
   $(".btnChangWalletName").off('click').on('click', function() {
