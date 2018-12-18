@@ -77,27 +77,55 @@ class Transactions {
         $("#loadingTransactionsOverlay").css("display", "block");
     
         setTimeout(() => {
+             var dataTransactions = ipcRenderer.sendSync('getTransactions');
+             var addressList = EthoWallets.getAddressList();
+
+             dataTransactions.forEach(function(element) {
+                var isFromValid = (addressList.indexOf(element[2].toLowerCase()) > -1);
+                var isToValid = (addressList.indexOf(element[3].toLowerCase()) > -1);
+          
+                if ((isToValid) && (!isFromValid)) {
+                  element.unshift(0);
+                } else if ((!isToValid) && (isFromValid)) { 
+                    element.unshift(1);
+                } else {
+                    element.unshift(2);
+                }
+            });
+             
             // render the transactions
             $('#tableTransactionsForAll').DataTable({
                 "paging": false,
                 "scrollY": "calc(100vh - 115px)",
                 "responsive": true,
                 "processing": true,
-                "order": [[ 0, "desc" ]],
-                "data": ipcRenderer.sendSync('getTransactions'),
+                "order": [[ 1, "desc" ]],
+                "data": dataTransactions,
                 "columnDefs": [
+                    {
+                        "targets": 0,
+                        "render": function ( data, type, row ) {
+                            if (data == 0) {
+                                return '<i class="fas fa-arrow-left"></i>';
+                            } else if (data == 1) {
+                                return '<i class="fas fa-arrow-right"></i>';
+                            } else {
+                                return '<i class="fas fa-arrows-alt-h"></i>';
+                            }
+                        }
+                    },
                     { 
                         "className": "transactionsBlockNum",
-                        "targets": 0
+                        "targets": 1
                     },
                     {
-                        "targets": 1,
+                        "targets": 2,
                         "render": function ( data, type, row ) {
                             return moment(data).format("MMM Do YYYY"); 
                         }
                     },
                     {
-                        "targets": 4,
+                        "targets": 5,
                         "render": function ( data, type, row ) {
                             return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), 'ether')).toFixed(2); 
                         }

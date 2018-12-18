@@ -22,3 +22,15 @@
 .sendWrapper input {
     color: #aaa;
 }
+
+#tableTransactionsForAll .fa-arrow-right {
+    color: #8B0000;
+}
+
+#tableTransactionsForAll .fa-arrow-left {
+    color: #228B22;
+}
+
+#tableTransactionsForAll .fa-arrows-alt-h {
+    color: #DCDCDC;
+}
