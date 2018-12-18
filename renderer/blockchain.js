@@ -45,7 +45,7 @@ class Blockchain {
                     if (error) {
                         clbError(error);
                     } else {
-                        var usedGas = result;
+                        var usedGas = result + 1;
                         web3Local.eth.getGasPrice(function( error, result ) {
                             if (error) {
                                 clbError(error);
@@ -81,7 +81,7 @@ class Blockchain {
                             if (error) {
                                 clbError(error);
                             } else {
-                                RawTransaction.gas = result;
+                                RawTransaction.gas = result + 1;
                                 web3Local.eth.getGasPrice(function( error, result ) {
                                     if (error) {
                                         clbError(error);    

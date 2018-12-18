@@ -52,7 +52,6 @@ class SendTransaction {
 
     resetSendForm() {
         if (EthoMainGUI.getAppState() == "send") {
-            $("#sendFromAddress").val("");
             $("#sendToAddress").val("");
             $("#sendAmmount").val(0);
         }
