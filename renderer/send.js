@@ -139,6 +139,24 @@ $(document).on("render_send", function() {
                                             position: 'topRight',
                                             timeout: 5000
                                         });                                         
+
+                                        EthoBlockchain.getTransaction(data,
+                                            function(error) {
+                                                EthoMainGUI.showGeneralError(error);
+                                            },
+                                            function(transaction) {
+                                                /*
+                                                ipcRenderer.send('storeTransaction', {
+                                                    block: element.block,
+                                                    fromaddr: element.fromaddr,
+                                                    timestamp: element.timestamp,
+                                                    toaddr: element.toaddr,
+                                                    value: element.value,
+                                                    confirmed: "1",
+                                                });                    
+                                                */
+                                            }        
+                                        );
                                     }
                                 );
                             }

@@ -1,5 +1,7 @@
 <div id="walletsToolbar">
-    <button type="button" class="btn btn-etho" id="btnNewAddress">New Address</button>    
+    <button type="button" class="btn btn-etho" id="btnNewAddress"><i class="fas fa-plus"></i></button>    
+    <button type="button" class="btn btn-etho" id="btnExportAccounts"><i class="fas fa-file-export"></i></button>    
+    <button type="button" class="btn btn-etho" id="btnImportAccounts"><i class="fas fa-file-import"></i></button>    
     <div id="sumBalance">Total ETHO: <span class="sumBalance">{{sumBalance}}</span></div>
 </div>
 <div id="addressList" class="{{#if addressData.length}}walletsWrapper{{else}}noWalletsWrapper{{/if}}">

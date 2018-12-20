@@ -29,7 +29,8 @@ ipcMain.on('getTransactions', (event, arg) => {
         docs[i].timestamp,
         docs[i].fromaddr,
         docs[i].toaddr,
-        docs[i].value
+        docs[i].value,
+        docs[i].confirmed || 1
       ]);
     }
 

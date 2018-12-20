@@ -1,4 +1,3 @@
-// In renderer process (web page).
 const {ipcRenderer} = require('electron');
 
 class Transactions {
@@ -23,14 +22,15 @@ class Transactions {
             
             $.getJSON("https://richlist.ether1.org/transactions_list.php" + params,  function( result ) {
                 result.data.forEach(element => {
-                    var Transaction = {
+                    ipcRenderer.send('storeTransaction', {
                         block: element.block,
+                        txhash: element.hash,
                         fromaddr: element.fromaddr,
                         timestamp: element.timestamp,
                         toaddr: element.toaddr,
-                        value: element.value
-                    }
-                    ipcRenderer.send('storeTransaction', Transaction);
+                        value: element.value,
+                        confirmed: "1"
+                    });
                 });
         
                 // call the transaction sync for the next address
@@ -93,6 +93,9 @@ class Transactions {
                 }
             });
              
+            // register the sort datetime format
+            $.fn.dataTable.moment('MMM Do YYYY');
+
             // render the transactions
             $('#tableTransactionsForAll').DataTable({
                 "paging": false,
@@ -128,6 +131,16 @@ class Transactions {
                         "targets": 5,
                         "render": function ( data, type, row ) {
                             return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), 'ether')).toFixed(2); 
+                        }
+                    },
+                    {
+                        "targets": 6,
+                        "render": function ( data, type, row ) {
+                            if (data == 0) {
+                                return '<i class="fas fa-question"></i>';
+                            } else if (data == 1) {
+                                return '<i class="fas fa-check"></i>';
+                            }
                         }
                     }
                 ],
@@ -172,7 +185,8 @@ $(document).on("onSyncInterval", function() {
                                                     fromaddr: element.from.toLowerCase(),
                                                     timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
                                                     toaddr: element.to.toLowerCase(),
-                                                    value: Number(element.value).toExponential(5).toString().replace('+','')
+                                                    value: Number(element.value).toExponential(5).toString().replace('+',''),
+                                                    confirmed: "0",
                                                 }
                                                 
                                                 // store transaction and notify about new transactions

@@ -34,3 +34,11 @@
 #tableTransactionsForAll .fa-arrows-alt-h {
     color: #DCDCDC;
 }
+
+#tableTransactionsForAll .fa-question {
+    color: #DCDCDC;
+}
+
+#tableTransactionsForAll .fa-check {
+    color: #228B22;
+}

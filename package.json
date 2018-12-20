@@ -25,9 +25,11 @@
   "author": "Ether1",
   "license": "CC0-1.0",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "electron-storage": "^1.0.7",
     "handlebars": "^4.0.12",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "electron": "^3.0.12",

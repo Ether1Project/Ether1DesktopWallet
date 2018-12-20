@@ -1,4 +1,3 @@
-// In renderer process (web page).
 const {ipcRenderer} = require('electron');
 
 class Wallets {
@@ -22,6 +21,12 @@ class Wallets {
     this.addressList.push(address.toLowerCase());
   }
 
+  enableButtonTooltips() {
+    EthoUtils.createToolTip("#btnNewAddress", "Create New Address");
+    EthoUtils.createToolTip("#btnExportAccounts", "Export Accounts");
+    EthoUtils.createToolTip("#btnImportAccounts", "Import Accounts");
+  }
+    
   validateNewAccountForm() {
     if (EthoMainGUI.getAppState() == "account") {
         if (!$("#walletPasswordFirst").val()) {
@@ -61,6 +66,7 @@ renderWalletsState() {
         // render the wallets current state
         EthoMainGUI.renderTemplate("wallets.html", data);          
         $(document).trigger("render_wallets");
+        EthoWallets.enableButtonTooltips();
       }
     );
   }
@@ -148,6 +154,14 @@ $(document).on("render_wallets", function() {
     });                                
   });                
 
+  $("#btnExportAccounts").off('click').on('click', function() {
+    ipcRenderer.send('exportAccounts', {});
+  });
+
+  $("#btnImportAccounts").off('click').on('click', function() {
+    ipcRenderer.sendSync('importAccounts', {});
+  });
+
   $(".textAddress").off('click').on('click', function() {
     EthoMainGUI.copyToClipboard($(this).html());
 
@@ -168,7 +182,7 @@ $(document).on("onGethReady", function() {
 
 $(document).on("onNewAccountTransaction", function() {
   if (EthoMainGUI.getAppState() == "account") {
-    EthoWallets.renderWalletsState();
+    EthoWallets.renderWalletsState();      
   }
 });
   

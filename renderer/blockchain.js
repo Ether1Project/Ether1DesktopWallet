@@ -28,6 +28,16 @@ class Blockchain {
         return web3Local.utils.isAddress(address);
     }
 
+    getTransaction(thxid, clbError, clbSuccess) {
+        web3Local.eth.getTransaction(thxid, function( error, result ) {
+            if (error) {
+                clbError(error);    
+            } else {
+                clbSuccess(result);
+            }
+        });
+    }
+
     getTranasctionFee(fromAddress, toAddress, value, clbError, clbSuccess) {
         web3Local.eth.getTransactionCount(fromAddress, function( error, result ) {
             if (error) {
@@ -65,7 +75,7 @@ class Blockchain {
                 clbError("Wrong password for the selected address!");
             } else
             {
-                web3Local.eth.getTransactionCount(fromAddress, function( error, result ) {
+                web3Local.eth.getTransactionCount(fromAddress, 'pending', function( error, result ) {
                     if (error) {
                         clbError(error);   
                     } else {

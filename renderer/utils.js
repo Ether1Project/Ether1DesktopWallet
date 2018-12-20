@@ -39,6 +39,19 @@ class Utils {
           }
         }
     }    
+
+    createToolTip(element, text) {
+        tippy(element, {
+            content: text,
+            delay: 500,
+            arrow: true,
+            arrowType: 'round',
+            size: 'large',
+            duration: 500,
+            animation: 'scale'
+        });      
+    }
+
 }
 
 EthoUtils = new Utils(); 
