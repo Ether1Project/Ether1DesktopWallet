@@ -1,12 +1,18 @@
 const child_process = require('child_process');
 const {app, dialog} = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 class Geth {
   constructor() {
     this.gethProcess = null;
+    this.logStream = fs.createWriteStream(path.join(app.getPath('userData'), 'gethlog.txt'));
   }
   
+  _writeLog(text) {
+    this.logStream.write(text);
+  }
+
   startGeth() {
     // get the path of get and execute the child process
     try {
@@ -17,10 +23,10 @@ class Geth {
         app.quit();
       });
       this.gethProcess.stderr.on('data', function(data) {
-        console.log(data.toString());
+        EthoGeth._writeLog(data.toString() + '\n');
       });
       this.gethProcess.stdout.on('data', function(data) {
-        console.log(data.toString());
+        EthoGeth._writeLog(data.toString() + '\n');
       });      
     } catch (e) {
       dialog.showErrorBox("Error starting application", e);
@@ -29,7 +35,8 @@ class Geth {
   }
 
   stopGeth() { 
-    this.gethProcess.kill('SIGINT');
+    const gethWrapePath = path.join(app.getPath('userData'), 'WrapGeth.exe');
+    child_process.spawnSync(gethWrapePath,  [this.gethProcess.pid]);
   }
 }
 
