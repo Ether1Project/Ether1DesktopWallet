@@ -8,6 +8,12 @@ class Geth {
   constructor() {
     this.gethProcess = null;
     this.logStream = fs.createWriteStream(path.join(app.getPath('userData'), 'gethlog.txt'));
+
+    if (appRoot.path.indexOf('app.asar') > -1) {
+      this.rootPath = path.dirname(appRoot.path);
+    } else {
+      this.rootPath = appRoot.path;
+    }
   }
   
   _writeLog(text) {
@@ -17,7 +23,7 @@ class Geth {
   startGeth() {
     // get the path of get and execute the child process
     try {
-      const gethPath = path.join(path.join(appRoot.path, 'bin'), 'geth');
+      const gethPath = path.join(path.join(this.rootPath, 'bin'), 'geth');
       this.gethProcess = child_process.spawn(gethPath, ['--ws', '--wsorigins', '*', '--wsaddr', '127.0.0.1', '--wsport', '8546', '--wsapi', 'admin,db,eth,net,miner,personal,web3']);
       this.gethProcess.on('error', function(err) {
         dialog.showErrorBox("Error starting application", "Geth failed to start!");
@@ -36,7 +42,7 @@ class Geth {
   }
 
   stopGeth() { 
-    const gethWrapePath = path.join(path.join(appRoot.path, 'bin'), 'WrapGeth.exe');
+    const gethWrapePath = path.join(path.join(this.rootPath, 'bin'), 'WrapGeth.exe');
     child_process.spawnSync(gethWrapePath,  [this.gethProcess.pid]);
   }
 }

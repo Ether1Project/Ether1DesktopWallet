@@ -13,7 +13,10 @@
     "appId": "Ether1DesktopWallet",
     "win": {
       "icon": "build/icon.png",
-      "target": "7z"
+      "target": "7z",
+      "extraResources": [
+        "bin/*"
+      ] 
     }
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
@@ -29,7 +32,7 @@
     "app-root-path": "^2.1.0",
     "electron-storage": "^1.0.7",
     "handlebars": "^4.0.12",
-    "nedb": "^1.8.0",
+    "nedb": "^1.8.0"
   },
   "devDependencies": {
     "electron": "^3.0.12",
