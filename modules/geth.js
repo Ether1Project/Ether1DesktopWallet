@@ -1,5 +1,6 @@
 const child_process = require('child_process');
 const {app, dialog} = require('electron');
+const appRoot = require('app-root-path');
 const path = require('path');
 const fs = require('fs');
 
@@ -16,7 +17,7 @@ class Geth {
   startGeth() {
     // get the path of get and execute the child process
     try {
-      const gethPath = path.join(app.getPath('userData'), 'geth');
+      const gethPath = path.join(path.join(appRoot.path, 'bin'), 'geth');
       this.gethProcess = child_process.spawn(gethPath, ['--ws', '--wsorigins', '*', '--wsaddr', '127.0.0.1', '--wsport', '8546', '--wsapi', 'admin,db,eth,net,miner,personal,web3']);
       this.gethProcess.on('error', function(err) {
         dialog.showErrorBox("Error starting application", "Geth failed to start!");
@@ -35,7 +36,7 @@ class Geth {
   }
 
   stopGeth() { 
-    const gethWrapePath = path.join(app.getPath('userData'), 'WrapGeth.exe');
+    const gethWrapePath = path.join(path.join(appRoot.path, 'bin'), 'WrapGeth.exe');
     child_process.spawnSync(gethWrapePath,  [this.gethProcess.pid]);
   }
 }
