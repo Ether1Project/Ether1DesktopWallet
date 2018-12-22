@@ -1,11 +1,10 @@
 {
   "name": "Ether1Wallet",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Desktop wallet for Ether1 currency",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "electron-builder",
     "pack": "build --dir",
     "dist": "build"
   },
@@ -14,9 +13,17 @@
     "win": {
       "icon": "build/icon.png",
       "target": "7z",
+      "files": [
+        "modules/*",
+        "assets/**/*",
+        "renderer/*",
+        "package.json",
+        "main.js",
+        "index.html"
+      ],
       "extraResources": [
-        "bin/*"
-      ] 
+        "bin/win/*"
+      ]
     }
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
