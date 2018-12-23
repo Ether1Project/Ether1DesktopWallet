@@ -64,6 +64,7 @@ class MainGUI {
 }
 
 $("#mainNavBtnTransactions").click(function() {
+    EthoTransactions.clearFilter();
     EthoMainGUI.changeAppState("transactions");
     EthoTransactions.renderTransactions();
 });                

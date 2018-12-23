@@ -21,12 +21,14 @@
     "win": {
       "icon": "build/icon.png",
       "target": "7z",
+      "artifactName":  "Windows-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/win/*"
       ]
     },
     "linux": {
       "target": "tar.gz",
+      "artifactName":  "Linux-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/linux/*"
       ]

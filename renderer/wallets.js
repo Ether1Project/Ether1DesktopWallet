@@ -116,6 +116,12 @@ $(document).on("render_wallets", function() {
     });                                
   });                
 
+  $(".btnShowAddressTransactions").off('click').on('click', function() {
+    EthoTransactions.setFilter($(this).attr('data-wallet'));
+    EthoMainGUI.changeAppState("transactions");
+    EthoTransactions.renderTransactions();
+  });
+
   $(".btnChangWalletName").off('click').on('click', function() {
     var walletAddress = $(this).attr('data-wallet');
     var walletName = $(this).attr('data-name');

@@ -2,6 +2,7 @@ const {ipcRenderer} = require('electron');
 
 class Transactions {
     constructor() {
+        this.filter = "";
         this.isSyncing = false;
     }
 
@@ -11,6 +12,18 @@ class Transactions {
 
     getIsSyncing() {
         return this.isSyncing;
+    }
+
+    setFilter(text) {
+        this.filter = text;
+    }
+
+    getFilter() {
+        return this.filter;
+    }
+
+    clearFilter() {
+        this.filter = "";
     }
 
     syncTransactionsForSingleAddress(addressList, counters, lastBlock, counter) { 
@@ -94,7 +107,7 @@ class Transactions {
             });
              
             // register the sort datetime format
-            $.fn.dataTable.moment('MMM Do YYYY');
+            $.fn.dataTable.moment('MMM Do YYYY HH:mm:ss');
 
             // render the transactions
             $('#tableTransactionsForAll').DataTable({
@@ -104,6 +117,7 @@ class Transactions {
                 "processing": true,
                 "order": [[ 1, "desc" ]],
                 "data": dataTransactions,
+                "oSearch": {"sSearch": EthoTransactions.getFilter() },
                 "columnDefs": [
                     {
                         "targets": 0,
@@ -124,7 +138,7 @@ class Transactions {
                     {
                         "targets": 2,
                         "render": function ( data, type, row ) {
-                            return moment(data).format("MMM Do YYYY"); 
+                            return moment(data).format("MMM Do YYYY HH:mm:ss"); 
                         }
                     },
                     {
