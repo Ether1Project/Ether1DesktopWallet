@@ -10,21 +10,27 @@
   },
   "build": {
     "appId": "Ether1DesktopWallet",
+    "files": [
+      "modules/*",
+      "assets/**/*",
+      "renderer/*",
+      "package.json",
+      "main.js",
+      "index.html"
+    ],
     "win": {
       "icon": "build/icon.png",
       "target": "7z",
-      "files": [
-        "modules/*",
-        "assets/**/*",
-        "renderer/*",
-        "package.json",
-        "main.js",
-        "index.html"
-      ],
       "extraResources": [
         "bin/win/*"
       ]
-    }
+    },
+    "linux": {
+      "target": "tar.gz",
+      "extraResources": [
+        "bin/linux/*"
+      ]
+    }    
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
   "keywords": [
