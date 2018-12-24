@@ -28,7 +28,7 @@ SyncProgress = new ProgressBar.Line('#syncProgress',
 });
 
 // set initial value for the progress text
-SyncProgress.setText("initializing, please wait...");
+SyncProgress.setText("Waiting for blockchain, please wait...");
 
 var peerCountInterval = setInterval(function()
 {   
@@ -39,61 +39,67 @@ var peerCountInterval = setInterval(function()
 
 function StartSyncProcess() {
   var alreadyCatchedUp = false;
+  var nodeSyncInterval = null;
 
-  function keepTheNodeInSync(interval) {
-    var nodeSyncInterval = setInterval(function()
-    {   
-      web3Local.eth.isSyncing(function(error, sync)
-      {
-        if(!error) {
-          if(sync == true) {
-            console.log("start the sync");
-          } else if(sync) {
-            SyncProgress.animate(sync.currentBlock / sync.highestBlock);
-            SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.currentBlock, sync.highestBlock, Math.round(sync.currentBlock / sync.highestBlock * 100)]));
-          } else {    
-            web3Local.eth.getBlock("latest", function(error, localBlock) {
-              if (localBlock.number > 0) {
-                web3Remote.eth.getBlock("latest", function(error, remoteBlock) {
-                  if (!EthoTransactions.getIsSyncing()) {
-                    SyncProgress.animate(localBlock.number / remoteBlock.number);    
-                    SyncProgress.setText(vsprintf('%d/%d (%d%%)', [localBlock.number, remoteBlock.number, Math.round(localBlock.number / remoteBlock.number * 100)]));
-                  }
-  
-                  if (remoteBlock.number == localBlock.number) {
-                    if (alreadyCatchedUp == false) 
-                    {
-                      // clear the repeat interval and render wallets
-                      $(document).trigger("onNewAccountTransaction");
-                      clearInterval(nodeSyncInterval);
-                      alreadyCatchedUp = true;
-
-                      // sync all the transactions to the current block
-                      EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
-                      $(document).trigger("onSyncInterval");
-        
-                      // restart with less intensity
-                      keepTheNodeInSync(10000);
-                    }      
-                  }
-                });
-              }
-            });            
-          }              
+  var subscription = web3Local.eth.subscribe('syncing', function(error, sync){
+    if (!error) {
+      if (!sync) {
+        if (nodeSyncInterval) {
+          clearInterval(nodeSyncInterval); 
         }
-      });  
-    }, interval);  
-  }
 
-  // initial fast syncing
-  keepTheNodeInSync(2000);
+        nodeSyncInterval = setInterval(function()
+        {   
+          web3Local.eth.getBlock("latest", function(error, localBlock) {
+            if (localBlock.number > 0) {
+              if (!EthoTransactions.getIsSyncing()) {
+                SyncProgress.animate(1);    
+                SyncProgress.setText(vsprintf('%d/%d (100%%)', [localBlock.number, localBlock.number]));
+              }
+
+              if (alreadyCatchedUp == false) 
+              {
+                // clear the repeat interval and render wallets
+                $(document).trigger("onNewAccountTransaction");
+                alreadyCatchedUp = true;
+
+                // sync all the transactions to the current block
+                EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
+                $(document).trigger("onSyncInterval");
+              }      
+            }
+          });              
+        }, 10000);  
+      }
+    }
+  }).on("data", function(sync){
+    if ((sync) && (sync.HighestBlock > 0)) {
+      SyncProgress.animate(sync.CurrentBlock / sync.HighestBlock);
+      SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.CurrentBlock, sync.HighestBlock, Math.round(sync.CurrentBlock / sync.HighestBlock * 100)]));  
+    }
+  }).on("changed", function(isSyncing){
+    if(isSyncing) {
+      nodeSyncInterval = setInterval(function()
+      {   
+        web3Local.eth.isSyncing(function(error, sync){
+          if ((!error) && (sync)) {
+            SyncProgress.animate(sync.currentBlock / sync.highestBlock);
+            SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.currentBlock, sync.highestBlock, Math.round(sync.currentBlock / sync.highestBlock * 100)]));      
+          }
+        }); 
+      }, 2000);     
+    } else {
+      if (nodeSyncInterval) {
+        clearInterval(nodeSyncInterval); 
+      }
+    }
+  });          
 }
 
 var InitWeb3 = setInterval(function()
 {     
   try {
     web3Local = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
-    web3Remote = new Web3(new Web3.providers.HttpProvider("https://rpc.ether1.org"));
 
     web3Local.eth.net.isListening(function(error, success) {
       if (!error) {

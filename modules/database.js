@@ -14,7 +14,7 @@ db.ensureIndex({ fieldName: 'block' }, function (err) {
 });
   
 ipcMain.on('storeTransaction', (event, arg) => {
-  db.update({ block: arg.block, fromaddr: arg.fromaddr, toaddr: arg.toaddr }, arg, { upsert: true }, function (err, numReplaced, upsert) {
+  db.update({ txhash: arg.txhash }, arg, { upsert: true }, function (err, numReplaced, upsert) {
     // do nothing for now
   });
 });
@@ -29,8 +29,7 @@ ipcMain.on('getTransactions', (event, arg) => {
         docs[i].timestamp,
         docs[i].fromaddr,
         docs[i].toaddr,
-        docs[i].value,
-        docs[i].confirmed || 1
+        docs[i].value
       ]);
     }
 

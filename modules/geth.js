@@ -53,8 +53,8 @@ class Geth {
       this.gethProcess.stdout.on('data', function(data) {
         EthoGeth._writeLog(data.toString() + '\n');
       });      
-    } catch (e) {
-      dialog.showErrorBox("Error starting application", e);
+    } catch (err) {
+      dialog.showErrorBox("Error starting application", err.message);
       app.quit();
     }
   }

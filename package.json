@@ -21,18 +21,18 @@
     "win": {
       "icon": "build/icon.png",
       "target": "7z",
-      "artifactName":  "Windows-${productName}-${version}.${ext}",
+      "artifactName": "Windows-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/win/*"
       ]
     },
     "linux": {
       "target": "tar.gz",
-      "artifactName":  "Linux-${productName}-${version}.${ext}",
+      "artifactName": "Linux-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/linux/*"
       ]
-    }    
+    }
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
   "keywords": [
@@ -47,7 +47,8 @@
     "app-root-path": "^2.1.0",
     "electron-storage": "^1.0.7",
     "handlebars": "^4.0.12",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "single-instance": "0.0.1"
   },
   "devDependencies": {
     "electron": "^3.0.12",

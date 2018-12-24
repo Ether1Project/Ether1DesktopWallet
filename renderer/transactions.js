@@ -36,13 +36,12 @@ class Transactions {
             $.getJSON("https://richlist.ether1.org/transactions_list.php" + params,  function( result ) {
                 result.data.forEach(element => {
                     ipcRenderer.send('storeTransaction', {
-                        block: element.block,
-                        txhash: element.hash,
-                        fromaddr: element.fromaddr,
+                        block: element.block.toString(),
+                        txhash: element.txhash.toLowerCase(),
+                        fromaddr: element.fromaddr.toLowerCase(),
                         timestamp: element.timestamp,
-                        toaddr: element.toaddr,
-                        value: element.value,
-                        confirmed: "1"
+                        toaddr: element.toaddr.toLowerCase(),
+                        value: element.value
                     });
                 });
         
@@ -149,11 +148,12 @@ class Transactions {
                     },
                     {
                         "targets": 6,
+                        "defaultContent": "",
                         "render": function ( data, type, row ) {
-                            if (data == 0) {
-                                return '<i class="fas fa-question"></i>';
-                            } else if (data == 1) {
+                            if (row[1]) {
                                 return '<i class="fas fa-check"></i>';
+                            } else if (data == 1) {
+                                return '<i class="fas fa-question"></i>';
                             }
                         }
                     }
@@ -196,11 +196,11 @@ $(document).on("onSyncInterval", function() {
                                             if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
                                                 var Transaction = {
                                                     block: element.blockNumber.toString(),
+                                                    txhash: element.hash.toLowerCase(),
                                                     fromaddr: element.from.toLowerCase(),
                                                     timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
                                                     toaddr: element.to.toLowerCase(),
-                                                    value: Number(element.value).toExponential(5).toString().replace('+',''),
-                                                    confirmed: "0",
+                                                    value: Number(element.value).toExponential(5).toString().replace('+','')
                                                 }
                                                 
                                                 // store transaction and notify about new transactions
