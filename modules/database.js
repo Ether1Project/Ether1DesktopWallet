@@ -1,6 +1,7 @@
 const {app, ipcMain} = require('electron');
 const storage = require('electron-storage');
 const datastore = require('nedb');
+const moment = require('moment');
 const path = require('path');
 
 const dbPath = path.join(app.getPath('userData'), 'storage.db');
@@ -26,8 +27,21 @@ ipcMain.on('storeTransaction', (event, arg) => {
 });
   
 ipcMain.on('getTransactions', (event, arg) => {
-  db.find({}).sort({ block: 1 }).exec(function (err, docs) {
+  db.find({}).exec(function (err, docs) {
     ResultData = [];
+    
+    // sort the data
+    docs.sort((a, b)=>{
+      if ((!b.block) && (a.block)) {
+        return 1;
+      } else if ((b.block) && (!a.block)) {
+        return -1;
+      } else if ((!b.block) && (!a.block)) {
+        return moment(b.timestamp, "YYYY-MM-DD HH:mm:ss").toDate() - moment(a.timestamp, "YYYY-MM-DD HH:mm:ss").toDate();
+      } else {
+        return b.block - a.block;
+      }
+    });
     
     for (i = 0; i < Math.min(docs.length, 500); i++) {
       ResultData.push([

@@ -104,64 +104,8 @@ class Transactions {
                     element.unshift(2);
                 }
             });
-             
-            // register the sort datetime format
-            $.fn.dataTable.moment('MMM Do YYYY HH:mm:ss');
 
-            // render the transactions
-            $('#tableTransactionsForAll').DataTable({
-                "paging": false,
-                "scrollY": "calc(100vh - 115px)",
-                "responsive": true,
-                "processing": true,
-                "order": [[ 1, "desc" ]],
-                "data": dataTransactions,
-                "oSearch": {"sSearch": EthoTransactions.getFilter() },
-                "columnDefs": [
-                    {
-                        "targets": 0,
-                        "render": function ( data, type, row ) {
-                            if (data == 0) {
-                                return '<i class="fas fa-arrow-left"></i>';
-                            } else if (data == 1) {
-                                return '<i class="fas fa-arrow-right"></i>';
-                            } else {
-                                return '<i class="fas fa-arrows-alt-h"></i>';
-                            }
-                        }
-                    },
-                    { 
-                        "className": "transactionsBlockNum",
-                        "targets": 1
-                    },
-                    {
-                        "targets": 2,
-                        "render": function ( data, type, row ) {
-                            return moment(data, "YYYY-MM-DD HH:mm:ss").format("MMM Do YYYY HH:mm:ss"); 
-                        }
-                    },
-                    {
-                        "targets": 5,
-                        "render": function ( data, type, row ) {
-                            return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), 'ether')).toFixed(2); 
-                        }
-                    },
-                    {
-                        "targets": 6,
-                        "defaultContent": "",
-                        "render": function ( data, type, row ) {
-                            if (row[1]) {
-                                return '<i class="fas fa-check"></i>';
-                            } else if (data == 1) {
-                                return '<i class="fas fa-question"></i>';
-                            }
-                        }
-                    }
-                ],
-                "drawCallback": function( settings ) {
-                    $("#loadingTransactionsOverlay").css("display", "none");  
-                }
-            });                
+            EthoTableTransactions.initialize('#tableTransactionsForAll', dataTransactions);             
         }, 200);
     }
 
@@ -206,6 +150,10 @@ $(document).on("onSyncInterval", function() {
                                                 // store transaction and notify about new transactions
                                                 ipcRenderer.send('storeTransaction', Transaction);
                                                 $(document).trigger("onNewAccountTransaction");
+
+                                                if (EthoMainGUI.getAppState() == "transactions") { 
+                                                    //$('#tableTransactionsForAll').DataTable().ajax.reload();
+                                                }
                                             }
                                         });                    
                                     }

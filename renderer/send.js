@@ -145,13 +145,14 @@ $(document).on("render_send", function() {
                                                 EthoMainGUI.showGeneralError(error);
                                             },
                                             function(transaction) {
+                                                console.log(JSON.stringify(transaction));
                                                 ipcRenderer.send('storeTransaction', {
-                                                    block: element.block.toString(),
-                                                    txhash: element.hash.toLowerCase(),
-                                                    fromaddr: element.fromaddr.toLowerCase(),
-                                                    timestamp: element.timestamp,
-                                                    toaddr: element.toaddr.toLowerCase(),
-                                                    value: element.value
+                                                    block: transaction.blockNumber,
+                                                    txhash: transaction.hash.toLowerCase(),
+                                                    fromaddr: transaction.from.toLowerCase(),
+                                                    timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+                                                    toaddr: transaction.to.toLowerCase(),
+                                                    value: transaction.value
                                                 });                    
                                             }        
                                         );
