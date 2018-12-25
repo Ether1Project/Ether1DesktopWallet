@@ -145,7 +145,6 @@ $(document).on("render_send", function() {
                                                 EthoMainGUI.showGeneralError(error);
                                             },
                                             function(transaction) {
-                                                console.log(JSON.stringify(transaction));
                                                 ipcRenderer.send('storeTransaction', {
                                                     block: transaction.blockNumber,
                                                     txhash: transaction.hash.toLowerCase(),
