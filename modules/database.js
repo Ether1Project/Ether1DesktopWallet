@@ -9,7 +9,13 @@ db.loadDatabase(function (err) {
   // Now commands will be executed
 });
 
+// index the block field
 db.ensureIndex({ fieldName: 'block' }, function (err) {
+  // If there was an error, err is not null
+});
+
+// index the txhash field
+db.ensureIndex({ fieldName: 'txhash', unique: true }, function (err) {
   // If there was an error, err is not null
 });
   

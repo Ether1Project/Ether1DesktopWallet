@@ -137,7 +137,7 @@ class Transactions {
                     {
                         "targets": 2,
                         "render": function ( data, type, row ) {
-                            return moment(data).format("MMM Do YYYY HH:mm:ss"); 
+                            return moment(data, "YYYY-MM-DD HH:mm:ss").format("MMM Do YYYY HH:mm:ss"); 
                         }
                     },
                     {
@@ -198,7 +198,7 @@ $(document).on("onSyncInterval", function() {
                                                     block: element.blockNumber.toString(),
                                                     txhash: element.hash.toLowerCase(),
                                                     fromaddr: element.from.toLowerCase(),
-                                                    timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+                                                    timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
                                                     toaddr: element.to.toLowerCase(),
                                                     value: Number(element.value).toExponential(5).toString().replace('+','')
                                                 }
