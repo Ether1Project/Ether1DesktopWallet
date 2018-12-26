@@ -14,7 +14,10 @@ class MainGUI {
             case "account":
               $("#mainNavBtnWalletsWrapper").addClass("iconSelected"); 
               break;
-              case "send":
+            case "addressBook":
+              $("#mainNavBtnAddressBoookWrapper").addClass("iconSelected"); 
+              break;
+            case "send":
               $("#mainNavBtnSendWrapper").addClass("iconSelected"); 
               break;
             case "transactions":
@@ -67,6 +70,11 @@ $("#mainNavBtnTransactions").click(function() {
     EthoTransactions.clearFilter();
     EthoMainGUI.changeAppState("transactions");
     EthoTransactions.renderTransactions();
+});                
+
+$("#mainNavBtnAddressBoook").click(function() {
+    EthoMainGUI.changeAppState("addressBook");
+    EthoAddressBook.renderAddressBook();
 });                
 
 $("#mainNavBtnSend").click(function() {

@@ -79,7 +79,7 @@ $(document).on("render_send", function() {
             },
             function(data) {
                 $("#dlgAddressList").iziModal({ width: "800px" });
-                EthoMainGUI.renderTemplate("addresslist.html", data, $("#dlgAddressListBody")); 
+                EthoMainGUI.renderTemplate("addressList.html", data, $("#dlgAddressListBody")); 
                 $('#dlgAddressList').iziModal('open');
 
                 $(".btnSelectToAddress").off('click').on('click', function() {

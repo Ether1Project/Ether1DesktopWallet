@@ -103,24 +103,29 @@ body.pg-loaded > .inner {
   margin-right: 10px;
 }
 
-.modalBodyPassword {
+.modalBody {
   margin: 20px;
 }
 
-#dlgGeneralError .modalBodyPassword {
+#dlgGeneralError .modalBody {
   height: 100px;
 }
 
-#dlgCreateWalletPassword .modalBodyPassword,
-#dlgCreateWalletPassword .modalBodyPassword {
+#dlgDeleteAddressConfirm .modalBody {
+  height: 100px;
+}
+
+#dlgCreateWalletPassword .modalBody,
+#dlgCreateAddressAndName .modalBody {
     height: 200px;
 }
 
-#dlgSendWalletPassword .modalBodyPassword {
+#dlgSendWalletPassword .modalBody {
   height: 300px;
 }
 
-#dlgChangeWalletName .modalBodyPassword {
+#dlgChangeWalletName .modalBody,
+#dlgChangeAddressName .modalBody {
   height: 150px;
 }
 
@@ -134,6 +139,12 @@ body.pg-loaded > .inner {
   position: absolute;
   bottom: 10px;
   right: 20px;
+}
+
+.btn-dialog-cancel {
+  position: absolute;
+  bottom: 10px;
+  right: 80px;
 }
 
 .modalDialog {
@@ -312,11 +323,14 @@ div.sidebar svg {
   margin: 10px;
 }
 
-#noWalletsPresent {
+#noWalletsPresent,
+#noAddressPresent {
   font-size: 1.3em;
 }
 
-div.noWalletsWrapper {
+div.noWalletsWrapper,
+div.noAddressWrapper {
+
   display: flex;
   align-items: center;
   justify-content: center;

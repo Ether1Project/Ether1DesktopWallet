@@ -1,4 +1,55 @@
 /*
+ * Table button styles
+ */
+ 
+.dt-button { 
+  margin-left: 10px !important;
+  color: #ffffff !important; 
+  background-color: #7A1336 !important; 
+  border: 1px solid #450118 !important; 
+  background-image: none !important; 
+} 
+  
+.dt-button:hover, 
+.dt-button:focus, 
+.dt-button.active, 
+.open .dropdown-toggle.dt-button { 
+  color: #ffffff !important; 
+  background-color: #B01549 !important; 
+  border: 1px solid #450118 !important; 
+  background-image: none !important; 
+} 
+  
+.dt-button.active, 
+.open .dropdown-toggle.dt-button.dt-button { 
+  background-image: none !important; 
+} 
+  
+.dt-button.disabled, 
+.dt-button[disabled], 
+fieldset[disabled] .dt-button, 
+.dt-button.disabled:hover, 
+.dt-button[disabled]:hover, 
+fieldset[disabled] .dt-button:hover, 
+.dt-button.disabled:focus, 
+.dt-button[disabled]:focus, 
+fieldset[disabled] .dt-button:focus, 
+.dt-button.disabled:active, 
+.dt-button[disabled]:active, 
+fieldset[disabled] .dt-button:active, 
+.dt-button.disabled.active, 
+.dt-button[disabled].active, 
+fieldset[disabled] .dt-button.active { 
+  background-color: #7A1336 !important; 
+  border-color: #450118 !important; 
+} 
+  
+.dt-button .badge { 
+  color: #7A1336 !important; 
+  background-color: #ffffff !important; 
+}  
+
+/*
  * Table styles
  */
 table.dataTable {

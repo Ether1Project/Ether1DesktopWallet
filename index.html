@@ -60,6 +60,9 @@
         <div class="sidebarIconWrapper iconSelected" id="mainNavBtnWalletsWrapper" data-tippy="Wallets" data-tippy-delay="500">
           <a class="sidebarIcon" id="mainNavBtnWallets" href="#"><i class="fas fa-wallet fa-2x"></i></a>
         </div>
+        <div class="sidebarIconWrapper iconSelected" id="mainNavBtnAddressBoookWrapper" data-tippy="Address Book" data-tippy-delay="500">
+          <a class="sidebarIcon" id="mainNavBtnAddressBoook" href="#"><i class="far fa-address-book fa-2x"></i></a>
+        </div>          
         <div class="sidebarIconWrapper" id="mainNavBtnSendWrapper" data-tippy="Send Funds" data-tippy-delay="500">
           <a class="sidebarIcon" id="mainNavBtnSend" href="#"><i class="fas fas fa-share-square fa-2x"></i></a>
         </div>
@@ -84,6 +87,7 @@
         require('./renderer/settings.js');
         require('./renderer/wallets.js');
         require('./renderer/blockchain.js');
+        require('./renderer/addressBook.js');
         require('./renderer/transactions.js');
         require('./renderer/tableTransactions.js');
       </script>
@@ -91,7 +95,7 @@
 
     <!-- The modal for general error -->
     <div id="dlgGeneralError" class="modalDialog" data-iziModal-title="Application Error" data-iziModal-subtitle="Something went wrong, don't kill the fish..." data-iziModal-icon="icon-home">
-      <div class="modalBodyPassword">
+      <div class="modalBody">
         <div class="form-group">
           <span id="txtGeneralError"></span>
         </div>

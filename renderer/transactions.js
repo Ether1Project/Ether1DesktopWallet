@@ -119,22 +119,33 @@ $(document).on("onSyncInterval", function() {
         counters = {};    
     }
 
+    function finalizeCounters(lastBlock) {
+        counters.transactions = lastBlock;
+
+        ipcRenderer.sendSync('setJSONFile', 
+        { 
+            file: 'counters.json',
+            data: counters
+        });
+    }
+
     function doSyncRemainingBlocks() {
         EthoBlockchain.getBlock("latest", false,
             function(error) {
                 EthoMainGUI.showGeneralError(error);
             },
             function(block) {
-                var lastBlock = counters.transactions || 0;
+                var lastBlock = counters.transactions || 1;
 
                 if (lastBlock < block.number) {
                     function getNextBlockTransactions(blockNumber, maxBlock) {
-                        EthoBlockchain.getBlock(blockNumber, true,
-                            function(error) {
-                                EthoMainGUI.showGeneralError(error);
-                            },
-                            function(data) {
-                                if (blockNumber < maxBlock) {
+                        if (blockNumber < maxBlock) {
+                            EthoBlockchain.getBlock(blockNumber, true,
+                                function(error) {
+                                    EthoMainGUI.showGeneralError(error);
+                                    getNextBlockTransactions(blockNumber + 1 , maxBlock);
+                                },
+                                function(data) {
                                     if (data.transactions) {                                    
                                         data.transactions.forEach(element => {
                                             if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
@@ -151,34 +162,33 @@ $(document).on("onSyncInterval", function() {
                                                 ipcRenderer.send('storeTransaction', Transaction);
                                                 $(document).trigger("onNewAccountTransaction");
 
-                                                if (EthoMainGUI.getAppState() == "transactions") { 
-                                                    //$('#tableTransactionsForAll').DataTable().ajax.reload();
-                                                }
+                                                iziToast.info({
+                                                    title: 'New Transaction',
+                                                    message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
+                                                    position: 'topRight',
+                                                    timeout: 10000
+                                                });                                                     
                                             }
-                                        });                    
+                                        });                                                            
                                     }
 
                                     // call the next iteration for the next block 
-                                    getNextBlockTransactions(blockNumber + 1 , maxBlock)    
-                                } else {
-                                    setTimeout(function() { 
-                                        doSyncRemainingBlocks();
-                                    }, 10000);                                    
+                                    getNextBlockTransactions(blockNumber + 1 , maxBlock);
                                 }
-                                
-                            }
-                        );
+                            );
+                        } else {
+                            finalizeCounters(blockNumber);
+
+                            setTimeout(function() { 
+                                doSyncRemainingBlocks();
+                            }, 10000);                                    
+                        }                        
                     }
 
                     // call initial call of function
                     getNextBlockTransactions(lastBlock, block.number);
                 } else {                    
-                    counters.transactions = block.number;
-                    ipcRenderer.sendSync('setJSONFile', 
-                    { 
-                        file: 'counters.json',
-                        data: counters
-                    });
+                    finalizeCounters(lastBlock);
 
                     setTimeout(function() { 
                         doSyncRemainingBlocks();

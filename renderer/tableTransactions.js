@@ -7,12 +7,13 @@ class tableTransactions {
         // register the sort datetime format
         $.fn.dataTable.moment('MMM Do YYYY HH:mm:ss');
 
-        var namesType = $.fn.dataTable.absoluteOrder(
+        var namesType = $.fn.dataTable.absoluteOrderNumber(
         [
             { value: null, position: 'top' }
         ]);
                         // render the transactions
         $(id).DataTable({
+            "dom": 'Bfrtip',
             "paging": false,
             "scrollY": "calc(100vh - 115px)",
             "responsive": true,
@@ -20,6 +21,15 @@ class tableTransactions {
             "order": [[ 1, "desc" ]],
             "data": data,
             "oSearch": {"sSearch": EthoTransactions.getFilter() },
+            "buttons": 
+            [
+                {
+                    text: 'Refresh',
+                    action: function ( e, dt, node, config ) {
+                        EthoTransactions.renderTransactions();    
+                    }
+                }
+            ],
             "columnDefs": [
                 {
                     "targets": 0,
