@@ -29,6 +29,7 @@ SyncProgress = new ProgressBar.Line('#syncProgress',
 
 // set initial value for the progress text
 SyncProgress.setText("Waiting for blockchain, please wait...");
+isFullySynced = false;
 
 var peerCountInterval = setInterval(function()
 {   
@@ -62,6 +63,7 @@ function StartSyncProcess() {
                 // clear the repeat interval and render wallets
                 $(document).trigger("onNewAccountTransaction");
                 alreadyCatchedUp = true;
+                isFullySynced = true;
 
                 // enable the keep in sync feature
                 EthoTransactions.enableKeepInSync();

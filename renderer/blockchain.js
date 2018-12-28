@@ -230,13 +230,15 @@ class Blockchain {
     }
 
     unsubsribePendingTransactions(clbError, clbSuccess) {
-        this.txSubscribe.unsubscribe(function(error, success){
-            if(error) {
-                clbError(error);
-            } else {
-                clbSuccess(success) ;
-            }
-        });
+        if (this.txSubscribe) {
+            this.txSubscribe.unsubscribe(function(error, success){
+                if(error) {
+                    clbError(error);
+                } else {
+                    clbSuccess(success) ;
+                }
+            });
+        }
     }
 
     subsribeNewBlockHeaders(clbError, clbSuccess, clbData) {
@@ -254,13 +256,15 @@ class Blockchain {
     }
 
     unsubsribeNewBlockHeaders(clbError, clbSuccess) {
-        this.bhSubscribe.unsubscribe(function(error, success){
-            if(error) {
-                clbError(error);
-            } else {
-                clbSuccess(success) ;
-            }
-        });
+        if (this.bhSubscribe) {
+            this.bhSubscribe.unsubscribe(function(error, success){
+                if(error) {
+                    clbError(error);
+                } else {
+                    clbSuccess(success) ;
+                }
+            });    
+        }
     }
 
     closeConnection() {

@@ -27,7 +27,7 @@ class Transactions {
     }
 
     syncTransactionsForSingleAddress(addressList, counters, lastBlock, counter) { 
-        if (counter < addressList.length - 1) {
+        if (counter < addressList.length) {
             SyncProgress.setText(vsprintf("Syncing address transactions %d/%d, please wait...", [counter, addressList.length]));
 
             var startBlock = parseInt(counters.transactions) || 0;
