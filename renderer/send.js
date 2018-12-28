@@ -77,9 +77,20 @@ $(document).on("render_send", function() {
             function(error) {
               EthoMainGUI.showGeneralError(error);
             },
-            function(data) {
+            function(addressList) {
+                var addressBook = EthoAddressBook.getAddressList();
+
+                for (var key in addressBook) {
+                    if (addressBook.hasOwnProperty(key)) {
+                        var adddressObject = {};
+                        adddressObject.address = key
+                        adddressObject.name = addressBook[key]; 
+                        addressList.addressData.push(adddressObject);
+                    }
+                }
+                
                 $("#dlgAddressList").iziModal({ width: "800px" });
-                EthoMainGUI.renderTemplate("addressList.html", data, $("#dlgAddressListBody")); 
+                EthoMainGUI.renderTemplate("addressList.html", addressList, $("#dlgAddressListBody")); 
                 $('#dlgAddressList').iziModal('open');
 
                 $(".btnSelectToAddress").off('click').on('click', function() {

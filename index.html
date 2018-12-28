@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Ether-1 Desktop Wallet</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <link rel="stylesheet" href="./assets/styles/materialize.min.css">
     <link rel="stylesheet" href="./assets/styles/datatables.min.css">
     <link rel="stylesheet" href="./assets/styles/iziModal.min.css">    
@@ -86,6 +87,7 @@
         require('./renderer/syncing.js');
         require('./renderer/settings.js');
         require('./renderer/wallets.js');
+        require('./renderer/database.js');
         require('./renderer/blockchain.js');
         require('./renderer/addressBook.js');
         require('./renderer/transactions.js');
@@ -102,5 +104,16 @@
         <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralErrorOK">OK</button>
       </div>
     </div>
-  </body>
+
+    <!-- The modal for general confirmation -->
+    <div id="dlgGeneralConfirm" class="modalDialog" data-iziModal-title="Confirmation" data-iziModal-subtitle="" data-iziModal-icon="icon-home">
+        <div class="modalBody">
+          <div class="form-group">
+            <span id="txtGeneralConfirm"></span>
+          </div>
+          <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnGeneralConfirmNo">No</button>
+          <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralConfirmYes">Yes</button>
+        </div>
+      </div>
+    </body>
 </html>

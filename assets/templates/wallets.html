@@ -2,7 +2,10 @@
     <button type="button" class="btn btn-etho" id="btnNewAddress"><i class="fas fa-plus"></i></button>    
     <button type="button" class="btn btn-etho" id="btnExportAccounts"><i class="fas fa-file-export"></i></button>    
     <button type="button" class="btn btn-etho" id="btnImportAccounts"><i class="fas fa-file-import"></i></button>    
-    <div id="sumBalance">Total ETHO: <span class="sumBalance">{{sumBalance}}</span></div>
+    <div id="sumBalance">
+        <span class="sumBalance" id="labelSumBalance">{{sumBalance}}</span>
+        <span class="sumCurrency"  id="labelSumCurrency">ETHO</span>
+        <span class="sumDollars" id="labelSumDollars">/ 0.00 $ / 0.00 $ per ETHO</span></div>
 </div>
 <div id="addressList" class="{{#if addressData.length}}walletsWrapper{{else}}noWalletsWrapper{{/if}}">
     {{#if addressData.length}}

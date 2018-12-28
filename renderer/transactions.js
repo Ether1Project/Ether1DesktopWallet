@@ -51,11 +51,7 @@ class Transactions {
         } else {
             // update the counter and store it back to file system
             counters.transactions = lastBlock;
-            ipcRenderer.sendSync('setJSONFile', 
-            { 
-                file: 'counters.json',
-                data: counters
-            });
+            EthoDatatabse.setCounters(counters);
 
             SyncProgress.setText("Syncing transactions is complete.");
             EthoTransactions.setIsSyncing(false);
@@ -63,12 +59,8 @@ class Transactions {
     }
 
     syncTransactionsForAllAddresses(lastBlock) {
-        var counters = ipcRenderer.sendSync('getJSONFile', 'counters.json');
+        var counters = EthoDatatabse.getCounters();
         var counter = 0;
-
-        if (counters == null) {
-            counters = {};    
-        }
 
         EthoBlockchain.getAccounts(
             function(error) {
@@ -109,99 +101,102 @@ class Transactions {
         }, 200);
     }
 
-}
+    enableKeepInSync() {
+        function processTransaction(data) {
 
-// event that tells us that geth is ready and up
-$(document).on("onSyncInterval", function() {
-    var counters = ipcRenderer.sendSync('getJSONFile', 'counters.json');
+            if ((EthoWallets.getAddressExists(data.from)) || (EthoWallets.getAddressExists(data.to))) {
+                if (data.blockNumber) {
+                    console.log(data.blockNumber);
+                }
 
-    if (counters == null) {
-        counters = {};    
-    }
+                var Transaction = {
+                    block: null,
+                    txhash: data.hash.toLowerCase(),
+                    fromaddr: data.from.toLowerCase(),
+                    timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+                    toaddr: data.to.toLowerCase(),
+                    value: Number(data.value).toExponential(5).toString().replace('+','')
+                }
+                
+                // store transaction and notify about new transactions
+                ipcRenderer.send('storeTransaction', Transaction);
+                $(document).trigger("onNewAccountTransaction");
 
-    function finalizeCounters(lastBlock) {
-        counters.transactions = lastBlock;
+                iziToast.info({
+                    title: 'New Transaction',
+                    message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
+                    position: 'topRight',
+                    timeout: 10000
+                });   
+                
+                // render transactions again to show latest
+                if (EthoMainGUI.getAppState() == "transactions") {
+                    setTimeout(function() { 
+                        EthoTransactions.renderTransactions();    
+                    }, 500);                    
+                }
+            }                
+        }
 
-        ipcRenderer.sendSync('setJSONFile', 
-        { 
-            file: 'counters.json',
-            data: counters
-        });
-    }
-
-    function doSyncRemainingBlocks() {
-        EthoBlockchain.getBlock("latest", false,
+        EthoBlockchain.subsribeNewBlockHeaders(
             function(error) {
                 EthoMainGUI.showGeneralError(error);
             },
-            function(block) {
-                var lastBlock = counters.transactions || 1;
-
-                if (lastBlock < block.number) {
-                    function getNextBlockTransactions(blockNumber, maxBlock) {
-                        if (blockNumber < maxBlock) {
-                            EthoBlockchain.getBlock(blockNumber, true,
-                                function(error) {
-                                    EthoMainGUI.showGeneralError(error);
-                                    getNextBlockTransactions(blockNumber + 1 , maxBlock);
-                                },
-                                function(data) {
-                                    if (data.transactions) {                                    
-                                        data.transactions.forEach(element => {
-                                            if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
-                                                var Transaction = {
-                                                    block: element.blockNumber.toString(),
-                                                    txhash: element.hash.toLowerCase(),
-                                                    fromaddr: element.from.toLowerCase(),
-                                                    timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
-                                                    toaddr: element.to.toLowerCase(),
-                                                    value: Number(element.value).toExponential(5).toString().replace('+','')
-                                                }
-                                                
-                                                // store transaction and notify about new transactions
-                                                ipcRenderer.send('storeTransaction', Transaction);
-                                                $(document).trigger("onNewAccountTransaction");
-
-                                                iziToast.info({
-                                                    title: 'New Transaction',
-                                                    message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
-                                                    position: 'topRight',
-                                                    timeout: 10000
-                                                });                                                     
-                                            }
-                                        });                                                            
+            function(data) 
+            {
+                EthoBlockchain.getBlock(data.number, true,
+                    function(error) {
+                        EthoMainGUI.showGeneralError(error);
+                    },
+                    function(data) {
+                        if (data.transactions) {                                    
+                            data.transactions.forEach(element => {
+                                if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
+                                    var Transaction = {
+                                        block: element.blockNumber.toString(),
+                                        txhash: element.hash.toLowerCase(),
+                                        fromaddr: element.from.toLowerCase(),
+                                        timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+                                        toaddr: element.to.toLowerCase(),
+                                        value: Number(element.value).toExponential(5).toString().replace('+','')
                                     }
+                                    
+                                    // store transaction and notify about new transactions
+                                    ipcRenderer.send('storeTransaction', Transaction);
+                                    $(document).trigger("onNewAccountTransaction");
 
-                                    // call the next iteration for the next block 
-                                    getNextBlockTransactions(blockNumber + 1 , maxBlock);
+                                    iziToast.info({
+                                        title: 'New Transaction',
+                                        message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
+                                        position: 'topRight',
+                                        timeout: 10000
+                                    });                                                     
+
+                                    if (EthoMainGUI.getAppState() == "transactions") {
+                                        setTimeout(function() { 
+                                            EthoTransactions.renderTransactions();    
+                                        }, 500);                    
+                                    }                                
                                 }
-                            );
-                        } else {
-                            finalizeCounters(blockNumber);
-
-                            setTimeout(function() { 
-                                doSyncRemainingBlocks();
-                            }, 10000);                                    
-                        }                        
+                            });                                                            
+                        }
                     }
+                );  
+            }          
+        );   
+    } 
 
-                    // call initial call of function
-                    getNextBlockTransactions(lastBlock, block.number);
-                } else {                    
-                    finalizeCounters(lastBlock);
-
-                    setTimeout(function() { 
-                        doSyncRemainingBlocks();
-                    }, 10000);                    
-                }
-            }
-        );        
+    disableKeepInSync() {
+        EthoBlockchain.unsubsribeNewBlockHeaders(
+            function(error) {
+                EthoMainGUI.showGeneralError(error);
+            },
+            function(data) {
+                // success
+            }        
+        );
     }
-
-    // do the initial sync
-    doSyncRemainingBlocks();
-});
-  
+}
         
 // create new transactions variable
 EthoTransactions = new Transactions();  

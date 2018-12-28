@@ -5,58 +5,28 @@ class AddressBook {
   }
   
   setAddressName(address, name) {
-    console.log(address);
-    console.log(name);
-    var addressBook = ipcRenderer.sendSync('getJSONFile', 'addresses.json');
-
-    if (!addressBook) {
-      addressBook = { names: {} };
-    }
+    var addressBook = EthoDatatabse.getAddresses();
 
     // set the wallet name from the dialog box
     addressBook.names[address] = name;
-    ipcRenderer.sendSync('setJSONFile', 
-    { 
-        file: 'addresses.json',
-        data: addressBook
-    });
+    EthoDatatabse.setAddresses(addressBook);
   }
 
   getAddressName(address) {
-    var addressBook = ipcRenderer.sendSync('getJSONFile', 'addresses.json');
-
-    if (!addressBook) {
-      addressBook = { names: {} };
-    }
-
+    var addressBook = EthoDatatabse.getAddresses();
     // set the wallet name from the dialog box
     return addressBook.names[address] || "";
   }
 
   getAddressList() {
-    var addressBook = ipcRenderer.sendSync('getJSONFile', 'addresses.json');
-
-    if (!addressBook) {
-      addressBook = { names: {} };
-    }
-
+    var addressBook = EthoDatatabse.getAddresses();
     return addressBook.names;
   }
 
   deleteAddress(address) {
-    var addressBook = ipcRenderer.sendSync('getJSONFile', 'addresses.json');
-
-    if (!addressBook) {
-      addressBook = { names: {} };
-    } else {
-      delete addressBook.names[address];
-    }
-
-    ipcRenderer.sendSync('setJSONFile', 
-    { 
-        file: 'addresses.json',
-        data: addressBook
-    });
+    var addressBook = EthoDatatabse.getAddresses();
+    delete addressBook.names[address];
+    EthoDatatabse.setAddresses(addressBook);
   }
 
   enableButtonTooltips() {
@@ -93,15 +63,20 @@ $(document).on("render_addressBook", function() {
     function doCreateNewWallet() {
       $('#dlgCreateAddressAndName').iziModal('close');
 
-      EthoAddressBook.setAddressName($("#addressHash").val(), $("#addressName").val());
-      EthoAddressBook.renderAddressBook();
-
-      iziToast.success({
-        title: 'Created',
-        message: 'New address was successfully created',
-        position: 'topRight',
-        timeout: 5000
-      });                                         
+      if (!EthoBlockchain.isAddress($("#addressHash").val())) {
+        EthoMainGUI.showGeneralError("Address must be a valid address!");  
+      } else {
+        EthoAddressBook.setAddressName($("#addressHash").val(), $("#addressName").val());
+        EthoAddressBook.renderAddressBook();
+  
+        iziToast.success({
+          title: 'Created',
+          message: 'New address was successfully created',
+          position: 'topRight',
+          timeout: 5000
+        });                                         
+  
+      }
     }      
 
     $("#btnCreateAddressConfirm").off('click').on('click', function() {
@@ -141,6 +116,8 @@ $(document).on("render_addressBook", function() {
   });                
   
   $(".btnDeleteAddress").off('click').on('click', function() {
+    var deleteAddress = $(this).attr('data-address');
+
     $("#dlgDeleteAddressConfirm").iziModal();
     $('#dlgDeleteAddressConfirm').iziModal('open');
     
@@ -149,8 +126,8 @@ $(document).on("render_addressBook", function() {
     });
 
     $("#btnDeleteAddressConfirm").off('click').on('click', function() {
-      EthoAddressBook.deleteAddress($(this).attr('data-address'));
       $('#dlgDeleteAddressConfirm').iziModal('close');
+      EthoAddressBook.deleteAddress(deleteAddress);
       EthoAddressBook.renderAddressBook();
     });
   });                

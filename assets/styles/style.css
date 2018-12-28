@@ -1,5 +1,7 @@
 html {
   color: #aaa;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* hide / show the body when the loader is finished */
@@ -98,19 +100,22 @@ body.pg-loaded > .inner {
 
 #sumBalance {
   float: right;
-  font-weight: bold;
   line-height: 38px;  
   margin-right: 10px;
 }
 
 .modalBody {
   margin: 20px;
+  color: #333;
 }
 
 #dlgGeneralError .modalBody {
-  height: 100px;
+    height: 100px;
 }
 
+#dlgGeneralConfirm .modalBody {
+    height: 100px;
+}
 #dlgDeleteAddressConfirm .modalBody {
   height: 100px;
 }
@@ -133,6 +138,10 @@ body.pg-loaded > .inner {
   margin: 0px;
   padding: 20px;
   background-color: #333;
+}
+
+#dlgAddressList .modalBody {
+  color: #aaa;
 }
 
 .btn-dialog-confirm {
@@ -240,6 +249,12 @@ div.sidebar svg {
   padding-left: 20px;
 }
 
+#addressList th {
+  color: #ccc;
+  font-size: 1.1em;
+  font-weight: normal;
+}
+
 .sendTXInfo {
   height: 30px;
 }
@@ -307,12 +322,11 @@ div.sidebar svg {
   background-color: #aaa;
 }
 
-.sumBalance {
-  color: white;
-  background-color: #7A1336;
-  border: 2px solid #991643;
-  border-radius: 10px;
-  padding: 5px;
+.sumDollars,
+.sumBalance,
+.sumCurrency {
+  color: #ccc;
+  margin-right: 5px;
 }
 
 .cleanText {

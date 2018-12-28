@@ -3,8 +3,21 @@ const {ipcRenderer} = require('electron');
 class Wallets {
   constructor() {
     this.addressList = []; 
+
+    $.getJSON("https://min-api.cryptocompare.com/data/price?fsym=ETHO&tsyms=USD", function( price ) 
+    {
+      EthoWallets._setPrice(price.USD);
+    });         
   }
-  
+
+  _getPrice() {
+    return this.price;
+  }
+
+  _setPrice(price) {
+    this.price = price;
+  }
+
   getAddressList() {
     return this.addressList;
   }
@@ -14,11 +27,17 @@ class Wallets {
   }
 
   getAddressExists(address) {
-    return this.addressList.indexOf(address.toLowerCase()) > -1;
+    if (address) {
+      return this.addressList.indexOf(address.toLowerCase()) > -1;
+    } else {
+      return false;
+    }
   }
 
   addAddressToList(address) {
-    this.addressList.push(address.toLowerCase());
+    if (address) {
+      this.addressList.push(address.toLowerCase());
+    }
   }
 
   enableButtonTooltips() {
@@ -67,6 +86,8 @@ renderWalletsState() {
         EthoMainGUI.renderTemplate("wallets.html", data);          
         $(document).trigger("render_wallets");
         EthoWallets.enableButtonTooltips();
+
+        $("#labelSumDollars").html(vsprintf("/ %.2f $ / %.4f $ per ETHO", [data.sumBalance * EthoWallets._getPrice(), EthoWallets._getPrice()]));
       }
     );
   }
@@ -131,19 +152,11 @@ $(document).on("render_wallets", function() {
     $('#dlgChangeWalletName').iziModal('open');
 
     function doChangeWalletName() {
-      var wallets = ipcRenderer.sendSync('getJSONFile', 'wallets.json');
-
-      if (!wallets) {
-        wallets = { names: {} };
-      }
+      var wallets = EthoDatatabse.getWallets();
 
       // set the wallet name from the dialog box
       wallets.names[walletAddress] = $("#inputWalletName").val();
-      ipcRenderer.sendSync('setJSONFile', 
-      { 
-          file: 'wallets.json',
-          data: wallets
-      });
+      EthoDatatabse.setWallets(wallets);
 
       $('#dlgChangeWalletName').iziModal('close');
       EthoWallets.renderWalletsState();

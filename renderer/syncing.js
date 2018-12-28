@@ -63,9 +63,13 @@ function StartSyncProcess() {
                 $(document).trigger("onNewAccountTransaction");
                 alreadyCatchedUp = true;
 
+                // enable the keep in sync feature
+                EthoTransactions.enableKeepInSync();
                 // sync all the transactions to the current block
                 EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
-                $(document).trigger("onSyncInterval");
+
+                // signal that the sync is complete
+                $(document).trigger("onSyncComplete");
               }      
             }
           });              
@@ -75,7 +79,7 @@ function StartSyncProcess() {
   }).on("data", function(sync){
     if ((sync) && (sync.HighestBlock > 0)) {
       SyncProgress.animate(sync.CurrentBlock / sync.HighestBlock);
-      SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.CurrentBlock, sync.HighestBlock, Math.round(sync.CurrentBlock / sync.HighestBlock * 100)]));  
+      SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.CurrentBlock, sync.HighestBlock, Math.floor(sync.CurrentBlock / sync.HighestBlock * 100)]));  
     }
   }).on("changed", function(isSyncing){
     if(isSyncing) {
@@ -84,7 +88,7 @@ function StartSyncProcess() {
         web3Local.eth.isSyncing(function(error, sync){
           if ((!error) && (sync)) {
             SyncProgress.animate(sync.currentBlock / sync.highestBlock);
-            SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.currentBlock, sync.highestBlock, Math.round(sync.currentBlock / sync.highestBlock * 100)]));      
+            SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.currentBlock, sync.highestBlock, Math.floor(sync.currentBlock / sync.highestBlock * 100)]));      
           }
         }); 
       }, 2000);     

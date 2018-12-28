@@ -2,7 +2,10 @@
 const {ipcRenderer} = require('electron');
 
 class Blockchain {
-    constructor() {}
+    constructor() {
+        this.txSubscribe = null;
+        this.bhSubscribe = null;
+    }
 
     getBlock(blockToGet, includeData, clbError, clbSuccess) {
         web3Local.eth.getBlock(blockToGet, includeData, function(error, block) {
@@ -129,7 +132,7 @@ class Blockchain {
         rendererData.sumBalance = 0;
         rendererData.addressData = [];
       
-        var wallets = ipcRenderer.sendSync('getJSONFile', 'wallets.json');
+        var wallets = EthoDatatabse.getWallets();
         var counter = 0;
       
         web3Local.eth.getAccounts(function(err, res) { 
@@ -178,7 +181,7 @@ class Blockchain {
         var rendererData = {};
         rendererData.addressData = [];
       
-        var wallets = ipcRenderer.sendSync('getJSONFile', 'wallets.json');
+        var wallets = EthoDatatabse.getWallets();
         var counter = 0;
       
         web3Local.eth.getAccounts(function(err, res) { 
@@ -208,6 +211,54 @@ class Blockchain {
                 clbError(error);
             } else {
               clbSuccess(account);
+            }
+        });
+    }
+
+    subsribePendingTransactions(clbError, clbSuccess, clbData) {
+        this.txSubscribe = web3Local.eth.subscribe('pendingTransactions', function(error, result){
+            if (error) {
+                clbError(error);
+            } else {
+                clbSuccess(result);
+            }
+        }).on("data", function(transaction){
+            if (clbData) {
+                clbData(transaction);
+            }
+        });        
+    }
+
+    unsubsribePendingTransactions(clbError, clbSuccess) {
+        this.txSubscribe.unsubscribe(function(error, success){
+            if(error) {
+                clbError(error);
+            } else {
+                clbSuccess(success) ;
+            }
+        });
+    }
+
+    subsribeNewBlockHeaders(clbError, clbSuccess, clbData) {
+        this.bhSubscribe = web3Local.eth.subscribe('newBlockHeaders', function(error, result){
+            if (error) {
+                clbError(error);
+            } else {
+                clbSuccess(result);
+            }
+        }).on("data", function(blockHeader){
+            if (clbData) {
+                clbData(blockHeader);
+            }
+        });        
+    }
+
+    unsubsribeNewBlockHeaders(clbError, clbSuccess) {
+        this.bhSubscribe.unsubscribe(function(error, success){
+            if(error) {
+                clbError(error);
+            } else {
+                clbSuccess(success) ;
             }
         });
     }

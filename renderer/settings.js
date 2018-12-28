@@ -12,7 +12,15 @@ class Settings {
         
 $(document).on("render_settings", function() {
     $("#btnSettingsCleanTransactions").off('click').on('click', function() {
-        EthoMainGUI.showGeneralError("Not implemented yet!");
+        EthoMainGUI.showGeneralConfirmation("Do you really want to resync transactions?", function(result) {
+            if (result) {
+                if (EthoTransactions.getIsSyncing()) {
+                    EthoMainGUI.showGeneralError("Transactions sync is currently in progress");  
+                } else {
+                    EthoTransactions.disableKeepInSync();
+                }
+            }
+        });
     });
 
     $("#btnSettingsCleanWallets").off('click').on('click', function() {

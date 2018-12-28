@@ -46,6 +46,24 @@ class MainGUI {
         });
     }
 
+    showGeneralConfirmation(confirmText, callback) {
+        $("#txtGeneralConfirm").html(confirmText);
+
+        // create and open the dialog
+        $("#dlgGeneralConfirm").iziModal();
+        $('#dlgGeneralConfirm').iziModal('open'); 
+        
+        $("#btnGeneralConfirmYes").click(function() {
+            $('#dlgGeneralConfirm').iziModal('close'); 
+            callback(true);
+        });
+
+        $("#btnGeneralConfirmNo").click(function() {
+            $('#dlgGeneralConfirm').iziModal('close'); 
+            callback(false);
+        });
+    }
+
     renderTemplate(template, data, container) {
         var template = Handlebars.compile(ipcRenderer.sendSync('getTemplateContent', template)); 
         
