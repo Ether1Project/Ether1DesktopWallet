@@ -109,6 +109,39 @@ $(document).on("render_send", function() {
             }
         );
     });
+
+    $("#btnAddToAddressBook").off('click').on('click', function() {
+        if (EthoBlockchain.isAddress($("#sendToAddress").val())) {
+            $("#dlgAddAddressToBook").iziModal();
+            $("#inputAddressName").val("");
+            $('#dlgAddAddressToBook').iziModal('open');
+    
+            function doAddAddressToAddressBook() {
+                EthoAddressBook.setAddressName($("#sendToAddress").val(), $("#inputAddressName").val());
+                $('#dlgAddAddressToBook').iziModal('close');
+    
+                iziToast.success({
+                    title: 'Success',
+                    message: 'Address was added to address book',
+                    position: 'topRight',
+                    timeout: 2000
+                });     
+            }    
+        } else {
+            EthoMainGUI.showGeneralError("Recipient address is not valid!");
+        }
+
+        $("#btnAddAddressToBookConfirm").off('click').on('click', function() {
+            doAddAddressToAddressBook();
+        });
+        
+        $("#dlgAddAddressToBook").off('keypress').on('keypress', function(e) {
+            if(e.which == 13) {
+                doAddAddressToAddressBook();
+            }
+        });                                
+    });
+
     
     $("#btnSendTransaction").off('click').on('click', function() {
         if (EthoSend.validateSendForm()) {

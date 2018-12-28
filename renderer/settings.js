@@ -17,7 +17,29 @@ $(document).on("render_settings", function() {
                 if (EthoTransactions.getIsSyncing()) {
                     EthoMainGUI.showGeneralError("Transactions sync is currently in progress");  
                 } else {
+                    // first disable keepInSync
                     EthoTransactions.disableKeepInSync();
+                    // then delete the transactions data    
+                    var counters = EthoDatatabse.getCounters();
+                    counters.transactions = 0;
+                    EthoDatatabse.setCounters(counters);
+                    ipcRenderer.sendSync('deleteTransactions', null);
+                    // sync all the transactions to the current block
+                    web3Local.eth.getBlock("latest", function(error, localBlock) {
+                        if (error) {
+                            EthoMainGUI.showGeneralError(error);
+                        } else {
+                            EthoTransactions.enableKeepInSync();
+                            EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
+    
+                            iziToast.success({
+                                title: 'Success',
+                                message: 'Transactions are being resynced',
+                                position: 'topRight',
+                                timeout: 5000
+                            });             
+                        }                    
+                    });
                 }
             }
         });

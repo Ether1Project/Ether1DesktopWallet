@@ -102,42 +102,6 @@ class Transactions {
     }
 
     enableKeepInSync() {
-        function processTransaction(data) {
-
-            if ((EthoWallets.getAddressExists(data.from)) || (EthoWallets.getAddressExists(data.to))) {
-                if (data.blockNumber) {
-                    console.log(data.blockNumber);
-                }
-
-                var Transaction = {
-                    block: null,
-                    txhash: data.hash.toLowerCase(),
-                    fromaddr: data.from.toLowerCase(),
-                    timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
-                    toaddr: data.to.toLowerCase(),
-                    value: Number(data.value).toExponential(5).toString().replace('+','')
-                }
-                
-                // store transaction and notify about new transactions
-                ipcRenderer.send('storeTransaction', Transaction);
-                $(document).trigger("onNewAccountTransaction");
-
-                iziToast.info({
-                    title: 'New Transaction',
-                    message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
-                    position: 'topRight',
-                    timeout: 10000
-                });   
-                
-                // render transactions again to show latest
-                if (EthoMainGUI.getAppState() == "transactions") {
-                    setTimeout(function() { 
-                        EthoTransactions.renderTransactions();    
-                    }, 500);                    
-                }
-            }                
-        }
-
         EthoBlockchain.subsribeNewBlockHeaders(
             function(error) {
                 EthoMainGUI.showGeneralError(error);

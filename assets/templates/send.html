@@ -14,7 +14,8 @@
                 <div class="input-field col s6 addressInputWrapper">
                     <input id="sendToAddress" placeholder="recipient address" type="text">
                     <label for="sendToAddress" class="active">To address:</label>
-                    <button type="button" class="btn btn-etho addressLookup" id="btnLookForToAddress"><i class="fas fa-search"></i></button>
+                    <button type="button" class="btn btn-etho btnSendToolButton" id="btnAddToAddressBook"><i class="fas fa-plus"></i></button>
+                    <button type="button" class="btn btn-etho btnSendToolButton" id="btnLookForToAddress"><i class="fas fa-search"></i></button>
                 </div>
             </div>
             <div class="row">
@@ -89,6 +90,17 @@
 <!-- The modal for address list -->
 <div id="dlgAddressList" class="modalDialog" data-iziModal-title="AddressList" data-iziModal-subtitle="Please select an address from the list" data-iziModal-icon="icon-home">
     <div class="modalBody" id="dlgAddressListBody"> 
+    </div>
+</div>
+
+<!-- The modal to add address to address book -->
+<div id="dlgAddAddressToBook" class="modalDialog" data-iziModal-title="Address Name" data-iziModal-subtitle="Enter the name for this address" data-iziModal-icon="icon-home">
+    <div class="modalBody">
+        <div class="form-group">
+            <label for="usr">Address Name:</label>
+            <input type="text" class="form-control" id="inputAddressName">
+        </div>
+        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnAddAddressToBookConfirm">Confirm</button>
     </div>
 </div>
       

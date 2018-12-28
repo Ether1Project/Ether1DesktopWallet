@@ -110,11 +110,11 @@ body.pg-loaded > .inner {
 }
 
 #dlgGeneralError .modalBody {
-    height: 100px;
+  height: 100px;
 }
 
 #dlgGeneralConfirm .modalBody {
-    height: 100px;
+  height: 100px;
 }
 #dlgDeleteAddressConfirm .modalBody {
   height: 100px;
@@ -129,6 +129,7 @@ body.pg-loaded > .inner {
   height: 300px;
 }
 
+#dlgAddAddressToBook .modalBody,
 #dlgChangeWalletName .modalBody,
 #dlgChangeAddressName .modalBody {
   height: 150px;
@@ -364,4 +365,13 @@ div.noAddressWrapper {
 
 #addressListFilter {
   color: #aaa;
+}
+
+.btnSendToolButton {
+  width: 40px;
+  padding: 0px; 
+}
+
+#btnAddToAddressBook {
+  margin-right: 3px;
 }

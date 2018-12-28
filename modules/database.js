@@ -1,8 +1,9 @@
-const {app, ipcMain} = require('electron');
+const {app, dialog, ipcMain} = require('electron');
 const storage = require('electron-storage');
 const datastore = require('nedb');
 const moment = require('moment');
 const path = require('path');
+const fs = require('fs');
 
 const dbPath = path.join(app.getPath('userData'), 'storage.db');
 const db = new datastore({ filename: dbPath });
@@ -72,6 +73,17 @@ ipcMain.on('setJSONFile', (event, arg) => {
   storage.set(arg.file, arg.data, (err) => {
     if (err) {
       event.returnValue = { success: false, error: err };
+    } else {
+      event.returnValue = { success: true, error: null };
+    }
+  });
+});  
+
+ipcMain.on('deleteTransactions', (event, arg) => {
+  fs.unlink(dbPath, (err) => {
+    if (err) {
+      event.returnValue = { success: false, error: err };
+      dialog.showErrorBox("Error deleting the file", err.message);      
     } else {
       event.returnValue = { success: true, error: null };
     }
