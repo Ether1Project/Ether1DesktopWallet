@@ -18,7 +18,8 @@ locker.lock().then(function() {
       height: 800,
       minWidth: 1100,
       minHeight: 700,
-      backgroundColor: "#000000"
+      backgroundColor: "#000000",
+      icon: 'assets/images/icon.png'
     });
 
     // and load the index.html of the app.
