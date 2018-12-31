@@ -116,8 +116,13 @@ body.pg-loaded > .inner {
 #dlgGeneralConfirm .modalBody {
   height: 100px;
 }
+
 #dlgDeleteAddressConfirm .modalBody {
   height: 100px;
+}
+
+#dlgAboutInfo .modalBody {
+  height: 180px;
 }
 
 #dlgCreateWalletPassword .modalBody,
@@ -374,4 +379,14 @@ div.noAddressWrapper {
 
 #btnAddToAddressBook {
   margin-right: 3px;
+}
+
+.infoText {
+  margin: 3px;
+}
+
+#aboutInfoWallet {
+  font-size: 1.5em;
+  text-decoration: underline;
+  margin-bottom: 10px;
 }

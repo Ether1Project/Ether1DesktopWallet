@@ -108,13 +108,26 @@
 
     <!-- The modal for general confirmation -->
     <div id="dlgGeneralConfirm" class="modalDialog" data-iziModal-title="Confirmation" data-iziModal-subtitle="" data-iziModal-icon="icon-home">
-        <div class="modalBody">
-          <div class="form-group">
-            <span id="txtGeneralConfirm"></span>
-          </div>
-          <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnGeneralConfirmNo">No</button>
-          <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralConfirmYes">Yes</button>
+      <div class="modalBody">
+        <div class="form-group">
+          <span id="txtGeneralConfirm"></span>
         </div>
+        <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnGeneralConfirmNo">No</button>
+        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralConfirmYes">Yes</button>
       </div>
-    </body>
+    </div>
+
+    <!-- The modal for about info -->
+    <div id="dlgAboutInfo" class="modalDialog" data-iziModal-title="About Ether1 Wallet" data-iziModal-icon="icon-home">
+      <div class="modalBody">
+        <div class="aboutInfo">
+          <div class="infoText" id="aboutInfoWallet">Ether1 Wallet</div>
+          <div class="infoText" id="aboutInfoGitHub">GitHub: <a id="urlOpenGitHub" href="https://github.com/taeguscromis/Ether1DesktopWallet">https://github.com/taeguscromis/Ether1DesktopWallet</a></div>        
+          <div class="infoText" id="aboutInfoLicence">Made under <a id="urlOpenLicence" href="https://choosealicense.com/licenses/gpl-3.0">GPL v3.0</a> licence</div>
+          <div class="infoText" id="aboutInfoVersion">Version: <span id="versionNumber"></span></div>
+        </div>
+        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnAboutInfoClose">Close</button>
+      </div>
+    </div>
+  </body>
 </html>

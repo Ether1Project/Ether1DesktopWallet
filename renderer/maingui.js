@@ -64,6 +64,23 @@ class MainGUI {
         });
     }
 
+    showAboutDialog(infoData) {
+        $("#versionNumber").html(infoData.version);
+
+        // create and open the dialog
+        $("#dlgAboutInfo").iziModal();
+        $('#dlgAboutInfo').iziModal('open'); 
+
+        $("#urlOpenLicence, #urlOpenGitHub").off("click").on("click", function(even) {
+            event.preventDefault();
+            ipcRenderer.send('openURL', $(this).attr("href"));
+        });
+
+        $("#btnAboutInfoClose").off("click").on("click", function(even) {
+            $('#dlgAboutInfo').iziModal('close'); 
+        });
+    }
+
     renderTemplate(template, data, container) {
         var template = Handlebars.compile(ipcRenderer.sendSync('getTemplateContent', template)); 
         
@@ -83,6 +100,10 @@ class MainGUI {
         $temp.remove();
     }
 }
+
+ipcRenderer.on('showAboutDialog', function(event, message) {
+    EthoMainGUI.showAboutDialog(message);
+});
 
 $("#mainNavBtnTransactions").click(function() {
     EthoTransactions.clearFilter();
