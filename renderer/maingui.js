@@ -55,7 +55,6 @@ class MainGUI {
         
         $("#btnGeneralConfirmYes").click(function() {
             $('#dlgGeneralConfirm').iziModal('close'); 
-            console.log(true);
             callback(true);
         });
 

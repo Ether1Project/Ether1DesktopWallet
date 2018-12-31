@@ -50,29 +50,31 @@ function StartSyncProcess() {
         }
 
         nodeSyncInterval = setInterval(function()
-        {   
+        {             
           web3Local.eth.getBlock("latest", function(error, localBlock) {
-            if (localBlock.number > 0) {
-              if (!EthoTransactions.getIsSyncing()) {
-                SyncProgress.animate(1);    
-                SyncProgress.setText(vsprintf('%d/%d (100%%)', [localBlock.number, localBlock.number]));
-              }
-
-              if (alreadyCatchedUp == false) 
-              {
-                // clear the repeat interval and render wallets
-                $(document).trigger("onNewAccountTransaction");
-                alreadyCatchedUp = true;
-                isFullySynced = true;
-
-                // enable the keep in sync feature
-                EthoTransactions.enableKeepInSync();
-                // sync all the transactions to the current block
-                EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
-
-                // signal that the sync is complete
-                $(document).trigger("onSyncComplete");
-              }      
+            if (!error) {
+              if (localBlock.number > 0) {
+                if (!EthoTransactions.getIsSyncing()) {
+                  SyncProgress.animate(1);    
+                  SyncProgress.setText(vsprintf('%d/%d (100%%)', [localBlock.number, localBlock.number]));
+                }
+  
+                if (alreadyCatchedUp == false) 
+                {
+                  // clear the repeat interval and render wallets
+                  $(document).trigger("onNewAccountTransaction");
+                  alreadyCatchedUp = true;
+                  isFullySynced = true;
+  
+                  // enable the keep in sync feature
+                  EthoTransactions.enableKeepInSync();
+                  // sync all the transactions to the current block
+                  EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
+  
+                  // signal that the sync is complete
+                  $(document).trigger("onSyncComplete");
+                }      
+              }  
             }
           });              
         }, 10000);  
