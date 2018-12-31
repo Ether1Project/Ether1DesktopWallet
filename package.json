@@ -27,6 +27,7 @@
       ]
     },
     "linux": {
+      "icon": "build/icon.png",
       "target": "tar.gz",
       "artifactName": "Linux-${productName}-${version}.${ext}",
       "extraResources": [
