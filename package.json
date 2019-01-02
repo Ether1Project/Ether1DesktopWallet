@@ -1,6 +1,6 @@
 {
   "name": "Ether1Wallet",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Desktop wallet for Ether1 currency",
   "main": "main.js",
   "scripts": {
@@ -19,19 +19,27 @@
       "index.html"
     ],
     "win": {
-      "icon": "build/icon.png",
       "target": "7z",
+      "icon": "build/icon.png",
       "artifactName": "Windows-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/win/*"
       ]
     },
     "linux": {
-      "icon": "build/icon.png",
       "target": "tar.gz",
+      "icon": "build/icon.icns",
       "artifactName": "Linux-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/linux/*"
+      ]
+    },
+    "mac": {
+      "target": "tar.gz",
+      "icon": "build/icon.icns",
+      "artifactName": "MacOS-${productName}-${version}.${ext}",
+      "extraResources": [
+        "bin/macos/*"
       ]
     }
   },
