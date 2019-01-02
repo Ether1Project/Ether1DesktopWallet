@@ -43,16 +43,22 @@ class Geth {
     try {
       const gethPath = path.join(this.binaries, 'geth');
       this.gethProcess = child_process.spawn(gethPath, ['--ws', '--wsorigins', '*', '--wsaddr', '127.0.0.1', '--wsport', '8546', '--wsapi', 'admin,db,eth,net,miner,personal,web3']);
-      this.gethProcess.on('error', function(err) {
+
+      if (!this.gethProcess) {
         dialog.showErrorBox("Error starting application", "Geth failed to start!");
         app.quit();
-      });
-      this.gethProcess.stderr.on('data', function(data) {
-        EthoGeth._writeLog(data.toString() + '\n');
-      });
-      this.gethProcess.stdout.on('data', function(data) {
-        EthoGeth._writeLog(data.toString() + '\n');
-      });      
+      } else {
+        this.gethProcess.on('error', function(err) {
+          dialog.showErrorBox("Error starting application", "Geth failed to start!");
+          app.quit();
+        });
+        this.gethProcess.stderr.on('data', function(data) {
+          EthoGeth._writeLog(data.toString() + '\n');
+        });
+        this.gethProcess.stdout.on('data', function(data) {
+          EthoGeth._writeLog(data.toString() + '\n');
+        });        
+      }
     } catch (err) {
       dialog.showErrorBox("Error starting application", err.message);
       app.quit();
