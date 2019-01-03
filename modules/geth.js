@@ -9,6 +9,10 @@ const os = require('os');
 class Geth {
   constructor() {
     this.gethProcess = null;
+    // create the user data dir (needed for MacOS)
+    if (!fs.existsSync(app.getPath('userData'))) {
+      fs.mkdirSync(app.getPath('userData')); 
+    }   
     this.logStream = fs.createWriteStream(path.join(app.getPath('userData'), 'gethlog.txt'));
 
     if (appRoot.path.indexOf('app.asar') > -1) {
