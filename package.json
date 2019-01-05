@@ -35,7 +35,7 @@
       ]
     },
     "mac": {
-      "target": "dmg",
+      "target": "pkg",
       "icon": "build/icon.icns",
       "artifactName": "MacOS-${productName}-${version}.${ext}",
       "extraResources": [
