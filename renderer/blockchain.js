@@ -215,6 +215,10 @@ class Blockchain {
         });
     }
 
+    importFromPrivateKey(privateKey) {
+        return web3Local.eth.accounts.privateKeyToAccount(privateKey);
+    }
+
     subsribePendingTransactions(clbError, clbSuccess, clbData) {
         this.txSubscribe = web3Local.eth.subscribe('pendingTransactions', function(error, result){
             if (error) {

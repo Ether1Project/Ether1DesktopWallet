@@ -2,6 +2,7 @@
     <button type="button" class="btn btn-etho" id="btnNewAddress"><i class="fas fa-plus"></i></button>    
     <button type="button" class="btn btn-etho" id="btnExportAccounts"><i class="fas fa-file-export"></i></button>    
     <button type="button" class="btn btn-etho" id="btnImportAccounts"><i class="fas fa-file-import"></i></button>    
+    <button type="button" class="btn btn-etho" id="btnImportFromPrivateKey"><i class="fas fa-key"></i></button>    
     <div id="sumBalance">
         <span class="sumBalance" id="labelSumBalance">{{sumBalance}}</span>
         <span class="sumCurrency"  id="labelSumCurrency">ETHO</span>
@@ -44,7 +45,7 @@
             <input type="password" class="form-control" id="walletPasswordFirst">
         </div>
         <div class="form-group">
-            <label for="pwd">Confirm Password:</label>
+            <label for="walletPasswordSecond">Confirm Password:</label>
             <input type="password" class="form-control" id="walletPasswordSecond">
         </div>
         <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnCreateWalletConfirm">Confirm</button>
@@ -56,9 +57,20 @@
 <div id="dlgChangeWalletName" class="modalDialog" data-iziModal-title="Wallet Name" data-iziModal-subtitle="Enter the name for this address" data-iziModal-icon="icon-home">
     <div class="modalBody">
         <div class="form-group">
-            <label for="usr">Type Name:</label>
+            <label for="inputWalletName">Type Name:</label>
             <input type="text" class="form-control" id="inputWalletName">
         </div>
         <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeWalletNameConfirm">Confirm</button>
+    </div>
+</div>
+
+<!-- The modal to import from private key -->
+<div id="dlgImportFromPrivateKey" class="modalDialog" data-iziModal-title="Import private ley" data-iziModal-subtitle="Import account from private key" data-iziModal-icon="icon-home">
+    <div class="modalBody">
+        <div class="form-group">
+            <label for="inputPrivateKey">Private Key:</label>
+            <input type="password" class="form-control" id="inputPrivateKey">
+        </div>
+        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnImportFromPrivateKeyConfirm">Import</button>
     </div>
 </div>

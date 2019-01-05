@@ -136,7 +136,8 @@ body.pg-loaded > .inner {
 
 #dlgAddAddressToBook .modalBody,
 #dlgChangeWalletName .modalBody,
-#dlgChangeAddressName .modalBody {
+#dlgChangeAddressName .modalBody,
+#dlgImportFromPrivateKey .modalBody {
   height: 150px;
 }
 

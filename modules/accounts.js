@@ -9,7 +9,7 @@ class Accounts {
       this.getKeyStoreLocation = function() {
         switch(os.type()) {
             case "Darwin":
-              return path.join(process.env.HOMEPATH, 'Documents/ethereum-wallet/ethereum-wallet/Classes/Business layer/Core/Services', 'keystore');
+              return path.join(os.homedir(), 'Documents/ethereum-wallet/ethereum-wallet/Classes/Business layer/Core/Services', 'keystore');
               break;
             default:
               return path.join(process.env.APPDATA, 'Ether1', 'keystore');
@@ -38,9 +38,33 @@ class Accounts {
     }
   }
 
-  importAccounts() { 
+  importAccounts(accountsFile) { 
+    var extName = path.extname(accountsFile).toUpperCase();
     const accPath = this.getKeyStoreLocation();
 
+    if (extName = '.ZIP') {
+        var zip = new admZip(accountsFile);
+        zip.extractAllTo(accPath, true);  
+        return { success: true, text: "Accounts ware successfully imported."};
+    } else if (extName = '.JSON') {
+        fs.copyFile(accountsFile, path.join(accPath, path.basename(accountsFile)), (err) => {
+            if (err) {
+                return { success: false, text: err};
+            } else {
+                return { success: true, text: "Account was successfully imported."};
+            }
+        });                
+    } else {
+        return { success: false, text: "This is not a valid account file or arhive!"};
+    }
+  }
+}
+
+ipcMain.on('exportAccounts', (event, arg) => {
+    EthoAccounts.exportAccounts();
+});
+  
+ipcMain.on('importAccounts', (event, arg) => {
     var openPath = dialog.showOpenDialog({
         defaultPath: app.getPath('documents'),
         "filters":
@@ -57,45 +81,10 @@ class Accounts {
     });
 
     if (openPath) {
-        var extName = path.extname(openPath[0]).toUpperCase();
-
-        if (extName = '.ZIP') {
-            var zip = new admZip(openPath[0]);
-            zip.extractAllTo(accPath, true);  
-
-            iziToast.success({
-                title: 'Imported',
-                message: 'Accounts ware successfully imported.',
-                position: 'topRight',
-                timeout: 2000
-            });                   
-        } else if (extName = '.JSON') {
-            fs.copyFile(openPath[0], path.join(accPath, path.basename(openPath[0])), (err) => {
-                if (err) {
-                    EthoMainGUI.showGeneralError(err);
-                } else {
-                    iziToast.success({
-                        title: 'Imported',
-                        message: 'Account was successfully imported.',
-                        position: 'topRight',
-                        timeout: 2000
-                    });                   
-                }
-            });                
-        } else {
-            EthoMainGUI.showGeneralError("This is not a valid account file or arhive!");
-        }
+        event.returnValue = EthoAccounts.importAccounts(openPath[0]);
+    } else {
+        event.returnValue = false; 
     }
-  }
-}
-
-ipcMain.on('exportAccounts', (event, arg) => {
-    EthoAccounts.exportAccounts();
-});
-  
-ipcMain.on('importAccounts', (event, arg) => {
-    EthoAccounts.importAccounts();
-    event.returnValue = true;
 });
 
 EthoAccounts = new Accounts();

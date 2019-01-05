@@ -44,6 +44,7 @@ class Wallets {
     EthoUtils.createToolTip("#btnNewAddress", "Create New Address");
     EthoUtils.createToolTip("#btnExportAccounts", "Export Accounts");
     EthoUtils.createToolTip("#btnImportAccounts", "Import Accounts");
+    EthoUtils.createToolTip("#btnImportFromPrivateKey", "Import From Private Key");
   }
     
   validateNewAccountForm() {
@@ -178,7 +179,41 @@ $(document).on("render_wallets", function() {
   });
 
   $("#btnImportAccounts").off('click').on('click', function() {
-    ipcRenderer.sendSync('importAccounts', {});
+    var ImportResult = ipcRenderer.sendSync('importAccounts', {});
+
+    if (ImportResult.success) {
+      iziToast.success({
+        title: 'Imported',
+        message: ImportResult.text,
+        position: 'topRight',
+        timeout: 2000
+      });                   
+    } else {
+      EthoMainGUI.showGeneralError(ImportResult.text);
+    }
+
+  });
+
+  $("#btnImportFromPrivateKey").off('click').on('click', function() {
+    $("#dlgImportFromPrivateKey").iziModal();
+    $("#inputPrivateKey").val("");
+    $('#dlgImportFromPrivateKey').iziModal('open');
+
+    function doImportFromPrivateKeys() {
+      EthoBlockchain.importFromPrivateKey($("#inputPrivateKey").val());
+      $('#dlgChangeWalletName').iziModal('close');
+      EthoWallets.renderWalletsState();    
+    }
+
+    $("#btnImportFromPrivateKeyConfirm").off('click').on('click', function() {
+      doImportFromPrivateKeys();
+    });
+
+    $("#dlgImportFromPrivateKey").off('keypress').on('keypress', function(e) {
+      if(e.which == 13) {
+        doImportFromPrivateKeys();
+      }
+    });                                
   });
 
   $(".textAddress").off('click').on('click', function() {
