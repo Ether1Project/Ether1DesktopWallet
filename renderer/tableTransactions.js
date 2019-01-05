@@ -24,7 +24,7 @@ class tableTransactions {
             "buttons": 
             [
                 {
-                    text: 'Refresh',
+                    text: '<i class="fas fa-sync-alt"></i>',
                     action: function ( e, dt, node, config ) {
                         EthoTransactions.renderTransactions();    
                     }

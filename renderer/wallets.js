@@ -42,6 +42,7 @@ class Wallets {
 
   enableButtonTooltips() {
     EthoUtils.createToolTip("#btnNewAddress", "Create New Address");
+    EthoUtils.createToolTip("#btnRefreshAddress", "Refresh Address List");
     EthoUtils.createToolTip("#btnExportAccounts", "Export Accounts");
     EthoUtils.createToolTip("#btnImportAccounts", "Import Accounts");
     EthoUtils.createToolTip("#btnImportFromPrivateKey", "Import From Private Key");
@@ -173,6 +174,10 @@ $(document).on("render_wallets", function() {
       }
     });                                
   });                
+  
+  $("#btnRefreshAddress").off('click').on('click', function() {
+    EthoWallets.renderWalletsState();
+  });
 
   $("#btnExportAccounts").off('click').on('click', function() {
     ipcRenderer.send('exportAccounts', {});
