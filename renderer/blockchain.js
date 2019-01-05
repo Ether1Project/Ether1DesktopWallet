@@ -215,8 +215,10 @@ class Blockchain {
         });
     }
 
-    importFromPrivateKey(privateKey) {
-        return web3Local.eth.accounts.privateKeyToAccount(privateKey);
+    importFromPrivateKey(privateKey, password) {
+        web3Local.eth.accounts.wallet.clear();
+        web3Local.eth.accounts.wallet.add(privateKey);
+        return web3Local.eth.accounts.wallet.encrypt('123456789');
     }
 
     subsribePendingTransactions(clbError, clbSuccess, clbData) {

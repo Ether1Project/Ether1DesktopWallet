@@ -58,10 +58,16 @@ class Accounts {
         return { success: false, text: "This is not a valid account file or arhive!"};
     }
   }
+
+  saveAccount(account) { 
+    fs.writeFile(path.join(this.getKeyStoreLocation(), '0x' + account.address), JSON.stringify(account), 'utf8', function() {
+        // file was written
+    });
+  }
 }
 
 ipcMain.on('exportAccounts', (event, arg) => {
-    EthoAccounts.exportAccounts();
+    EthoAccounts.exportAccounts();    
 });
   
 ipcMain.on('importAccounts', (event, arg) => {
@@ -85,6 +91,11 @@ ipcMain.on('importAccounts', (event, arg) => {
     } else {
         event.returnValue = false; 
     }
+});
+
+ipcMain.on('saveAccount', (event, arg) => {
+    EthoAccounts.saveAccount(arg);
+    event.returnValue = true; 
 });
 
 EthoAccounts = new Accounts();

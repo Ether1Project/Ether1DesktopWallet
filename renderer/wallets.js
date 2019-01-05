@@ -200,9 +200,23 @@ $(document).on("render_wallets", function() {
     $('#dlgImportFromPrivateKey').iziModal('open');
 
     function doImportFromPrivateKeys() {
-      EthoBlockchain.importFromPrivateKey($("#inputPrivateKey").val());
-      $('#dlgChangeWalletName').iziModal('close');
-      EthoWallets.renderWalletsState();    
+      var account = EthoBlockchain.importFromPrivateKey($("#inputPrivateKey").val());
+      $('#dlgImportFromPrivateKey').iziModal('close');
+
+      if (account) {
+        ipcRenderer.sendSync('saveAccount', account[0]);
+        EthoWallets.renderWalletsState();
+
+        iziToast.success({
+          title: 'Imported',
+          message: "Account was succesfully imported",
+          position: 'topRight',
+          timeout: 2000
+        });                   
+  
+      } else {
+        EthoMainGUI.showGeneralError("Error importing account from private key!");
+      }
     }
 
     $("#btnImportFromPrivateKeyConfirm").off('click').on('click', function() {
