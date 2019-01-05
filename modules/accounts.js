@@ -9,7 +9,7 @@ class Accounts {
       this.getKeyStoreLocation = function() {
         switch(os.type()) {
             case "Darwin":
-              return path.join(os.homedir(), 'Documents/ethereum-wallet/ethereum-wallet/Classes/Business layer/Core/Services', 'keystore');
+              return path.join(os.homedir(), 'Library', 'Ether1', 'keystore');
               break;
             default:
               return path.join(process.env.APPDATA, 'Ether1', 'keystore');
