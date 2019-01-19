@@ -1,6 +1,6 @@
 {
   "name": "Ether1Wallet",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Desktop wallet for Ether1 currency",
   "main": "main.js",
   "scripts": {

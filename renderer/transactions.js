@@ -4,6 +4,7 @@ class Transactions {
     constructor() {
         this.filter = "";
         this.isSyncing = false;
+        this.isLoading = false;
     }
 
     setIsSyncing(value) {
@@ -12,6 +13,14 @@ class Transactions {
 
     getIsSyncing() {
         return this.isSyncing;
+    }
+
+    setIsLoading(value) {
+        this.isLoading = value;
+    }
+
+    getIsLoading() {
+        return this.isLoading;
     }
 
     setFilter(text) {
@@ -74,31 +83,35 @@ class Transactions {
     }
 
     renderTransactions() {
-        EthoMainGUI.renderTemplate("transactions.html", {});          
-        $(document).trigger("render_transactions");
+        if (!EthoTransactions.getIsLoading()) {
+            EthoMainGUI.renderTemplate("transactions.html", {});          
+            $(document).trigger("render_transactions");
+            EthoTransactions.setIsLoading(true);
+            
+            // show the loading overlay for transactions
+            $("#loadingTransactionsOverlay").css("display", "block");
         
-        // show the loading overlay for transactions
-        $("#loadingTransactionsOverlay").css("display", "block");
-    
-        setTimeout(() => {
-             var dataTransactions = ipcRenderer.sendSync('getTransactions');
-             var addressList = EthoWallets.getAddressList();
+            setTimeout(() => {
+                var dataTransactions = ipcRenderer.sendSync('getTransactions');
+                var addressList = EthoWallets.getAddressList();
 
-             dataTransactions.forEach(function(element) {
-                var isFromValid = (addressList.indexOf(element[2].toLowerCase()) > -1);
-                var isToValid = (addressList.indexOf(element[3].toLowerCase()) > -1);
-          
-                if ((isToValid) && (!isFromValid)) {
-                  element.unshift(0);
-                } else if ((!isToValid) && (isFromValid)) { 
-                    element.unshift(1);
-                } else {
-                    element.unshift(2);
-                }
-            });
+                dataTransactions.forEach(function(element) {
+                    var isFromValid = (addressList.indexOf(element[2].toLowerCase()) > -1);
+                    var isToValid = (addressList.indexOf(element[3].toLowerCase()) > -1);
+            
+                    if ((isToValid) && (!isFromValid)) {
+                        element.unshift(0);
+                    } else if ((!isToValid) && (isFromValid)) { 
+                        element.unshift(1);
+                    } else {
+                        element.unshift(2);
+                    }
+                });
 
-            EthoTableTransactions.initialize('#tableTransactionsForAll', dataTransactions);             
-        }, 200);
+                EthoTableTransactions.initialize('#tableTransactionsForAll', dataTransactions);             
+                EthoTransactions.setIsLoading(false);
+            }, 200);
+        }
     }
 
     enableKeepInSync() {

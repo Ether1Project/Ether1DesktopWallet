@@ -75,10 +75,14 @@ function StartSyncProcess() {
                   $(document).trigger("onSyncComplete");
                 }      
               }  
+            } else {
+              EthoMainGUI.showGeneralError(error);
             }
           });              
         }, 10000);  
       }
+    } else {
+      EthoMainGUI.showGeneralError(error);
     }
   }).on("data", function(sync){
     if ((sync) && (sync.HighestBlock > 0)) {
@@ -93,6 +97,8 @@ function StartSyncProcess() {
           if ((!error) && (sync)) {
             SyncProgress.animate(sync.currentBlock / sync.highestBlock);
             SyncProgress.setText(vsprintf('%d/%d (%d%%)', [sync.currentBlock, sync.highestBlock, Math.floor(sync.currentBlock / sync.highestBlock * 100)]));      
+          } else if (error) {
+            EthoMainGUI.showGeneralError(error);
           }
         }); 
       }, 2000);     
@@ -118,6 +124,6 @@ var InitWeb3 = setInterval(function()
     });
   }
   catch(err) {
-    console.log(err);
+    EthoMainGUI.showGeneralError(err);
   }
 }, 2000);  
