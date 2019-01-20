@@ -193,7 +193,7 @@ $(document).on("render_wallets", function() {
         position: 'topRight',
         timeout: 2000
       });                   
-    } else {
+    } else if (ImportResult.success == false) {
       EthoMainGUI.showGeneralError(ImportResult.text);
     }
 

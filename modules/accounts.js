@@ -42,11 +42,11 @@ class Accounts {
     var extName = path.extname(accountsFile).toUpperCase();
     const accPath = this.getKeyStoreLocation();
 
-    if (extName = '.ZIP') {
+    if (extName == '.ZIP') {
         var zip = new admZip(accountsFile);
         zip.extractAllTo(accPath, true);  
         return { success: true, text: "Accounts ware successfully imported."};
-    } else if (extName = '.JSON') {
+    } else {
         fs.copyFile(accountsFile, path.join(accPath, path.basename(accountsFile)), (err) => {
             if (err) {
                 return { success: false, text: err};
@@ -54,8 +54,6 @@ class Accounts {
                 return { success: true, text: "Account was successfully imported."};
             }
         });                
-    } else {
-        return { success: false, text: "This is not a valid account file or arhive!"};
     }
   }
 
@@ -82,6 +80,10 @@ ipcMain.on('importAccounts', (event, arg) => {
             {
                 "name": "json",
                 "extensions": ["json"]
+            },
+            {
+                "name": "All",
+                "extensions": ["*.*"]
             }
         ]
     });
@@ -89,7 +91,7 @@ ipcMain.on('importAccounts', (event, arg) => {
     if (openPath) {
         event.returnValue = EthoAccounts.importAccounts(openPath[0]);
     } else {
-        event.returnValue = false; 
+        event.returnValue = {}; 
     }
 });
 

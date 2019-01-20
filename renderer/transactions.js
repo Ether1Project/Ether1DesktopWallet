@@ -44,14 +44,16 @@ class Transactions {
             
             $.getJSON("https://richlist.ether1.org/transactions_list.php" + params,  function( result ) {
                 result.data.forEach(element => {
-                    ipcRenderer.send('storeTransaction', {
-                        block: element.block.toString(),
-                        txhash: element.txhash.toLowerCase(),
-                        fromaddr: element.fromaddr.toLowerCase(),
-                        timestamp: element.timestamp,
-                        toaddr: element.toaddr.toLowerCase(),
-                        value: element.value
-                    });
+                    if (element.fromaddr && element.toaddr) {
+                        ipcRenderer.send('storeTransaction', {
+                            block: element.block.toString(),
+                            txhash: element.txhash.toLowerCase(),
+                            fromaddr: element.fromaddr.toLowerCase(),
+                            timestamp: element.timestamp,
+                            toaddr: element.toaddr.toLowerCase(),
+                            value: element.value
+                        });    
+                    }
                 });
         
                 // call the transaction sync for the next address
@@ -128,32 +130,34 @@ class Transactions {
                     function(data) {
                         if (data.transactions) {                                    
                             data.transactions.forEach(element => {
-                                if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
-                                    var Transaction = {
-                                        block: element.blockNumber.toString(),
-                                        txhash: element.hash.toLowerCase(),
-                                        fromaddr: element.from.toLowerCase(),
-                                        timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
-                                        toaddr: element.to.toLowerCase(),
-                                        value: Number(element.value).toExponential(5).toString().replace('+','')
-                                    }
-                                    
-                                    // store transaction and notify about new transactions
-                                    ipcRenderer.send('storeTransaction', Transaction);
-                                    $(document).trigger("onNewAccountTransaction");
-
-                                    iziToast.info({
-                                        title: 'New Transaction',
-                                        message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
-                                        position: 'topRight',
-                                        timeout: 10000
-                                    });                                                     
-
-                                    if (EthoMainGUI.getAppState() == "transactions") {
-                                        setTimeout(function() { 
-                                            EthoTransactions.renderTransactions();    
-                                        }, 500);                    
-                                    }                                
+                                if (element.from && element.to) {
+                                    if ((EthoWallets.getAddressExists(element.from)) || (EthoWallets.getAddressExists(element.to))) {
+                                        var Transaction = {
+                                            block: element.blockNumber.toString(),
+                                            txhash: element.hash.toLowerCase(),
+                                            fromaddr: element.from.toLowerCase(),
+                                            timestamp: moment.unix(data.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+                                            toaddr: element.to.toLowerCase(),
+                                            value: Number(element.value).toExponential(5).toString().replace('+','')
+                                        }
+                                        
+                                        // store transaction and notify about new transactions
+                                        ipcRenderer.send('storeTransaction', Transaction);
+                                        $(document).trigger("onNewAccountTransaction");
+    
+                                        iziToast.info({
+                                            title: 'New Transaction',
+                                            message: vsprintf('Transaction from address %s to address %s was just processed', [Transaction.fromaddr, Transaction.toaddr]),
+                                            position: 'topRight',
+                                            timeout: 10000
+                                        });                                                     
+    
+                                        if (EthoMainGUI.getAppState() == "transactions") {
+                                            setTimeout(function() { 
+                                                EthoTransactions.renderTransactions();    
+                                            }, 500);                    
+                                        }                                
+                                    }    
                                 }
                             });                                                            
                         }
