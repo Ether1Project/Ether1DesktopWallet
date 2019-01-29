@@ -24,23 +24,28 @@ $(document).on("render_settings", function() {
                         var counters = EthoDatatabse.getCounters();
                         counters.transactions = 0;
                         EthoDatatabse.setCounters(counters);
-                        ipcRenderer.sendSync('deleteTransactions', null);
-                        // sync all the transactions to the current block
-                        web3Local.eth.getBlock("latest", function(error, localBlock) {
-                            if (error) {
-                                EthoMainGUI.showGeneralError(error);
-                            } else {
-                                EthoTransactions.enableKeepInSync();
-                                EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
-        
-                                iziToast.success({
-                                    title: 'Success',
-                                    message: 'Transactions are being resynced',
-                                    position: 'topRight',
-                                    timeout: 5000
-                                });             
-                            }                    
-                        });
+                        ipcResult = ipcRenderer.sendSync('deleteTransactions', null);
+
+                        if (ipcResult.success) {
+                            // sync all the transactions to the current block
+                            web3Local.eth.getBlock("latest", function(error, localBlock) {
+                                if (error) {
+                                    EthoMainGUI.showGeneralError(error);
+                                } else {
+                                    EthoTransactions.enableKeepInSync();
+                                    EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
+            
+                                    iziToast.success({
+                                        title: 'Success',
+                                        message: 'Transactions are being resynced',
+                                        position: 'topRight',
+                                        timeout: 5000
+                                    });             
+                                }                    
+                            });
+                        } else {
+                            EthoMainGUI.showGeneralError("Error resyncing transactions: " + ipcResult.error);
+                        }
                     }
                 }
             });    
@@ -55,7 +60,18 @@ $(document).on("render_settings", function() {
     });
 
     $("#btnSettingsCleanWallets").off('click').on('click', function() {
-        EthoMainGUI.showGeneralError("Not implemented yet!");
+        ipcResult = ipcRenderer.sendSync('deleteWalletData', null);
+
+        if (ipcResult.success) {
+            iziToast.success({
+                title: 'Success',
+                message: 'Wallet names were succesfully cleaned',
+                position: 'topRight',
+                timeout: 5000
+            });             
+        } else {
+            EthoMainGUI.showGeneralError("Error clearing wallet names: " + ipcResult.error);  
+        }
     });
 
     $("#btnSettingsCleanBlockchain").off('click').on('click', function() {

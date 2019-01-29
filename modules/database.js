@@ -83,7 +83,16 @@ ipcMain.on('deleteTransactions', (event, arg) => {
   fs.unlink(dbPath, (err) => {
     if (err) {
       event.returnValue = { success: false, error: err };
-      dialog.showErrorBox("Error deleting the file", err.message);      
+    } else {
+      event.returnValue = { success: true, error: null };
+    }
+  });  
+});  
+
+ipcMain.on('deleteWalletData', (event, arg) => {
+  fs.unlink(path.join(app.getPath('userData'), 'wallets.json'), (err) => {
+    if (err) {
+      event.returnValue = { success: false, error: err };
     } else {
       event.returnValue = { success: true, error: null };
     }

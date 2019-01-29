@@ -1,7 +1,7 @@
 const {app, dialog, ipcMain} = require('electron');
 const admZip = require('adm-zip');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const os = require('os');
 
 class Accounts {
@@ -47,13 +47,12 @@ class Accounts {
         zip.extractAllTo(accPath, true);  
         return { success: true, text: "Accounts ware successfully imported."};
     } else {
-        fs.copyFile(accountsFile, path.join(accPath, path.basename(accountsFile)), (err) => {
-            if (err) {
-                return { success: false, text: err};
-            } else {
-                return { success: true, text: "Account was successfully imported."};
-            }
-        });                
+        try {
+            fs.copySync(accountsFile,  path.join(accPath, path.basename(accountsFile)));
+            return { success: true, text: "Account was successfully imported."};
+          } catch (err) {
+            return { success: false, text: err};
+        }
     }
   }
 

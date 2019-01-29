@@ -55,6 +55,7 @@
     "adm-zip": "^0.4.13",
     "app-root-path": "^2.1.0",
     "electron-storage": "^1.0.7",
+    "fs-extra": "^7.0.1",
     "handlebars": "^4.0.12",
     "moment": "^2.23.0",
     "nedb": "^1.8.0",
