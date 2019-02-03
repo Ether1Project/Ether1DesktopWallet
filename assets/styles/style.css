@@ -391,3 +391,8 @@ div.noAddressWrapper {
   text-decoration: underline;
   margin-bottom: 10px;
 }
+
+#sendFromAddressName,
+#sendToAddressName {
+  font-size: 95%;
+}

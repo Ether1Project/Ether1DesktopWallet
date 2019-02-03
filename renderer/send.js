@@ -52,6 +52,7 @@ class SendTransaction {
 
     resetSendForm() {
         if (EthoMainGUI.getAppState() == "send") {
+            $("#sendToAddressName").html("");
             $("#sendToAddress").val("");
             $("#sendAmmount").val(0);
         }
@@ -72,6 +73,26 @@ $(document).on("render_send", function() {
         $("#sendAmmount").val($("#sendMaxAmmount").html());
     });
     
+    $("#sendToAddress").off('input').on('input', function() {
+        var addressName = null;
+        $("#sendToAddressName").html("");
+        addressName = EthoAddressBook.getAddressName($("#sendToAddress").val()); 
+
+        if (!addressName) { 
+            var wallets = EthoDatatabse.getWallets();
+            addressName = wallets.names[$("#sendToAddress").val()];      
+        }
+        $("#sendToAddressName").html(addressName);
+    });
+    
+    $("#sendFromAddress").off('change').on('change', function() {
+        var optionText = $(this).find("option:selected").text();
+        var addrName = optionText.substr(0, optionText.indexOf('-')); 
+        var addrValue = optionText.substr(optionText.indexOf("-") + 1);
+        $(".fromAddressSelect input").val(addrValue.trim());  
+        $("#sendFromAddressName").html(addrName.trim());          
+    });    
+
     $("#btnLookForToAddress").off('click').on('click', function() {
         EthoBlockchain.getAddressListData(
             function(error) {
@@ -94,6 +115,7 @@ $(document).on("render_send", function() {
                 $('#dlgAddressList').iziModal('open');
 
                 $(".btnSelectToAddress").off('click').on('click', function() {
+                    $("#sendToAddressName").html($(this).attr('data-name'));
                     $("#sendToAddress").val($(this).attr('data-wallet'));
                     $('#dlgAddressList').iziModal('close');
                 });

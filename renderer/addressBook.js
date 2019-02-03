@@ -8,14 +8,14 @@ class AddressBook {
     var addressBook = EthoDatatabse.getAddresses();
 
     // set the wallet name from the dialog box
-    addressBook.names[address] = name;
+    addressBook.names[address.toUpperCase()] = name;
     EthoDatatabse.setAddresses(addressBook);
   }
 
   getAddressName(address) {
     var addressBook = EthoDatatabse.getAddresses();
     // set the wallet name from the dialog box
-    return addressBook.names[address] || "";
+    return addressBook.names[address.toUpperCase()] || "";
   }
 
   getAddressList() {
@@ -131,6 +131,17 @@ $(document).on("render_addressBook", function() {
       EthoAddressBook.renderAddressBook();
     });
   });                
+
+  $(".textAddress").off('click').on('click', function() {
+    EthoMainGUI.copyToClipboard($(this).html());
+
+    iziToast.success({
+      title: 'Copied',
+      message: 'Address was copied to clipboard',
+      position: 'topRight',
+      timeout: 2000
+    }); 
+  });
 });                
   
 EthoAddressBook = new AddressBook();

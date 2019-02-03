@@ -10,12 +10,16 @@
                         {{/addressData}}
                     </select>
                     <label for="sendFromAddress">From address:</label>
+                    <small id="sendFromAddressName" class="form-text text-muted"></small>
                 </div>
-                <div class="input-field col s6 addressInputWrapper">
-                    <input id="sendToAddress" placeholder="recipient address" type="text">
+                <div class="input-field col s6">
                     <label for="sendToAddress" class="active">To address:</label>
-                    <button type="button" class="btn btn-etho btnSendToolButton" id="btnAddToAddressBook"><i class="fas fa-plus"></i></button>
-                    <button type="button" class="btn btn-etho btnSendToolButton" id="btnLookForToAddress"><i class="fas fa-search"></i></button>
+                    <div class="addressInputWrapper">
+                        <input id="sendToAddress" placeholder="recipient address" type="text">
+                        <button type="button" class="btn btn-etho btnSendToolButton" id="btnAddToAddressBook"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn btn-etho btnSendToolButton" id="btnLookForToAddress"><i class="fas fa-search"></i></button>        
+                    </div>
+                    <small id="sendToAddressName" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="row">
