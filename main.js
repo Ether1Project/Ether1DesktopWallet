@@ -66,9 +66,17 @@ locker.lock().then(function() {
   // In this file you can include the rest of your app's specific main process
   // code. You can also put them in separate files and require them here.
   // listen for request to get template
+
+  // get the template content from file
   ipcMain.on('getTemplateContent', (event, arg) => {
     event.returnValue = fs.readFileSync(path.join(app.getAppPath(), "assets/templates/") + arg, 'utf8');
   });
+
+  // quit the app on coomand
+  ipcMain.on('appQuit', (event, arg) => {
+    app.quit();
+  });  
+  
 })
 .catch(function(err) {
   app.quit();

@@ -6,15 +6,16 @@ const os = require('os');
 
 class Accounts {
   constructor() {
-      this.getKeyStoreLocation = function() {
-        switch(os.type()) {
-            case "Darwin":
-              return path.join(os.homedir(), 'Library', 'Ether1', 'keystore');
-              break;
-            default:
-              return path.join(process.env.APPDATA, 'Ether1', 'keystore');
-          }     
-      }
+  }
+
+  getKeyStoreLocation() {
+    switch(os.type()) {
+        case "Darwin":
+          return path.join(os.homedir(), 'Library', 'Ether1', 'keystore');
+          break;
+        default:
+          return path.join(process.env.APPDATA, 'Ether1', 'keystore');
+    }     
   }
 
   exportAccounts() {
@@ -23,7 +24,7 @@ class Accounts {
     });
 
     if (savePath) {
-        const accPath = this.getKeyStoreLocation();
+        const accPath = EthoAccounts.getKeyStoreLocation();
         
         fs.readdir(accPath, function(err, files) {
             var zip = new admZip();
@@ -40,7 +41,7 @@ class Accounts {
 
   importAccounts(accountsFile) { 
     var extName = path.extname(accountsFile).toUpperCase();
-    const accPath = this.getKeyStoreLocation();
+    const accPath = EthoAccounts.getKeyStoreLocation();
 
     if (extName == '.ZIP') {
         var zip = new admZip(accountsFile);
@@ -57,7 +58,7 @@ class Accounts {
   }
 
   saveAccount(account) { 
-    fs.writeFile(path.join(this.getKeyStoreLocation(), '0x' + account.address), JSON.stringify(account), 'utf8', function() {
+    fs.writeFile(path.join(tEthoAccountshis.getKeyStoreLocation(), '0x' + account.address), JSON.stringify(account), 'utf8', function() {
         // file was written
     });
   }

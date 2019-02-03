@@ -4,6 +4,7 @@ const datastore = require('nedb');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
 const dbPath = path.join(app.getPath('userData'), 'storage.db');
 const db = new datastore({ filename: dbPath });
@@ -96,5 +97,35 @@ ipcMain.on('deleteWalletData', (event, arg) => {
     } else {
       event.returnValue = { success: true, error: null };
     }
-  });
+  });  
+});  
+
+ipcMain.on('deleteBlockchainData', (event, arg) => {  
+  var deleteFolderRecursive = function(path) {
+    if( fs.existsSync(path) ) {
+      fs.readdirSync(path).forEach(function(file,index){
+        var curPath = path + "/" + file;
+        if(fs.lstatSync(curPath).isDirectory()) { // recurse
+          deleteFolderRecursive(curPath);
+        } else { // delete file
+          fs.unlinkSync(curPath);
+        }
+      });
+      fs.rmdirSync(path);
+    }
+  };  
+  
+  function getBlockchainDataLocation() {
+    switch(os.type()) {
+        case "Darwin":
+          return path.join(os.homedir(), 'Library', 'Ether1', 'geth');
+          break;
+        default:
+          return path.join(process.env.APPDATA, 'Ether1', 'geth');
+    }     
+  }
+
+  // delete folder in a synchronous recursive maner
+  deleteFolderRecursive(getBlockchainDataLocation());
+  event.returnValue = true;
 });  

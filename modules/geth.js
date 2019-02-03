@@ -1,5 +1,5 @@
+const {app, dialog, ipcMain} = require('electron');
 const child_process = require('child_process');
-const {app, dialog} = require('electron');
 const appRoot = require('app-root-path');
 const path = require('path');
 const fs = require('fs');
@@ -78,5 +78,9 @@ class Geth {
     }
   }
 }
+
+ipcMain.on('stopGeth', (event, arg) => {
+  EthoGeth.stopGeth();
+});  
 
 EthoGeth = new Geth();

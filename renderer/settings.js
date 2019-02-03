@@ -60,22 +60,46 @@ $(document).on("render_settings", function() {
     });
 
     $("#btnSettingsCleanWallets").off('click').on('click', function() {
-        ipcResult = ipcRenderer.sendSync('deleteWalletData', null);
+        EthoMainGUI.showGeneralConfirmation("Do you really want to delete wallets data?", function(result) {
+            if (result) {
+                ipcResult = ipcRenderer.sendSync('deleteWalletData', null);
 
-        if (ipcResult.success) {
-            iziToast.success({
-                title: 'Success',
-                message: 'Wallet names were succesfully cleaned',
-                position: 'topRight',
-                timeout: 5000
-            });             
-        } else {
-            EthoMainGUI.showGeneralError("Error clearing wallet names: " + ipcResult.error);  
-        }
+                if (ipcResult.success) {
+                    iziToast.success({
+                        title: 'Success',
+                        message: 'Wallet names were succesfully cleaned',
+                        position: 'topRight',
+                        timeout: 5000
+                    });             
+                } else {
+                    EthoMainGUI.showGeneralError("Error clearing wallet names: " + ipcResult.error);  
+                }
+            }
+        });
     });
 
     $("#btnSettingsCleanBlockchain").off('click').on('click', function() {
-        EthoMainGUI.showGeneralError("Not implemented yet!");
+        EthoMainGUI.showGeneralConfirmation("Do you really want to delete the blockchain data? Wallet will close and you will need to restart it!", function(result) {
+            if (result) {                
+                var loading_screen = pleaseWait({
+                    logo: "assets/images/logo.png",
+                    backgroundColor: '#000000',
+                    loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Deleting blockchain data, wallet will automatically close, please wait...</div>"
+                });
+                          
+                setTimeout(() => {
+                    // first stop the geth process
+                    ipcResult = ipcRenderer.send('stopGeth', null);
+
+                    setTimeout(() => {
+                        // delete the blockchain date async and wait for 5 seconds
+                        ipcResult = ipcRenderer.sendSync('deleteBlockchainData', null);
+                        // finally quit the application
+                        ipcResult = ipcRenderer.send('appQuit', null);                    
+                    }, 5000);
+                }, 2000);
+            }
+        });
     });
 });
   
