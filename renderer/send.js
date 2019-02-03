@@ -109,7 +109,7 @@ $(document).on("render_send", function() {
                 }
                 
                 $("#dlgAddressList").iziModal({ width: "800px" });
-                EthoMainGUI.renderTemplate("addressList.html", addressList, $("#dlgAddressListBody")); 
+                EthoMainGUI.renderTemplate("addresslist.html", addressList, $("#dlgAddressListBody")); 
                 $('#dlgAddressList').iziModal('open');
 
                 $(".btnSelectToAddress").off('click').on('click', function() {
