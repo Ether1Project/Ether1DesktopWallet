@@ -9,11 +9,15 @@ const os = require('os');
 class Geth {
   constructor() {
     this.gethProcess = null;
+    this.logGethEvents = false;
     // create the user data dir (needed for MacOS)
     if (!fs.existsSync(app.getPath('userData'))) {
       fs.mkdirSync(app.getPath('userData')); 
     }   
-    this.logStream = fs.createWriteStream(path.join(app.getPath('userData'), 'gethlog.txt'));
+
+    if (this.logGethEvents) {
+      this.logStream = fs.createWriteStream(path.join(app.getPath('userData'), 'gethlog.txt'), { flags: 'a' });
+    }
 
     if (appRoot.path.indexOf('app.asar') > -1) {
       this.rootPath = path.dirname(appRoot.path);
@@ -39,7 +43,9 @@ class Geth {
   }
   
   _writeLog(text) {
-    this.logStream.write(text);
+    if (this.logGethEvents) {
+      this.logStream.write(text);
+    }
   }
 
   startGeth() {
