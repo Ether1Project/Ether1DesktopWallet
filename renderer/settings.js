@@ -103,5 +103,5 @@ $(document).on("render_settings", function() {
     });
 });
   
-// create new account variable
+// create new settings variable
 EthoSettings = new Settings();  

@@ -23,6 +23,9 @@ class MainGUI {
             case "transactions":
               $("#mainNavBtnTransactionsWrapper").addClass("iconSelected"); 
               break;
+              case "markets":
+              $("#mainNavBtnMarketsWrapper").addClass("iconSelected"); 
+              break;
             case "settings":
               $("#mainNavBtnSettingsWrapper").addClass("iconSelected"); 
               break;
@@ -124,6 +127,11 @@ $("#mainNavBtnSend").click(function() {
 $("#mainNavBtnWallets").click(function() {
     EthoMainGUI.changeAppState("account");
     EthoWallets.renderWalletsState();
+});                
+
+$("#mainNavBtnMarkets").click(function() {
+    EthoMainGUI.changeAppState("markets");
+    EthoMarkets.renderMarkets();
 });                
 
 $("#mainNavBtnSettings").click(function() {

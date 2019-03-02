@@ -396,3 +396,11 @@ div.noAddressWrapper {
 #sendToAddressName {
   font-size: 95%;
 }
+
+.etho-red {
+  background-color: #7A1336 !important;
+}
+
+#chartMarketPrice {
+  height: calc(100vh - 260px);
+}

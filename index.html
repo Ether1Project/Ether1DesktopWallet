@@ -36,6 +36,7 @@
     <script src="./assets/scripts/datatables-absolute.js"></script>       
     <script src="./assets/scripts/jquery.floatThead.min.js"></script>           
     <script src="./assets/scripts/all.min.js"></script>    
+    <script src="./assets/scripts/Chart.js"></script>    
 
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
@@ -71,6 +72,9 @@
         <div class="sidebarIconWrapper" id="mainNavBtnTransactionsWrapper" data-tippy="Transactions" data-tippy-delay="500">
           <a class="sidebarIcon" id="mainNavBtnTransactions" href="#"><i class="fas fa-exchange-alt fa-2x"></i></a>
         </div>
+        <div class="sidebarIconWrapper" id="mainNavBtnMarketsWrapper" data-tippy="Markets" data-tippy-delay="500">
+          <a class="sidebarIcon" id="mainNavBtnMarkets" href="#"><i class="fas fa-poll fa-2x"></i></a>
+        </div>
         <div class="sidebarIconWrapper" id="mainNavBtnSettingsWrapper" data-tippy="Settings" data-tippy-delay="500">
           <a class="sidebarIcon" id="mainNavBtnSettings" href="#"><i class="fas fa-cog fa-2x"></i></a>
         </div>
@@ -86,6 +90,7 @@
         require('./renderer/utils.js');
         require('./renderer/maingui.js');
         require('./renderer/syncing.js');
+        require('./renderer/markets.js');
         require('./renderer/settings.js');
         require('./renderer/wallets.js');
         require('./renderer/database.js');
