@@ -52,7 +52,6 @@
     "handlebars": "^4.1.0",
     "moment": "^2.23.0",
     "nedb": "^1.8.0",
-    "open": "0.0.5",
     "single-instance": "0.0.1"
   },
   "devDependencies": {

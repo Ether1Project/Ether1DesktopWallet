@@ -1,5 +1,4 @@
-const {app, Menu, ipcMain} = require("electron");
-const open = require("open");
+const {app, Menu, ipcMain, shell} = require("electron");
 
 const template = [
   {
@@ -88,12 +87,12 @@ const template = [
       }, {
         label: "Ether1 documentation",
         click() {
-          open("https://docs.ether1.org");
+          shell.openExternal("https://docs.ether1.org");
         }
       }, {
         label: "Report issue on GitHub",
         click() {
-          open("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
+          shell.openExternal("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
         }
       }
     ]
@@ -163,7 +162,7 @@ if (process.platform === "darwin") {
 }
 
 ipcMain.on("openURL", (event, arg) => {
-  open(arg);
+  shell.openExternal("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
 });
 
 const menu = Menu.buildFromTemplate(template);
