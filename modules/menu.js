@@ -1,202 +1,170 @@
-const {app, Menu, ipcMain} = require('electron');
+const {app, Menu, ipcMain} = require("electron");
 const open = require("open");
 
 const template = [
-    {
-        label: 'File',
-        submenu: [
-          {
-            label:'Exit', 
-            click() { 
-                app.quit() 
-            }           }
-        ]
-      },
-      {
-    label: 'Edit',
+  {
+    label: "File",
     submenu: [
       {
-        role: 'undo'
-      },
-      {
-        role: 'redo'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        role: 'cut'
-      },
-      {
-        role: 'copy'
-      },
-      {
-        role: 'paste'
-      },
-      {
-        role: 'delete'
-      },
-      {
-        role: 'selectall'
+        label: "Exit",
+        click() {
+          app.quit();
+        }
       }
     ]
-  },
-  {
-    label: 'View',
+  }, {
+    label: "Edit",
     submenu: [
       {
-        label: 'Reload',
-        accelerator: 'CmdOrCtrl+R',
-        click (item, focusedWindow) {
-          if (focusedWindow) focusedWindow.reload()
-        }
-      },
-      {
-        label: 'Toggle Developer Tools',
-        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-        click (item, focusedWindow) {
-          if (focusedWindow) focusedWindow.webContents.toggleDevTools()
-        }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        role: 'resetzoom'
-      },
-      {
-        role: 'zoomin'
-      },
-      {
-        role: 'zoomout'
-      },      
-      {
-        type: 'separator'
-      },
-      {
-        role: 'togglefullscreen'
+        role: "undo"
+      }, {
+        role: "redo"
+      }, {
+        type: "separator"
+      }, {
+        role: "cut"
+      }, {
+        role: "copy"
+      }, {
+        role: "paste"
+      }, {
+        role: "delete"
+      }, {
+        role: "selectall"
       }
     ]
-  },
-  {
-    role: 'window',
+  }, {
+    label: "View",
     submenu: [
       {
-        role: 'minimize'
-      },
-      {
-        role: 'close'
+        label: "Reload",
+        accelerator: "CmdOrCtrl+R",
+        click(item, focusedWindow) {
+          if (focusedWindow) 
+            focusedWindow.reload();
+          }
+        }, {
+        label: "Toggle Developer Tools",
+        accelerator: process.platform === "darwin"
+          ? "Alt+Command+I"
+          : "Ctrl+Shift+I",
+        click(item, focusedWindow) {
+          if (focusedWindow) 
+            focusedWindow.webContents.toggleDevTools();
+          }
+        }, {
+        type: "separator"
+      }, {
+        role: "resetzoom"
+      }, {
+        role: "zoomin"
+      }, {
+        role: "zoomout"
+      }, {
+        type: "separator"
+      }, {
+        role: "togglefullscreen"
       }
     ]
-  },
-  {
-    role: 'help',
+  }, {
+    role: "window",
     submenu: [
       {
-        label: 'About Ether1 wallet',
-        click () { 
-            var infoData = {};
-            infoData.version = app.getVersion();
-            mainWindow.webContents.send('showAboutDialog', infoData);
-        }
-      },
+        role: "minimize"
+      }, {
+        role: "close"
+      }
+    ]
+  }, {
+    role: "help",
+    submenu: [
       {
-        label: 'Ether1 documentation',
-        click () { 
-            open("https://docs.ether1.org");
+        label: "About Ether1 wallet",
+        click() {
+          var infoData = {};
+          infoData.version = app.getVersion();
+          mainWindow.webContents.send("showAboutDialog", infoData);
         }
-      },
-      {
-        label: 'Report issue on GitHub',
-        click () { 
-            open("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
+      }, {
+        label: "Ether1 documentation",
+        click() {
+          open("https://docs.ether1.org");
+        }
+      }, {
+        label: "Report issue on GitHub",
+        click() {
+          open("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
         }
       }
     ]
   }
-]
+];
 
-if (process.platform === 'darwin') {
-  const name = app.getName()
+if (process.platform === "darwin") {
+  const name = app.getName();
   template.unshift({
     label: name,
     submenu: [
       {
-        role: 'about'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        role: 'services',
+        role: "about"
+      }, {
+        type: "separator"
+      }, {
+        role: "services",
         submenu: []
-      },
-      {
-        type: 'separator'
-      },
-      {
-        role: 'hide'
-      },
-      {
-        role: 'hideothers'
-      },
-      {
-        role: 'unhide'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        role: 'quit'
+      }, {
+        type: "separator"
+      }, {
+        role: "hide"
+      }, {
+        role: "hideothers"
+      }, {
+        role: "unhide"
+      }, {
+        type: "separator"
+      }, {
+        role: "quit"
       }
     ]
-  })
+  });
   // Edit menu.
-  template[1].submenu.push(
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Speech',
-      submenu: [
-        {
-          role: 'startspeaking'
-        },
-        {
-          role: 'stopspeaking'
-        }
-      ]
-    }
-  )
+  template[1].submenu.push({
+    type: "separator"
+  }, {
+    label: "Speech",
+    submenu: [
+      {
+        role: "startspeaking"
+      }, {
+        role: "stopspeaking"
+      }
+    ]
+  });
   // Window menu.
   template[3].submenu = [
     {
-      label: 'Close',
-      accelerator: 'CmdOrCtrl+W',
-      role: 'close'
-    },
-    {
-      label: 'Minimize',
-      accelerator: 'CmdOrCtrl+M',
-      role: 'minimize'
-    },
-    {
-      label: 'Zoom',
-      role: 'zoom'
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Bring All to Front',
-      role: 'front'
+      label: "Close",
+      accelerator: "CmdOrCtrl+W",
+      role: "close"
+    }, {
+      label: "Minimize",
+      accelerator: "CmdOrCtrl+M",
+      role: "minimize"
+    }, {
+      label: "Zoom",
+      role: "zoom"
+    }, {
+      type: "separator"
+    }, {
+      label: "Bring All to Front",
+      role: "front"
     }
-  ]
+  ];
 }
 
-ipcMain.on('openURL', (event, arg) => {
-    open(arg);
+ipcMain.on("openURL", (event, arg) => {
+  open(arg);
 });
-  
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);

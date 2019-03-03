@@ -1,6 +1,6 @@
 {
   "name": "Ether1Wallet",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Desktop wallet for Ether1 currency",
   "main": "main.js",
   "scripts": {
@@ -22,41 +22,34 @@
       "target": "7z",
       "icon": "build/icon.png",
       "artifactName": "Windows-${productName}-${version}.${ext}",
-      "extraResources": [
-        "bin/win/*"
-      ]
+      "extraResources": ["bin/win/*"]
     },
     "linux": {
       "target": "tar.gz",
       "icon": "build/icon.icns",
       "artifactName": "Linux-${productName}-${version}.${ext}",
-      "extraResources": [
-        "bin/linux/*"
-      ]
+      "extraResources": ["bin/linux/*"]
     },
     "mac": {
       "target": "pkg",
       "icon": "build/icon.icns",
       "artifactName": "MacOS-${productName}-${version}.${ext}",
-      "extraResources": [
-        "bin/macos/*"
-      ]
+      "extraResources": ["bin/macos/*"]
     }
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
   "keywords": [
-    "Ether1",
-    "Desktop",
-    "Wallet"
+    "Ether1", "Desktop", "Wallet"
   ],
   "author": "Ether1",
   "license": "CC0-1.0",
   "dependencies": {
+    "@unibeautify/beautifier-js-beautify": "^0.4.0",
     "adm-zip": "^0.4.13",
     "app-root-path": "^2.1.0",
     "electron-storage": "^1.0.7",
     "fs-extra": "^7.0.1",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.1.0",
     "moment": "^2.23.0",
     "nedb": "^1.8.0",
     "open": "0.0.5",
@@ -64,6 +57,9 @@
   },
   "devDependencies": {
     "electron": "^3.0.12",
-    "electron-builder": "^20.38.3"
+    "electron-builder": "^20.38.3",
+    "js-beautify": "^1.9.0",
+    "unibeautify": "^0.17.0",
+    "unibeautify-cli": "^0.2.1"
   }
 }
