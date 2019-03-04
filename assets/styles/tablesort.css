@@ -1,0 +1,33 @@
+th[role=columnheader]:not(.no-sort) {
+	cursor: pointer;
+}
+
+th[role=columnheader]:not(.no-sort):after {
+	content: '';
+	float: right;
+	margin-top: 7px;
+	border-width: 0 8px 8px;
+	border-style: solid;
+	border-color: #7A1336 transparent;
+	visibility: hidden;
+	opacity: 0;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+th[aria-sort=ascending]:not(.no-sort):after {
+	border-bottom: none;
+	border-width: 8px 8px 0;
+}
+
+th[aria-sort]:not(.no-sort):after {
+	visibility: visible;
+	opacity: 0.6;
+}
+
+th[role=columnheader]:not(.no-sort):hover:after {
+	visibility: visible;
+	opacity: 1;
+}

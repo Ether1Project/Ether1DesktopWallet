@@ -1,77 +1,94 @@
 <div id="walletsToolbar">
-    <button type="button" class="btn btn-etho" id="btnNewAddress"><i class="fas fa-plus"></i></button>    
-    <button type="button" class="btn btn-etho" id="btnRefreshAddress"><i class="fas fa-sync-alt"></i></button>        
-    <button type="button" class="btn btn-etho" id="btnExportAccounts"><i class="fas fa-file-export"></i></button>    
-    <button type="button" class="btn btn-etho" id="btnImportAccounts"><i class="fas fa-file-import"></i></button>    
-    <button type="button" class="btn btn-etho" id="btnImportFromPrivateKey"><i class="fas fa-key"></i></button>    
-    <div id="sumBalance">
-        <span class="sumBalance" id="labelSumBalance">{{sumBalance}}</span>
-        <span class="sumCurrency"  id="labelSumCurrency">ETHO</span>
-        <span class="sumDollars" id="labelSumDollars">/ 0.00 $ / 0.00 $ per ETHO</span></div>
+  <button type="button" class="btn btn-etho" id="btnNewAddress">
+    <i class="fas fa-plus"></i>
+  </button>
+  <button type="button" class="btn btn-etho" id="btnRefreshAddress">
+    <i class="fas fa-sync-alt"></i>
+  </button>
+  <button type="button" class="btn btn-etho" id="btnExportAccounts">
+    <i class="fas fa-file-export"></i>
+  </button>
+  <button type="button" class="btn btn-etho" id="btnImportAccounts">
+    <i class="fas fa-file-import"></i>
+  </button>
+  <button type="button" class="btn btn-etho" id="btnImportFromPrivateKey">
+    <i class="fas fa-key"></i>
+  </button>
+  <div id="sumBalance">
+    <span class="sumBalance" id="labelSumBalance">{{sumBalance}}</span>
+    <span class="sumCurrency" id="labelSumCurrency">ETHO</span>
+    <span class="sumDollars" id="labelSumDollars">/ 0.00 $ / 0.00 $ per ETHO</span></div>
 </div>
 <div id="addressList" class="{{#if addressData.length}}walletsWrapper{{else}}noWalletsWrapper{{/if}}">
-    {{#if addressData.length}}
-        <table class="bordered" id="addressTable">
-            <thead>
-                <tr>
-                <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col"></th>
-                <th scope="col">Balance</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#addressData}}
-                    <tr>
-                        <th scope="row" class="colEdit"><button type="button" class="btn btn-etho btnChangWalletName" data-wallet="{{address}}" data-name="{{name}}">Edit</button></th>
-                        <td>{{name}}</td>
-                        <td><span class="textAddress">{{address}}</span></td>
-                        <td><button type="button" class="btn btn-etho btnShowAddressTransactions" data-wallet="{{address}}"><i class="fas fa-exchange-alt"></i></button></td>
-                        <td>{{balance}}</td>
-                    </tr>
-                {{/addressData}}
-            </tbody>
-        </table>
-    {{else}}
-      <div id="noWalletsPresent">You don't have any wallets, please import them, or create a new one</div>
-    {{/if}}
+  {{#if addressData.length}}
+    <table class="bordered" id="addressTable">
+      <thead>
+        <tr>
+          <th scope="col" data-sort-method='none'></th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col" data-sort-method='none'></th>
+          <th scope="col" data-sort-method='number'>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#addressData}}
+          <tr>
+            <th scope="row" class="colEdit">
+              <button type="button" class="btn btn-etho btnChangWalletName" data-wallet="{{address}}" data-name="{{name}}">Edit</button>
+            </th>
+            <td>{{name}}</td>
+            <td>
+              <span class="textAddress">{{address}}</span></td>
+            <td>
+              <button type="button" class="btn btn-etho btnShowAddressTransactions" data-wallet="{{address}}">
+                <i class="fas fa-exchange-alt"></i>
+              </button>
+            </td>
+            <td>{{balance}}</td>
+          </tr>
+        {{/addressData}}
+      </tbody>
+    </table>
+  {{else}}
+    <div id="noWalletsPresent">You don't have any wallets, please import them, or create a new one</div>
+  {{/if}}
 </div>
 
 <!-- The modal for new wallet -->
-<div id="dlgCreateWalletPassword" class="modalDialog" data-iziModal-title="Wallet Password" data-iziModal-subtitle="Make sure to write it down or remember it!!!" data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-            <label for="usr">Type Password:</label>
-            <input type="password" class="form-control" id="walletPasswordFirst">
-        </div>
-        <div class="form-group">
-            <label for="walletPasswordSecond">Confirm Password:</label>
-            <input type="password" class="form-control" id="walletPasswordSecond">
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnCreateWalletConfirm">Confirm</button>
+<div id="dlgCreateWalletPassword" class="modalDialog" data-izimodal-title="Wallet Password" data-izimodal-subtitle="Make sure to write it down or remember it!!!" data-izimodal-icon="icon-home">
+  <div class="modalBody">
+    <div class="form-group">
+      <label for="usr">Type Password:</label>
+      <input type="password" class="form-control" id="walletPasswordFirst">
     </div>
+    <div class="form-group">
+      <label for="walletPasswordSecond">Confirm Password:</label>
+      <input type="password" class="form-control" id="walletPasswordSecond">
     </div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnCreateWalletConfirm">Confirm</button>
+  </div>
+</div>
 </div>
 
 <!-- The modal to change wallet name -->
-<div id="dlgChangeWalletName" class="modalDialog" data-iziModal-title="Wallet Name" data-iziModal-subtitle="Enter the name for this address" data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-            <label for="inputWalletName">Type Name:</label>
-            <input type="text" class="form-control" id="inputWalletName">
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeWalletNameConfirm">Confirm</button>
-    </div>
+<div id="dlgChangeWalletName" class="modalDialog" data-izimodal-title="Wallet Name" data-izimodal-subtitle="Enter the name for this address" data-izimodal-icon="icon-home">
+<div class="modalBody">
+  <div class="form-group">
+    <label for="inputWalletName">Type Name:</label>
+    <input type="text" class="form-control" id="inputWalletName">
+  </div>
+  <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeWalletNameConfirm">Confirm</button>
+</div>
 </div>
 
 <!-- The modal to import from private key -->
-<div id="dlgImportFromPrivateKey" class="modalDialog" data-iziModal-title="Import private ley" data-iziModal-subtitle="Import account from private key" data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-            <label for="inputPrivateKey">Private Key:</label>
-            <input type="password" class="form-control" id="inputPrivateKey">
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnImportFromPrivateKeyConfirm">Import</button>
-    </div>
+<div id="dlgImportFromPrivateKey" class="modalDialog" data-izimodal-title="Import private ley" data-izimodal-subtitle="Import account from private key" data-izimodal-icon="icon-home">
+<div class="modalBody">
+  <div class="form-group">
+    <label for="inputPrivateKey">Private Key:</label>
+    <input type="password" class="form-control" id="inputPrivateKey">
+  </div>
+  <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnImportFromPrivateKeyConfirm">Import</button>
+</div>
 </div>

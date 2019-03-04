@@ -96,6 +96,7 @@ class Wallets {
 
 // the event to tell us that the wallets are rendered
 $(document).on("render_wallets", function () {
+  new Tablesort(document.getElementById("addressTable"));
   $("#addressTable").floatThead();
 
   $("#btnNewAddress").off("click").on("click", function () {
