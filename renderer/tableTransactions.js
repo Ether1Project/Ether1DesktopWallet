@@ -88,7 +88,6 @@ class tableTransactions {
         var rowIdx = $(id).DataTable().cell(this).index().row;
         var rowData = $(id).DataTable().rows(rowIdx).data()[0];
 
-        console.log(rowData[6]);
         $("#dlgTransactionInfo").iziModal();
         $("#txBlockHeight").html(rowData[1]);
         $("#txTimestamp").html(rowData[2]);
