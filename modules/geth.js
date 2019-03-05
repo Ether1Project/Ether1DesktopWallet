@@ -9,7 +9,7 @@ class Geth {
   constructor() {
     this.isRunning = false;
     this.gethProcess = null;
-    this.logGethEvents = true;
+    this.logGethEvents = false;
     // create the user data dir (needed for MacOS)
     if (!fs.existsSync(app.getPath("userData"))) {
       fs.mkdirSync(app.getPath("userData"));
