@@ -1,9 +1,8 @@
-const {ipcRenderer} = require('electron');
+const {ipcRenderer} = require("electron");
 
 class AddressBook {
-  constructor() {
-  }
-  
+  constructor() {}
+
   setAddressName(address, name) {
     var addressBook = EthoDatatabse.getAddresses();
 
@@ -29,12 +28,13 @@ class AddressBook {
     EthoDatatabse.setAddresses(addressBook);
   }
 
-  enableButtonTooltips() {
-  }
-    
+  enableButtonTooltips() {}
+
   renderAddressBook() {
     var addressObject = EthoAddressBook.getAddressList();
-    var renderData = { addressData: [] };
+    var renderData = {
+      addressData: []
+    };
 
     for (var key in addressObject) {
       if (addressObject.hasOwnProperty(key)) {
@@ -46,102 +46,94 @@ class AddressBook {
     }
 
     // render the wallets current state
-    EthoMainGUI.renderTemplate("addressBook.html", renderData);          
+    EthoMainGUI.renderTemplate("addressBook.html", renderData);
     $(document).trigger("render_addressBook");
     EthoAddressBook.enableButtonTooltips();
   }
 }
 
 // the event to tell us that the wallets are rendered
-$(document).on("render_addressBook", function() {
-  $("#btnNewAddress").off('click').on('click', function() {
+$(document).on("render_addressBook", function () {
+  new Tablesort(document.getElementById("addressTable"));
+  $("#addressTable").floatThead();
+
+  $("#btnNewAddress").off("click").on("click", function () {
     $("#dlgCreateAddressAndName").iziModal();
     $("#addressName").val("");
     $("#addressHash").val("");
-    $('#dlgCreateAddressAndName').iziModal('open');
+    $("#dlgCreateAddressAndName").iziModal("open");
 
     function doCreateNewWallet() {
-      $('#dlgCreateAddressAndName').iziModal('close');
+      $("#dlgCreateAddressAndName").iziModal("close");
 
       if (!EthoBlockchain.isAddress($("#addressHash").val())) {
-        EthoMainGUI.showGeneralError("Address must be a valid address!");  
+        EthoMainGUI.showGeneralError("Address must be a valid address!");
       } else {
         EthoAddressBook.setAddressName($("#addressHash").val(), $("#addressName").val());
         EthoAddressBook.renderAddressBook();
-  
-        iziToast.success({
-          title: 'Created',
-          message: 'New address was successfully created',
-          position: 'topRight',
-          timeout: 5000
-        });                                         
-  
-      }
-    }      
 
-    $("#btnCreateAddressConfirm").off('click').on('click', function() {
+        iziToast.success({title: "Created", message: "New address was successfully created", position: "topRight", timeout: 5000});
+      }
+    }
+
+    $("#btnCreateAddressConfirm").off("click").on("click", function () {
       doCreateNewWallet();
     });
 
-    $("#dlgCreateAddressAndName").off('keypress').on('keypress', function(e) {
-      if(e.which == 13) {
+    $("#dlgCreateAddressAndName").off("keypress").on("keypress", function (e) {
+      if (e.which == 13) {
         doCreateNewWallet();
       }
-    });                                
-  });  
-  
-  $(".btnChangAddressName").off('click').on('click', function() {
-    var walletAddress = $(this).attr('data-address');
-    var walletName = $(this).attr('data-name');
+    });
+  });
+
+  $(".btnChangAddressName").off("click").on("click", function () {
+    var walletAddress = $(this).attr("data-address");
+    var walletName = $(this).attr("data-name");
 
     $("#dlgChangeAddressName").iziModal();
     $("#inputAddressName").val(walletName);
-    $('#dlgChangeAddressName').iziModal('open');
+    $("#dlgChangeAddressName").iziModal("open");
 
     function doChangeAddressName() {
       EthoAddressBook.setAddressName(walletAddress, $("#inputAddressName").val());
-      $('#dlgChangeAddressName').iziModal('close');
+      $("#dlgChangeAddressName").iziModal("close");
       EthoAddressBook.renderAddressBook();
     }
 
-    $("#btnChangeAddressNameConfirm").off('click').on('click', function() {
+    $("#btnChangeAddressNameConfirm").off("click").on("click", function () {
       doChangeAddressName();
     });
 
-    $("#dlgChangeAddressName").off('keypress').on('keypress', function(e) {
-      if(e.which == 13) {
+    $("#dlgChangeAddressName").off("keypress").on("keypress", function (e) {
+      if (e.which == 13) {
         doChangeAddressName();
       }
-    });                                
-  });                
-  
-  $(".btnDeleteAddress").off('click').on('click', function() {
-    var deleteAddress = $(this).attr('data-address');
+    });
+  });
+
+  $(".btnDeleteAddress").off("click").on("click", function () {
+    var deleteAddress = $(this).attr("data-address");
 
     $("#dlgDeleteAddressConfirm").iziModal();
-    $('#dlgDeleteAddressConfirm').iziModal('open');
-    
-    $("#btnDeleteAddressCancel").off('click').on('click', function() {
-      $('#dlgDeleteAddressConfirm').iziModal('close');
+    $("#dlgDeleteAddressConfirm").iziModal("open");
+
+    $("#btnDeleteAddressCancel").off("click").on("click", function () {
+      $("#dlgDeleteAddressConfirm").iziModal("close");
     });
 
-    $("#btnDeleteAddressConfirm").off('click').on('click', function() {
-      $('#dlgDeleteAddressConfirm').iziModal('close');
+    $("#btnDeleteAddressConfirm").off("click").on("click", function () {
+      $("#dlgDeleteAddressConfirm").iziModal("close");
       EthoAddressBook.deleteAddress(deleteAddress);
       EthoAddressBook.renderAddressBook();
     });
-  });                
+  });
 
-  $(".textAddress").off('click').on('click', function() {
+  $(".textAddress").off("click").on("click", function () {
     EthoMainGUI.copyToClipboard($(this).html());
 
-    iziToast.success({
-      title: 'Copied',
-      message: 'Address was copied to clipboard',
-      position: 'topRight',
-      timeout: 2000
-    }); 
+    iziToast.success({title: "Copied", message: "Address was copied to clipboard", position: "topRight", timeout: 2000});
   });
-});                
-  
+});
+
 EthoAddressBook = new AddressBook();

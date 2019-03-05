@@ -8,7 +8,7 @@ th[role=columnheader]:not(.no-sort):after {
 	margin-top: 7px;
 	border-width: 0 8px 8px;
 	border-style: solid;
-	border-color: #7A1336 transparent;
+	border-color: #ccc transparent;
 	visibility: hidden;
 	opacity: 0;
 	-ms-user-select: none;

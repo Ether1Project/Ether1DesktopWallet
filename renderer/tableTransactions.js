@@ -1,3 +1,5 @@
+const {ipcRenderer} = require("electron");
+
 class tableTransactions {
   constructor() {
     this.appState = "account";
@@ -57,12 +59,15 @@ class tableTransactions {
             return moment(data, "YYYY-MM-DD HH:mm:ss").format("MMM Do YYYY HH:mm:ss");
           }
         }, {
-          targets: 5,
+          targets: 3,
+          visible: false
+        }, {
+          targets: 6,
           render: function (data, type, row) {
             return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), "ether")).toFixed(2);
           }
         }, {
-          targets: 6,
+          targets: 7,
           defaultContent: "",
           render: function (data, type, row) {
             if (row[1]) {
@@ -75,6 +80,36 @@ class tableTransactions {
       ],
       drawCallback: function (settings) {
         $("#loadingTransactionsOverlay").css("display", "none");
+      }
+    });
+
+    $(id + " tbody").off("click").on("click", "td", function () {
+      if ($(id).DataTable().cell(this).index().column == 1) {
+        var rowIdx = $(id).DataTable().cell(this).index().row;
+        var rowData = $(id).DataTable().rows(rowIdx).data()[0];
+
+        console.log(rowData[6]);
+        $("#dlgTransactionInfo").iziModal();
+        $("#txBlockHeight").html(rowData[1]);
+        $("#txTimestamp").html(rowData[2]);
+        $("#txHash").html(rowData[3]);
+        $("#txHash").attr("href", vsprintf("https://explorer.ether1.org/tx/%s", [rowData[3]]));
+        $("#txFromAddress").html(rowData[4]);
+        $("#txFromAddress").attr("href", vsprintf("https://explorer.ether1.org/addr/%s", [rowData[4]]));
+        $("#txToAddress").html(rowData[5]);
+        $("#txToAddress").attr("href", vsprintf("https://explorer.ether1.org/addr/%s", [rowData[5]]));
+        $("#txValue").html(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(rowData[6])).toString(), "ether"));
+
+        $("#dlgTransactionInfo a").off("click").on("click", function (even) {
+          event.preventDefault();
+          ipcRenderer.send("openURL", $(this).attr("href"));
+        });
+
+        $("#btnTxInfoClose").off("click").on("click", function () {
+          $("#dlgTransactionInfo").iziModal("close");
+        });
+
+        $("#dlgTransactionInfo").iziModal("open");
       }
     });
   }

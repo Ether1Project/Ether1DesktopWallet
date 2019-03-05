@@ -1,67 +1,74 @@
 <div id="walletsToolbar">
-    <button type="button" class="btn btn-etho" id="btnNewAddress"><i class="fas fa-plus"></i></button>    
+  <button type="button" class="btn btn-etho" id="btnNewAddress">
+    <i class="fas fa-plus"></i>
+  </button>
 </div>
 <div id="addressList" class="{{#if addressData.length}}addressWrapper{{else}}noAddressWrapper{{/if}}">
-    {{#if addressData.length}}
-        <table class="bordered" id="addressTable">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#addressData}}
-                    <tr>
-                        <th scope="row" class="colEdit"><button type="button" class="btn btn-etho btnChangAddressName" data-address="{{address}}" data-name="{{name}}">Edit</button></th>
-                        <td>{{name}}</td>
-                        <td><span class="textAddress">{{address}}</span></td>
-                        <td><button type="button" class="btn btn-etho btnDeleteAddress" data-address="{{address}}"><i class="far fa-trash-alt"></i></button></td>
-                    </tr>
-                {{/addressData}}
-            </tbody>
-        </table>
-    {{else}}
-        <div id="noAddressPresent">You don't have any addresses, create a new one</div>
-    {{/if}}
+  {{#if addressData.length}}
+    <table class="bordered" id="addressTable">
+      <thead>
+        <tr>
+          <th scope="col" data-sort-method='none'></th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col" data-sort-method='none'>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#addressData}}
+          <tr>
+            <th scope="row" class="colEdit">
+              <button type="button" class="btn btn-etho btnChangAddressName" data-address="{{address}}" data-name="{{name}}">Edit</button>
+            </th>
+            <td>{{name}}</td>
+            <td>
+              <span class="textAddress">{{address}}</span></td>
+            <td>
+              <button type="button" class="btn btn-etho btnDeleteAddress" data-address="{{address}}">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        {{/addressData}}
+      </tbody>
+    </table>
+  {{else}}
+    <div id="noAddressPresent">You don't have any addresses, create a new one</div>
+  {{/if}}
 </div>
-        
-<div id="dlgCreateAddressAndName" class="modalDialog" data-iziModal-title="Create new address" data-iziModal-subtitle="Enter the name and the address" data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-            <label for="addressName">Address Name:</label>
-            <input type="text" class="form-control" id="addressName">
-        </div>
-        <div class="form-group">
-            <label for="addressHash">Address Hash:</label>
-            <input type="text" class="form-control" id="addressHash">
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnCreateAddressConfirm">Confirm</button>
+
+<div id="dlgCreateAddressAndName" class="modalDialog" data-izimodal-title="Create new address" data-izimodal-subtitle="Enter the name and the address" data-izimodal-icon="icon-home">
+  <div class="modalBody">
+    <div class="form-group">
+      <label for="addressName">Address Name:</label>
+      <input type="text" class="form-control" id="addressName">
     </div>
+    <div class="form-group">
+      <label for="addressHash">Address Hash:</label>
+      <input type="text" class="form-control" id="addressHash">
+    </div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnCreateAddressConfirm">Confirm</button>
+  </div>
 </div>
 
 <!-- The modal to change address name -->
-<div id="dlgChangeAddressName" class="modalDialog" data-iziModal-title="Address Name" data-iziModal-subtitle="Enter the name for this address" data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-            <label for="usr">Type Name:</label>
-            <input type="text" class="form-control" id="inputAddressName">
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeAddressNameConfirm">Confirm</button>
+<div id="dlgChangeAddressName" class="modalDialog" data-izimodal-title="Address Name" data-izimodal-subtitle="Enter the name for this address" data-izimodal-icon="icon-home">
+  <div class="modalBody">
+    <div class="form-group">
+      <label for="usr">Type Name:</label>
+      <input type="text" class="form-control" id="inputAddressName">
     </div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeAddressNameConfirm">Confirm</button>
+  </div>
 </div>
 
 <!-- The modal for delete confirmation -->
-<div id="dlgDeleteAddressConfirm" class="modalDialog" data-iziModal-title="Application Error" data-iziModal-subtitle="Something went wrong, don't kill the fish..." data-iziModal-icon="icon-home">
-    <div class="modalBody">
-        <div class="form-group">
-        <span>Do you really want to delete the address?</span>
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnDeleteAddressCancel">No</button>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnDeleteAddressConfirm">Yes</button>
+<div id="dlgDeleteAddressConfirm" class="modalDialog" data-izimodal-title="Application Error" data-izimodal-subtitle="Something went wrong, don't kill the fish..." data-izimodal-icon="icon-home">
+  <div class="modalBody">
+    <div class="form-group">
+      <span>Do you really want to delete the address?</span>
     </div>
+    <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnDeleteAddressCancel">No</button>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnDeleteAddressConfirm">Yes</button>
+  </div>
 </div>
-      
-    

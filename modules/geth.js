@@ -7,8 +7,9 @@ const os = require("os");
 
 class Geth {
   constructor() {
+    this.isRunning = false;
     this.gethProcess = null;
-    this.logGethEvents = false;
+    this.logGethEvents = true;
     // create the user data dir (needed for MacOS)
     if (!fs.existsSync(app.getPath("userData"))) {
       fs.mkdirSync(app.getPath("userData"));
@@ -48,6 +49,7 @@ class Geth {
   startGeth() {
     // get the path of get and execute the child process
     try {
+      this.isRunning = true;
       const gethPath = path.join(this.binaries, "geth");
       this.gethProcess = child_process.spawn(gethPath, [
         "--ws",
@@ -69,6 +71,12 @@ class Geth {
           dialog.showErrorBox("Error starting application", "Geth failed to start!");
           app.quit();
         });
+        this.gethProcess.on("close", function (err) {
+          if (this.isRunning) {
+            dialog.showErrorBox("Error running the node", "The node stoped working. Wallet will close!");
+            app.quit();
+          }
+        });
         this.gethProcess.stderr.on("data", function (data) {
           EthoGeth._writeLog(data.toString() + "\n");
         });
@@ -83,6 +91,8 @@ class Geth {
   }
 
   stopGeth() {
+    this.isRunning = false;
+
     if (os.type() == "Windows_NT") {
       const gethWrapePath = path.join(this.binaries, "WrapGeth.exe");
       child_process.spawnSync(gethWrapePath, [this.gethProcess.pid]);

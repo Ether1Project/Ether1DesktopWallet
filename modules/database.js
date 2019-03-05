@@ -58,6 +58,7 @@ ipcMain.on("getTransactions", (event, arg) => {
       ResultData.push([
         docs[i].block,
         docs[i].timestamp,
+        docs[i].txhash,
         docs[i].fromaddr,
         docs[i].toaddr,
         docs[i].value

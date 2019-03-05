@@ -134,6 +134,15 @@ body.pg-loaded > .inner {
   height: 300px;
 }
 
+#dlgTransactionInfo {
+  width: 700px;
+  max-width: 700px !important;
+}
+
+#dlgTransactionInfo .modalBody {
+  height: 300px;
+}
+
 #dlgAddAddressToBook .modalBody,
 #dlgChangeWalletName .modalBody,
 #dlgChangeAddressName .modalBody,
@@ -231,6 +240,7 @@ div.sidebar svg {
 
 .dataTables_scrollBody .transactionsBlockNum {
   color: #f92472;
+  cursor: pointer;
 }
 
 .sendWrapper,
@@ -268,7 +278,18 @@ div.sidebar svg {
 
 .sendTXInfo label {
   line-height: 30px;
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+
+.txInfo label {
+  line-height: 30px;
+  margin-left: 5px;
+  font-size: 1em;
+}
+
+.txInfo label + label {
+  color: #7A1336;
+  margin-left: 0px;
 }
 
 .sendTXdivider {

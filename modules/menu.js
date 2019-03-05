@@ -162,7 +162,7 @@ if (process.platform === "darwin") {
 }
 
 ipcMain.on("openURL", (event, arg) => {
-  shell.openExternal("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
+  shell.openExternal(arg);
 });
 
 const menu = Menu.buildFromTemplate(template);
