@@ -54,8 +54,10 @@ class AddressBook {
 
 // the event to tell us that the wallets are rendered
 $(document).on("render_addressBook", function () {
-  new Tablesort(document.getElementById("addressTable"));
-  $("#addressTable").floatThead();
+  if ($("#addressTable").length > 0) {
+    new Tablesort(document.getElementById("addressTable"));
+    $("#addressTable").floatThead();
+  }
 
   $("#btnNewAddress").off("click").on("click", function () {
     $("#dlgCreateAddressAndName").iziModal();

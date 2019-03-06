@@ -96,8 +96,10 @@ class Wallets {
 
 // the event to tell us that the wallets are rendered
 $(document).on("render_wallets", function () {
-  new Tablesort(document.getElementById("addressTable"));
-  $("#addressTable").floatThead();
+  if ($("#addressTable").length > 0) {
+    new Tablesort(document.getElementById("addressTable"));
+    $("#addressTable").floatThead();
+  }
 
   $("#btnNewAddress").off("click").on("click", function () {
     $("#dlgCreateWalletPassword").iziModal();
