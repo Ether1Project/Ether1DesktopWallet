@@ -70,6 +70,34 @@ class Wallets {
     }
   }
 
+  validateImportFromKeyForm() {
+    if (EthoMainGUI.getAppState() == "account") {
+      if (!$("#inputPrivateKey").val()) {
+        EthoMainGUI.showGeneralError("Private key cannot be empty!");
+        return false;
+      }
+
+      if (!$("#keyPasswordFirst").val()) {
+        EthoMainGUI.showGeneralError("Password cannot be empty!");
+        return false;
+      }
+
+      if (!$("#keyPasswordSecond").val()) {
+        EthoMainGUI.showGeneralError("Password cannot be empty!");
+        return false;
+      }
+
+      if ($("#keyPasswordFirst").val() !== $("#keyPasswordSecond").val()) {
+        EthoMainGUI.showGeneralError("Passwords do not match!");
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   renderWalletsState() {
     // clear the list of addresses
     EthoWallets.clearAddressList();
@@ -193,16 +221,19 @@ $(document).on("render_wallets", function () {
     $("#dlgImportFromPrivateKey").iziModal("open");
 
     function doImportFromPrivateKeys() {
-      var account = EthoBlockchain.importFromPrivateKey($("#inputPrivateKey").val());
       $("#dlgImportFromPrivateKey").iziModal("close");
 
-      if (account) {
-        ipcRenderer.sendSync("saveAccount", account[0]);
-        EthoWallets.renderWalletsState();
-
-        iziToast.success({title: "Imported", message: "Account was succesfully imported", position: "topRight", timeout: 2000});
-      } else {
-        EthoMainGUI.showGeneralError("Error importing account from private key!");
+      if (EthoWallets.validateImportFromKeyForm()) {
+        var account = EthoBlockchain.importFromPrivateKey($("#inputPrivateKey").val(), $("#keyPasswordFirst").val(), function (error) {
+          EthoMainGUI.showGeneralError(error);
+        }, function (account) {
+          if (account) {
+            EthoWallets.renderWalletsState();
+            iziToast.success({title: "Imported", message: "Account was succesfully imported", position: "topRight", timeout: 2000});
+          } else {
+            EthoMainGUI.showGeneralError("Error importing account from private key!");
+          }
+        });
       }
     }
 
