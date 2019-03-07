@@ -79,7 +79,7 @@ ipcMain.on("importAccounts", (event, arg) => {
         extensions: ["json"]
       }, {
         name: "All",
-        extensions: ["*.*"]
+        extensions: ["*"]
       }
     ]
   });
