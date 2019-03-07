@@ -130,7 +130,8 @@ body.pg-loaded > .inner {
     height: 200px;
 }
 
-#dlgSendWalletPassword .modalBody {
+#dlgSendWalletPassword .modalBody,
+#dlgImportFromPrivateKey .modalBody {
   height: 300px;
 }
 
@@ -145,8 +146,7 @@ body.pg-loaded > .inner {
 
 #dlgAddAddressToBook .modalBody,
 #dlgChangeWalletName .modalBody,
-#dlgChangeAddressName .modalBody,
-#dlgImportFromPrivateKey .modalBody {
+#dlgChangeAddressName .modalBody {
   height: 150px;
 }
 
