@@ -131,6 +131,18 @@ $(document).on("render_addressBook", function () {
     });
   });
 
+  $(".btnShowQRCode").off("click").on("click", function () {
+    var QRCodeAddress = $(this).attr("data-address");
+    $("#dlgShowAddressQRCode").iziModal();
+    $("#addrQRCode").html("");
+    $("#addrQRCode").qrcode(QRCodeAddress);
+    $("#dlgShowAddressQRCode").iziModal("open");
+
+    $("#btnScanQRCodeClose").off("click").on("click", function () {
+      $("#dlgShowAddressQRCode").iziModal("close");
+    });
+  });
+
   $(".textAddress").off("click").on("click", function () {
     EthoMainGUI.copyToClipboard($(this).html());
 

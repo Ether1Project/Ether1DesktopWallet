@@ -121,6 +121,10 @@ body.pg-loaded > .inner {
   height: 100px;
 }
 
+#dlgShowAddressQRCode .modalBody {
+  height: 300px;
+}
+
 #dlgAboutInfo .modalBody {
   height: 180px;
 }
@@ -424,4 +428,8 @@ div.noAddressWrapper {
 
 #chartMarketPrice {
   height: calc(100vh - 260px);
+}
+
+#addrQRCode {
+  text-align: center;
 }

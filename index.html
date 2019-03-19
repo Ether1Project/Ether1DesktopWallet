@@ -44,6 +44,7 @@
     <script src="./assets/scripts/jquery.floatThead.min.js"></script>
     <script src="./assets/scripts/tablesort.min.js"></script>
     <script src="./assets/scripts/tablesort.number.min.js"></script>
+    <script src="./assets/scripts/jquery.qrcode.min.js"></script>
     <script src="./assets/scripts/all.min.js"></script>
     <script src="./assets/scripts/Chart.js"></script>
 
@@ -162,5 +163,13 @@
       </div>
     </div>
   </body>
+
+  <!-- The modal for QR-Code info -->
+  <div id="dlgShowAddressQRCode" class="modalDialog" data-izimodal-title="Address QR-Code" data-izimodal-subtitle="Scan the QR-Code to get the address..." data-izimodal-icon="icon-home">
+    <div class="modalBody">
+      <div id="addrQRCode"></div>
+      <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnScanQRCodeClose">Close</button>
+    </div>
+  </div>
 
 </html>

@@ -167,6 +167,18 @@ $(document).on("render_wallets", function () {
     EthoTransactions.renderTransactions();
   });
 
+  $(".btnShowQRCode").off("click").on("click", function () {
+    var QRCodeAddress = $(this).attr("data-address");
+    $("#dlgShowAddressQRCode").iziModal();
+    $("#addrQRCode").html("");
+    $("#addrQRCode").qrcode(QRCodeAddress);
+    $("#dlgShowAddressQRCode").iziModal("open");
+
+    $("#btnScanQRCodeClose").off("click").on("click", function () {
+      $("#dlgShowAddressQRCode").iziModal("close");
+    });
+  });
+
   $(".btnChangWalletName").off("click").on("click", function () {
     var walletAddress = $(this).attr("data-wallet");
     var walletName = $(this).attr("data-name");

@@ -27,6 +27,9 @@
               <button type="button" class="btn btn-etho btnDeleteAddress" data-address="{{address}}">
                 <i class="far fa-trash-alt"></i>
               </button>
+              <button type="button" class="btn btn-etho btnShowQRCode" data-address="{{address}}">
+                <i class="fas fa-qrcode"></i>
+              </button>
             </td>
           </tr>
         {{/addressData}}
@@ -63,7 +66,7 @@
 </div>
 
 <!-- The modal for delete confirmation -->
-<div id="dlgDeleteAddressConfirm" class="modalDialog" data-izimodal-title="Application Error" data-izimodal-subtitle="Something went wrong, don't kill the fish..." data-izimodal-icon="icon-home">
+<div id="dlgDeleteAddressConfirm" class="modalDialog" data-izimodal-title="Delete Address" data-izimodal-icon="icon-home">
   <div class="modalBody">
     <div class="form-group">
       <span>Do you really want to delete the address?</span>
