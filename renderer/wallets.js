@@ -114,7 +114,7 @@ class Wallets {
       $(document).trigger("render_wallets");
       EthoWallets.enableButtonTooltips();
 
-      $("#labelSumDollars").html(vsprintf("/ %.2f $ / %.4f $ per ETHO", [
+      $("#labelSumDollars").html(vsprintf("/ %.2f $ / %.4f $ per XERO", [
         data.sumBalance * EthoWallets._getPrice(),
         EthoWallets._getPrice()
       ]));

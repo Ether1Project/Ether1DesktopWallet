@@ -5,7 +5,7 @@
 .dt-button { 
   margin-left: 10px !important;
   color: #ffffff !important; 
-  background-color: #7A1336 !important; 
+  background-color: #308968 !important; 
   border: 1px solid #450118 !important; 
   background-image: none !important; 
 } 
@@ -15,7 +15,7 @@
 .dt-button.active, 
 .open .dropdown-toggle.dt-button { 
   color: #ffffff !important; 
-  background-color: #B01549 !important; 
+  background-color: #3cc492 !important; 
   border: 1px solid #450118 !important; 
   background-image: none !important; 
 } 
@@ -40,12 +40,12 @@ fieldset[disabled] .dt-button:active,
 .dt-button.disabled.active, 
 .dt-button[disabled].active, 
 fieldset[disabled] .dt-button.active { 
-  background-color: #7A1336 !important; 
+  background-color: #308968 !important; 
   border-color: #450118 !important; 
 } 
   
 .dt-button .badge { 
-  color: #7A1336 !important; 
+  color: #308968 !important; 
   background-color: #ffffff !important; 
 }  
 
