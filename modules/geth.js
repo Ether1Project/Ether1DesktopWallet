@@ -60,7 +60,9 @@ class Geth {
         "--wsport",
         "8546",
         "--wsapi",
-        "admin,db,eth,net,miner,personal,web3"
+        "admin,db,eth,net,miner,personal,web3",
+        "--networkid",
+        "1313114"
       ]);
 
       if (!this.gethProcess) {
