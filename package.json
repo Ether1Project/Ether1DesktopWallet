@@ -22,24 +22,32 @@
       "target": "7z",
       "icon": "build/icon.png",
       "artifactName": "Windows-${productName}-${version}.${ext}",
-      "extraResources": ["bin/win/*"]
+      "extraResources": [
+        "bin/win/*"
+      ]
     },
     "linux": {
       "target": "tar.gz",
       "icon": "build/icon.icns",
       "artifactName": "Linux-${productName}-${version}.${ext}",
-      "extraResources": ["bin/linux/*"]
+      "extraResources": [
+        "bin/linux/*"
+      ]
     },
     "mac": {
       "target": "pkg",
       "icon": "build/icon.icns",
       "artifactName": "MacOS-${productName}-${version}.${ext}",
-      "extraResources": ["bin/macos/*"]
+      "extraResources": [
+        "bin/macos/*"
+      ]
     }
   },
   "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
   "keywords": [
-    "Ether1", "Desktop", "Wallet"
+    "Ether1",
+    "Desktop",
+    "Wallet"
   ],
   "author": "Ether1",
   "license": "CC0-1.0",
