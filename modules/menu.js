@@ -39,7 +39,7 @@ const template = [
         label: "Reload",
         accelerator: "CmdOrCtrl+R",
         click(item, focusedWindow) {
-          if (focusedWindow) 
+          if (focusedWindow)
             focusedWindow.reload();
           }
         }, {
@@ -48,7 +48,7 @@ const template = [
           ? "Alt+Command+I"
           : "Ctrl+Shift+I",
         click(item, focusedWindow) {
-          if (focusedWindow) 
+          if (focusedWindow)
             focusedWindow.webContents.toggleDevTools();
           }
         }, {
@@ -78,21 +78,21 @@ const template = [
     role: "help",
     submenu: [
       {
-        label: "About Ether1 wallet",
+        label: "About the XERO wallet",
         click() {
           var infoData = {};
           infoData.version = app.getVersion();
           mainWindow.webContents.send("showAboutDialog", infoData);
         }
       }, {
-        label: "Ether1 documentation",
+        label: "XERO documentation",
         click() {
-          shell.openExternal("https://docs.ether1.org");
+          shell.openExternal("https://docs.xerom.org");
         }
       }, {
         label: "Report issue on GitHub",
         click() {
-          shell.openExternal("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
+          shell.openExternal("https://github.com/xero-official/Xero-Wallet/issues");
         }
       }
     ]

@@ -4,7 +4,7 @@ class Wallets {
   constructor() {
     this.addressList = [];
 
-    $.getJSON("https://min-api.cryptocompare.com/data/price?fsym=ETHO&tsyms=USD", function (price) {
+    $.getJSON("https://min-api.cryptocompare.com/data/price?fsym=XERO&tsyms=USD", function (price) {
       EthoWallets._setPrice(price.USD);
     });
   }

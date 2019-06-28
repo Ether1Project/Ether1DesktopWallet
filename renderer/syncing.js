@@ -119,7 +119,7 @@ function StartSyncProcess() {
 
 var InitWeb3 = setInterval(function () {
   try {
-    web3Local = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
+    web3Local = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8549"));
 
     web3Local.eth.net.isListening(function (error, success) {
       if (!error) {

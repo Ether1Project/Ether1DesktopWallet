@@ -1,6 +1,6 @@
 {
   "name": "XEROWallet",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Desktop wallet for XERO currency",
   "main": "main.js",
   "scripts": {
@@ -16,12 +16,11 @@
       "renderer/*",
       "package.json",
       "main.js",
-      "index.html",
-      "embedded.provisionprofile"
+      "index.html"
     ],
     "win": {
       "target": "7z",
-      "icon": "build/icon.png",
+      "icon": "build/icon.ico",
       "artifactName": "Windows-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/win/*"
@@ -46,7 +45,7 @@
   },
   "repository": "https://github.com/xero-official/Xero-Wallet",
   "keywords": [
-    "Xerom",
+    "XERO",
     "Desktop",
     "Wallet"
   ],

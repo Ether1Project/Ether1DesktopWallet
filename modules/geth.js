@@ -58,11 +58,13 @@ class Geth {
         "--wsaddr",
         "127.0.0.1",
         "--wsport",
-        "8546",
+        "8549",
         "--wsapi",
         "admin,db,eth,net,miner,personal,web3",
         "--networkid",
-        "1313121"
+        "1313500",
+        "--syncmode",
+        "full"
       ]);
 
       if (!this.gethProcess) {
@@ -75,7 +77,7 @@ class Geth {
         });
         this.gethProcess.on("close", function (err) {
           if (this.isRunning) {
-            dialog.showErrorBox("Error running the node", "The node stoped working. Wallet will close!");
+            dialog.showErrorBox("Error running the node", "The node stoped working. The Wallet will close!");
             app.quit();
           }
         });

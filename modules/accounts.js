@@ -10,10 +10,10 @@ class Accounts {
   getKeyStoreLocation() {
     switch (os.type()) {
       case "Darwin":
-        return path.join(os.homedir(), "Library", "Ether1", "keystore");
+        return path.join(os.homedir(), "Library", "Xerom", "keystore");
         break;
       default:
-        return path.join(process.env.APPDATA, "Ether1", "keystore");
+        return path.join(process.env.APPDATA, "Xerom", "keystore");
     }
   }
 
