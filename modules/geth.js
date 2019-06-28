@@ -59,6 +59,8 @@ class Geth {
         "127.0.0.1",
         "--wsport",
         "8549",
+        "--port",
+        "30307",
         "--wsapi",
         "admin,db,eth,net,miner,personal,web3",
         "--networkid",
