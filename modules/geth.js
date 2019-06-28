@@ -50,7 +50,7 @@ class Geth {
     // get the path of get and execute the child process
     try {
       this.isRunning = true;
-      const gethPath = path.join(this.binaries, "xgeth");
+      const gethPath = path.join(this.binaries, "geth");
       this.gethProcess = child_process.spawn(gethPath, [
         "--ws",
         "--wsorigins",
