@@ -1,17 +1,20 @@
 html {
-  color: #aaa;
-  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* hide / show the body when the loader is finished */
-body > .inner {
+body>.inner {
   display: none;
 }
 
-body.pg-loaded > .inner {
+body.pg-loaded>.inner {
   display: block;
 }
+
+/* Fallen */
+
 
 /* Style the sidebar - fixed full height */
 .sidebar {
@@ -49,8 +52,7 @@ body.pg-loaded > .inner {
   padding-left: 5px;
 }
 
-#syncProgress
-{
+#syncProgress {
   height: 20px;
   position: fixed;
   z-index: 1;
@@ -61,8 +63,7 @@ body.pg-loaded > .inner {
   border-top: 1px solid #000;
 }
 
-#mainContent
-{
+#mainContent {
   position: fixed;
   z-index: 1;
   left: 120px;
@@ -74,14 +75,20 @@ body.pg-loaded > .inner {
 
 /* Style the main content */
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 160px;
+  /* Same as the width of the sidenav */
   padding: 0px 10px;
 }
 
 /* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
 }
 
 .sidebarIcon {
@@ -131,7 +138,7 @@ body.pg-loaded > .inner {
 
 #dlgCreateWalletPassword .modalBody,
 #dlgCreateAddressAndName .modalBody {
-    height: 200px;
+  height: 200px;
 }
 
 #dlgSendWalletPassword .modalBody,
@@ -193,7 +200,6 @@ body.pg-loaded > .inner {
   height: 60px;
 }
 
-
 #transactionsWrapper {
   color: #aaa;
   padding-top: 10px;
@@ -248,8 +254,7 @@ div.sidebar svg {
 }
 
 .sendWrapper,
-.settingsWrapper
-{
+.settingsWrapper {
   padding: 30px;
 }
 
@@ -291,7 +296,7 @@ div.sidebar svg {
   font-size: 1em;
 }
 
-.txInfo label + label {
+.txInfo label+label {
   color: #308968;
   margin-left: 0px;
 }
@@ -376,7 +381,6 @@ div.sidebar svg {
 
 div.noWalletsWrapper,
 div.noAddressWrapper {
-
   display: flex;
   align-items: center;
   justify-content: center;

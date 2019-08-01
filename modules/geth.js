@@ -66,7 +66,7 @@ class Geth {
         "--networkid",
         "1313500",
         "--syncmode",
-        "full"
+        "light"
       ]);
 
       if (!this.gethProcess) {

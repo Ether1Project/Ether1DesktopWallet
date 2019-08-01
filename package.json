@@ -1,6 +1,6 @@
 {
   "name": "XEROWallet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Desktop wallet for XERO currency",
   "main": "main.js",
   "scripts": {
@@ -55,6 +55,7 @@
     "@unibeautify/beautifier-js-beautify": "^0.4.0",
     "adm-zip": "^0.4.13",
     "app-root-path": "^2.1.0",
+    "electron-reload": "^1.4.1",
     "electron-storage": "^1.0.7",
     "fs-extra": "^7.0.1",
     "handlebars": "^4.1.0",
