@@ -1,6 +1,6 @@
 {
   "name": "XEROWallet",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Desktop wallet for XERO currency",
   "main": "main.js",
   "scripts": {
