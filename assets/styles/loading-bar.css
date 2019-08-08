@@ -1,0 +1,21 @@
+.syncProgress {
+  position: relative;
+}
+
+.syncProgress.label-center>.syncProgress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 3px #fff
+}
+
+.syncProgress-label:after {
+  content: "%";
+  display: inline
+}
+
+.syncProgress.no-percent .syncProgress-label:after {
+  content: ""
+}

@@ -14,8 +14,7 @@ body.pg-loaded>.inner {
 }
 
 /* Fallen */
-
-
+/* Fallen */
 /* Style the sidebar - fixed full height */
 .sidebar {
   height: 100%;
@@ -40,7 +39,7 @@ body.pg-loaded>.inner {
 
 /* Style links on mouse-over */
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: #fff;
 }
 
 #peerCount {

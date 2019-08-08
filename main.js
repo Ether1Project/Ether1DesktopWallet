@@ -8,13 +8,6 @@ const {
 const singleInstance = require("single-instance");
 const path = require("path");
 const fs = require("fs");
-const electron = require('electron')
-
-// Enable live reload for Electron too
-require('electron-reload')(__dirname, {
-  // Note that the path to electron may vary according to the main file
-  electron: require(`${__dirname}/node_modules/electron`)
-});
 
 var locker = new singleInstance("Ether1DesktopWallet");
 
