@@ -6,7 +6,9 @@
   "scripts": {
     "start": "electron .",
     "pack": "build --dir",
-    "dist": "build"
+    "dist-win": "build --platform=win --arch=x64",
+    "dist-linux": "build --platform=linux --arch=x64",
+    "dist-osx": "build --platform=mac --arch=x64"
   },
   "build": {
     "appId": "com.xerom.wallet",
