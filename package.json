@@ -1,12 +1,14 @@
 {
   "name": "Ether1Wallet",
   "version": "0.3.1",
-  "description": "Desktop wallet for Ether1 currency",
+  "description": "Desktop wallet for Ether-1 ($ETHO)",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "build --dir",
-    "dist": "build"
+    "pack-win": "build --windows --dir",
+    "dist-win": "build --platform=win --arch=x64",
+    "dist-linux": "build --platform=linux --arch=x64",
+    "dist-osx": "build --platform=mac --arch=x64"
   },
   "build": {
     "appId": "Ether1DesktopWallet",
