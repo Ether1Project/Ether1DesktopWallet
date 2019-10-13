@@ -219,30 +219,30 @@
               </h4>
             </div>
             <div class="modal-body">
-              <center>
-                <h4>ETHOFS BROWSER NODE INFORMATION</h4>
-                <br>
-              </center>
-              <div>
-                <h4>Ether-1 Address:</h4>
-                <pre class="etho-message" style="color:white; background-color: Black;"></pre>
-              </div>
-              <div>
-                <h4>ethoFS Node ID:</h4>
-                <pre class="node-id" style="color:white; background-color: Black;"></pre>
-              </div>
-              <div>
-                <h4>Status:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
+              <main>
+                <center>
+                  <h4>ETHOFS BROWSER NODE INFORMATION</h4>
+                  <br>
+                </center>
                 <div>
-                  <pre id="logs" class="success">Initializing node...</pre>
+                  <h4>Ether-1 Address:</h4>
+                  <pre class="etho-message" style="color:white; background-color: Black;"></pre>
                 </div>
-                <h4>Peer Health:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
-                <div id="peer-count-div">
-                  <pre id="peercount">
-																						<div id="myPeerBar"></div>
-																					</pre>
+                <div>
+                  <h4>ethoFS Node ID:</h4>
+                  <pre class="node-id" style="color:white; background-color: Black;"></pre>
                 </div>
-              </div>
+                <div>
+                  <h4>Status:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
+                  <div>
+                    <pre id="logs" class="success">Initializing node...</pre>
+                  </div>
+                  <h4>Peer Health:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
+                  <div id="peer-count-div">
+                    <div id="myPeerBar"></div>
+                  </div>
+                </div>
+              </main>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
@@ -251,6 +251,8 @@
           </div>
         </div>
       </div>
+
+      <!--Upload Modal -->
       <div class="modal fade" id="defaultModal2" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="background-color: #840032;">
@@ -258,7 +260,7 @@
               <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
                 Live Upload | ethoFS Browser Node</h4>
             </div>
-            <div class="modal-body" style="width:100%; background: #000000; background-color: #000;">
+            <div class="modal-body" style="width:100%; background-color: #840032;">
               <div id="files" class="box" ondragover="event.preventDefault()">
                 <h4 align="center">Upload Your Files</h4>
                 <div id="drag-container" style="width:100%; background: #000000; background-color: #000;">
@@ -286,7 +288,6 @@
                 </table>
               </div>
             </div>
-          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
             <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal" data-target="#defaultModal3">NEXT</button>
@@ -294,6 +295,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="defaultModal3" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #840032;">
@@ -304,13 +306,13 @@
           </div>
           <div class="modal-body" style="width:100%; background: #000000;">
             <main>
-              <table class="rwd-table" name="contract-detail-table" style="width:100%; background: #000000;">
+              <table class="rwd-table" name="contract-detail-table" style="width:100%;">
                 <tr style="border-color:#000;">
                   <th>Contract Name</th>
                 </tr>
                 <tr style="border-color:#000;">
                   <td data-th="Contract Name">
-                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:Black;">
+                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
                   </td>
                 </tr>
                 <tr>
@@ -323,42 +325,31 @@
                   <th>Upload Size</th>
                   <td data-th="Upload Size">
                     <span id="upload-size">0</span> MB
-
                   </td>
                 </tr>
                 <tr>
                   <th>Contract Duration (Blocks)</th>
                   <td data-th="Contract Duration (Blocks)">
                     <select id="contract-duration" onchange="contractDurationChange(this);">
-                      <option value="100000" selected="selected">100000
-                        - 15 Days
+                      <option value="100000" selected="selected">100000 - 15 Days
                       </option>
-                      <option value="200000">200000
-                        - 30 Days
+                      <option value="200000">200000 - 30 Days
                       </option>
-                      <option value="300000">300000
-                        - 45 Days
+                      <option value="300000">300000 - 45 Days
                       </option>
-                      <option value="400000">400000
-                        - 60 Days
+                      <option value="400000">400000 - 60 Days
                       </option>
-                      <option value="500000">500000
-                        - 75 Days
+                      <option value="500000">500000 - 75 Days
                       </option>
-                      <option value="600000">600000
-                        - 90 Days
+                      <option value="600000">600000 - 90 Days
                       </option>
-                      <option value="700000">700000
-                        - 105 Days
+                      <option value="700000">700000 - 105 Days
                       </option>
-                      <option value="800000">800000
-                        - 120 Days
+                      <option value="800000">800000 - 120 Days
                       </option>
-                      <option value="900000">900000
-                        - 135 Days
+                      <option value="900000">900000 - 135 Days
                       </option>
-                      <option value="1000000">1000000
-                        - 150 Days
+                      <option value="1000000">1000000 - 150 Days
                       </option>
                     </select>
                   </td>
@@ -371,7 +362,7 @@
                 </tr>
               </table>
 
-              <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+              <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="window.startUploadProcess();">CONFIRM</button>
               </div>

@@ -5877,7 +5877,6 @@ button.close {
   left: 0;
   z-index: 1050;
   display: none;
-  overflow: hidden;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
@@ -5896,10 +5895,8 @@ button.close {
        -o-transform: translate(0, 0);
           transform: translate(0, 0);
 }
-.modal-open .modal {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
+.modal-open .modal {}
+
 .modal-dialog {
   position: relative;
   width: auto;
@@ -5957,7 +5954,6 @@ button.close {
   border-top: 1px solid #e5e5e5;
 }
 .modal-footer .btn + .btn {
-  margin-bottom: 0;
   margin-left: 5px;
 }
 .modal-footer .btn-group .btn + .btn {
