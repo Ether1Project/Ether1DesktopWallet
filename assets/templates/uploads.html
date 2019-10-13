@@ -1,19 +1,25 @@
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-<!-- Bootstrap Core Css -->
-<link href="assets/dashboard/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-<!-- Waves Effect Css -->
-<link href="assets/dashboard/plugins/node-waves/waves.css" rel="stylesheet" />
-<!-- Animation Css -->
-<link href="assets/dashboard/plugins/animate-css/animate.css" rel="stylesheet" />
-<!-- Morris Chart Css
+<head>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  <!-- Bootstrap Core Css -->
+  <link href="assets/dashboard/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <!-- Waves Effect Css -->
+  <link href="assets/dashboard/plugins/node-waves/waves.css" rel="stylesheet" />
+  <!-- Animation Css -->
+  <link href="assets/dashboard/plugins/animate-css/animate.css" rel="stylesheet" />
+  <!-- Morris Chart Css
 <link href="assets/dashboard/plugins/morrisjs/morris.css" rel="stylesheet" />-->
-<!-- Custom Css -->
-<link href="assets/dashboard/css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-<!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-<link href="assets/dashboard/css/themes/all-themes.css" rel="stylesheet" />
+  <!-- Custom Css -->
+  <link href="assets/dashboard/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+  <link href="assets/dashboard/css/themes/all-themes.css" rel="stylesheet" />
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://medium-widget.pixelpoint.io/widget.js"></script>
+
+</head>
+
 <div class="marketStats">
   <!-- #END# Page Loader -->
   <!-- Overlay For Sidebars -->
@@ -84,8 +90,21 @@
         </div>
       </div>
       <!-- #END# Widgets -->
-      <!-- CPU Usage-->
       <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+          <div class="card">
+            <div class="header bg-indigo">
+              <h2>
+                What is ethoFS?
+              </h2>
+            </div>
+            <div class="body">
+              <div id="medium-widget" style="overflow: auto;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CPU Usage-->
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
             <div class="header bg-indigo">
@@ -650,6 +669,7 @@
       module = undefined;
     }
   </script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
   <!-- Jquery Core Js -->
   <script src="assets/dashboard/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap Core Js -->
@@ -668,8 +688,23 @@
   <script src="assets/dashboard/js/misc.js"></script>
   <!-- Demo Js -->
   <script src="assets/dashboard/js/demo.js"></script>
+  <script src="assets/dashboard/js/medium.js"></script>
+  <script>
+    MediumWidget.Init({
+      renderTo: '#medium-widget',
+      params: {
+        "resource": "https://medium.com/@Ether1Official",
+        "postsPerLine": 1,
+        "limit": 10,
+        "picture": "small",
+        "fields": ["description", "publishAt"],
+        "ratio": "landscape"
+      }
+    })
+  </script>
   <script>
     if (window.module)
       module = window.module;
   </script>
+
 </div>
