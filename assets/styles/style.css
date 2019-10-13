@@ -25,7 +25,7 @@ body.pg-loaded > .inner {
   overflow-x: hidden;
   padding-top: 16px;
 }
-  
+
 /* Style sidebar links */
 .sidebar a {
   padding: 6px 8px 6px 16px;
@@ -48,7 +48,7 @@ body.pg-loaded > .inner {
   font-size: 0.8em;
   padding-left: 5px;
 }
- 
+
 #syncProgress
 {
   height: 20px;
@@ -70,6 +70,7 @@ body.pg-loaded > .inner {
   right: 0;
   bottom: 20px;
   background-color: #212529;
+  overflow-y: auto;
 }
 
 /* Style the main content */
@@ -77,7 +78,7 @@ body.pg-loaded > .inner {
   margin-left: 160px; /* Same as the width of the sidenav */
   padding: 0px 10px;
 }
-  
+
 /* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
@@ -92,15 +93,15 @@ body.pg-loaded > .inner {
 
 .sidebarIconWrapper {
   width: 100%;
-  height: 80px;  
+  height: 80px;
   display: inline-block;
   text-align: center;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 
 #sumBalance {
   float: right;
-  line-height: 38px;  
+  line-height: 38px;
   margin-right: 10px;
 }
 
@@ -201,7 +202,7 @@ body.pg-loaded > .inner {
 
 div.iconSelected {
   background-color: ivory;
-  border: 1px solid slategray;  
+  border: 1px solid slategray;
 }
 
 div.loadingText {
@@ -228,7 +229,7 @@ div.sidebar svg {
 }
 
 #tableTransactionsForAll_filter input {
-  width: 400px;  
+  width: 400px;
   color: #aaa;
   padding: 12px 10px;
   display: inline-block;
@@ -400,7 +401,7 @@ div.noAddressWrapper {
 
 .btnSendToolButton {
   width: 40px;
-  padding: 0px; 
+  padding: 0px;
 }
 
 #btnAddToAddressBook {
