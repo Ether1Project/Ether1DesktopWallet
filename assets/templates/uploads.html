@@ -288,369 +288,368 @@
                 </table>
               </div>
             </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal" data-target="#defaultModal3">NEXT</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+              <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal" data-target="#defaultModal3">NEXT</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="defaultModal3" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #840032;">
-          <div class="modal-header">
-            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-              Live Upload | ethoFS Browser Node
-            </h4>
-          </div>
-          <div class="modal-body" style="width:100%; background: #000000;">
-            <main>
-              <table class="rwd-table" name="contract-detail-table" style="width:100%;">
-                <tr style="border-color:#000;">
-                  <th>Contract Name</th>
-                </tr>
-                <tr style="border-color:#000;">
-                  <td data-th="Contract Name">
-                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
-                  </td>
-                </tr>
-                <tr>
-                  <th>ethoFS Upload Status</th>
-                  <td data-th="ethoFS Upload Hash">
-                    <span id="upload-hash"></span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Upload Size</th>
-                  <td data-th="Upload Size">
-                    <span id="upload-size">0</span> MB
-                  </td>
-                </tr>
-                <tr>
-                  <th>Contract Duration (Blocks)</th>
-                  <td data-th="Contract Duration (Blocks)">
-                    <select id="contract-duration" onchange="contractDurationChange(this);">
-                      <option value="100000" selected="selected">100000 - 15 Days
-                      </option>
-                      <option value="200000">200000 - 30 Days
-                      </option>
-                      <option value="300000">300000 - 45 Days
-                      </option>
-                      <option value="400000">400000 - 60 Days
-                      </option>
-                      <option value="500000">500000 - 75 Days
-                      </option>
-                      <option value="600000">600000 - 90 Days
-                      </option>
-                      <option value="700000">700000 - 105 Days
-                      </option>
-                      <option value="800000">800000 - 120 Days
-                      </option>
-                      <option value="900000">900000 - 135 Days
-                      </option>
-                      <option value="1000000">1000000 - 150 Days
-                      </option>
-                    </select>
-                  </td>
-                </tr>
-                <tr style="border-color:#0000;">
-                  <th>Total Contract Cost</th>
-                  <td data-th="Total Contract Cost">
-                    <span id="contract-cost">0</span> ETHO
-                  </td>
-                </tr>
-              </table>
+      <div class="modal fade" id="defaultModal3" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background-color: #840032;">
+            <div class="modal-header">
+              <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+                Live Upload | ethoFS Browser Node
+              </h4>
+            </div>
+            <div class="modal-body" style="width:100%; background: #000000;">
+              <main>
+                <table class="rwd-table" name="contract-detail-table" style="width:100%;">
+                  <tr style="border-color:#000;">
+                    <th>Contract Name</th>
+                  </tr>
+                  <tr style="border-color:#000;">
+                    <td data-th="Contract Name">
+                      <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>ethoFS Upload Status</th>
+                    <td data-th="ethoFS Upload Hash">
+                      <span id="upload-hash"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Upload Size</th>
+                    <td data-th="Upload Size">
+                      <span id="upload-size">0</span> MB
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Contract Duration (Blocks)</th>
+                    <td data-th="Contract Duration (Blocks)">
+                      <select id="contract-duration" onchange="contractDurationChange(this);">
+                        <option value="100000" selected="selected">100000</option>
+                        <option value="200000">200000</option>
+                        <option value="300000">300000</option>
+                        <option value="400000">400000</option>
+                        <option value="500000">500000</option>
+                        <option value="600000">600000</option>
+                        <option value="700000">700000</option>
+                        <option value="800000">800000</option>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="window.startUploadProcess();">CONFIRM</button>
-              </div>
-            </main>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="uploadTrackerModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #840032;">
-          <div class="modal-header">
-            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;" onclick="updateContractTable();">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <br>
-              <center>
-                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
-              </center>
-          </div>
-          <div class="modal-body">
-            <main>
-              <div class="box node" style="width:100%; background: #000000;">
-                <h3 style="padding: 10px;">ethoFS Upload Status:
-                  <span id="upload-status-message" style="color: #3CB371; text-align: center !important;">In Progress</span>
-                </h3>
-                <div>
-                  <h3 style="padding-left:10px;">Message Log:</h3>
-                  <span class="upload-message" style="color: #3CB371; font-size: 24px; padding: 10px"></span>
+                        <option value="900000">900000</option>
+
+                        <option value="1000000">1000000</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr style="border-color:#0000;">
+                    <th>Total Contract Cost</th>
+                    <td data-th="Total Contract Cost">
+                      <span id="contract-cost">0</span> ETHO
+                    </td>
+                  </tr>
+                </table>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="window.startUploadProcess();">CONFIRM</button>
                 </div>
-                <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
-                  <div id="myBar">0%</div>
-                </div>
-              </div>
-            </main>
-          </div>
-          <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-            <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
+              </main>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #840032;">
-          <div class="modal-header">
-            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-              <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close" style="color:#ffffff;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <br>
-              <center>
-                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
-              </center>
-
-              <div class="modal-body">
-              </div>
+      <div class="modal fade" id="uploadTrackerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background-color: #840032;">
+            <div class="modal-header">
+              <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;" onclick="updateContractTable();">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <br>
+                <center>
+                  <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+                </center>
+            </div>
+            <div class="modal-body">
               <main>
                 <div class="box node" style="width:100%; background: #000000;">
-                  <h4 style="padding: 20px;">Data Upload Status:
-                    <span id="analyze-status-message" style="color: #3CB371; font-size: 24px;">Analyzing Upload Data</span>
-                  </h4>
+                  <h3 style="padding: 10px;">ethoFS Upload Status:
+                    <span id="upload-status-message" style="color: #3CB371; text-align: center !important;">In Progress</span>
+                  </h3>
                   <div>
-                    <h4 style="padding-left:10px;">Message Log:</h4>
-                    <pre class="analyze-message" style="color: #3CB371; font-size: 24px;"></pre>
+                    <h3 style="padding-left:10px;">Message Log:</h3>
+                    <span class="upload-message" style="color: #3CB371; font-size: 24px; padding: 10px"></span>
                   </div>
                   <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
-                    <div id="myAnalyzeBar">0%</div>
+                    <div id="myBar">0%</div>
                   </div>
-                </div>
-
-
-                <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-                  <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
-                </div>
-              </main>
-          </div>
-        </div>
-      </div>
-      <!-- end analyze data modal -->
-      <!-- begin mined block checking modal -->
-      <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" style="background-color: #840032;">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Waiting
-                For Confirmation | ethoFS Block Tracker</h5>
-              <br>
-              <center>
-                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
-              </center>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <main>
-                <div class="box node" style="width:100%; background: #000000; background-color: #000;">
-                  <h3 style="padding: 20px;">Ether-1 Transaction Status:
-                    <span id="mining-status-message" style="color: #3CB371; font-size: 24px; text-align: center !important;">In
-                      Progress</span>
-                  </h3>
-                  <div>
-                    <h3 style="padding-left:20px;">Message Log:</h3>
-                    <center>
-                      <span class="mining-message" id="mining-message" style="color: #3CB371; font-size: 24px;"></span>
-                    </center>
-                  </div>
-                  <div class="summary" style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
-                    <h3 style="font-size: 24px;">Current Ether-1 Block Height:
-                      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                      <span id="block-height" style="color: #3CB371; font-size: 24px;">0</span>
-                    </h3>
-                  </div>
-                </div>
-              </main>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end mined block checking modal -->
-      <!-- begin preparing upload modal -->
-      <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" style="background-color: #840032;">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Preparing
-                Data Upload | ethoFS Block Tracker</h5>
-              <br>
-              <center>
-                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
-              </center>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <main>
-                <div class="box node" style="width:100%; background: #000000;">
-                  <h3 style="padding: 20px;">ETHOFS UPLOAD STATUS:
-                    <span id="preparing-status-message" style="color: #3CB371; font-size: 24px;">PREPARING UPLOAD</span>
-                  </h3>
-                  <div>
-                    <h3 style="padding-left:20px;">Message Log:</h3>
-                    <span class="mining-message" id="preparing-message" style="color: #3CB371;">Preparing Data For Upload</span>
-                  </div>
-                </div>
-              </main>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end preparing upload modal -->
-      <!-- begin contract detail modal -->
-      <div class="modal fade" id="contractDetailModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" style="background-color: #840032;">
-            <div class="modal-header">
-              <h4 class="modal-title" id="defaultModalLabel" style="color:white;">ethoFS Hosting Contract
-                Details</h4>
-              <br>
-              <center>
-                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
-              </center>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;" onclick="resetContractDetailTableRows();">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <main>
-                <div class="box node" style="width:100%;">
-                  <center>
-                    <h3>ETHOFS HOSTING CONTRACT DETAILS</h3>
-                  </center>
-                </div>
-                <div class="summary" style="background: #000000; background-color: #000">
-                  <div id="earth"></div>
-                  <div class="box node" style="width:100%; background: #000000;">
-                    <table class="rwd-table" id="contract-detail-table" name="contract-detail-table">
-                      <tr style="border-color:#000; word-break: break-word;">
-                        <th>Contract Name</th>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <td data-th="Contract Name">
-                          <span id="contract-detail-name" name="contract-detail-name"></span>
-                        </td>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <th>Contract Deployment Block Height</th>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <td data-th="Contract Deployment Block Height">
-                          <span id="contract-detail-startblock" name="contract-detail-startblock"></span>
-                        </td>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <th>Contract Expiration Block Height</th>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <td data-th="Contract Expiration Block Height">
-                          <span id="contract-detail-endblock" name="contract-detail-endblock"></span>
-                        </td>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <th>Contract Status</th>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <td data-th="Contract Status">
-                          <span id="contract-detail-status" name="contract-detail-status"></span>
-                        </td>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <th>Total Contract Size</th>
-                      </tr>
-                      <tr style="border-color:#000;">
-                        <td data-th="Total Contract Size">
-                          <span id="contract-detail-size" name="contract-detail-size"></span>
-                        </td>
-                      </tr>
-                      <tr style="word-break: break-word">
-                        <th>Content Hash</th>
-                      </tr>
-                    </table>
-                  </div>
-                  <table class="rwd-table" id="contract-detail-extension-table" name="contract-detail-table">
-                    <tr>
-                      <th>Contract Extension Duration (Blocks)</th>
-                      <th>Cost</th>
-                    </tr>
-                    <tr>
-                      <td data-th="Contract Duration (Blocks)">
-                        <select class="js-select22" name="extend-contract" id="extend-contract" onchange="contractExtensionChange(this);">
-                          <option value="100000" selected="selected">100000
-                            - 15 Days
-                          </option>
-                          <option value="200000">200000
-                            - 30 Days
-                          </option>
-                          <option value="300000">300000
-                            - 45 Days
-                          </option>
-                          <option value="400000">400000
-                            - 60 Days
-                          </option>
-                          <option value="500000">500000
-                            - 75 Days
-                          </option>
-                          <option value="600000">600000
-                            - 90 Days
-                          </option>
-                          <option value="700000">700000
-                            - 105 Days
-                          </option>
-                          <option value="800000">800000
-                            - 120 Days
-                          </option>
-                          <option value="900000">900000
-                            - 135 Days
-                          </option>
-                          <option value="1000000">1000000
-                            - 150 Days
-                          </option>
-                        </select>
-                      </td>
-                      <td data-th="Cost">
-                        <span id="contract-extension-cost">0</span> ETHO
-                      </td>
-                    </tr>
-                  </table>
-                  <div class="table-data__tool-right" style="margin-left: 15px;">
-                    <button class="btn btn-primary" id="contract-extension-button" type="button" onclick="contractExtensionConfirmation();">Extend Hosting Contract</button>
-                    <br>
-                    <br>
-                  </div>
-
                 </div>
               </main>
             </div>
             <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="resetContractDetailTableRows();">Close</button>
+              <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
             </div>
           </div>
         </div>
       </div>
-      <!-- END MODAL -->
-    </div>
+      <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background-color: #840032;">
+            <div class="modal-header">
+              <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+                <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close" style="color:#ffffff;">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <br>
+                <center>
+                  <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+                </center>
+
+                <div class="modal-body">
+                </div>
+                <main>
+                  <div class="box node" style="width:100%; background: #000000;">
+                    <h4 style="padding: 20px;">Data Upload Status:
+                      <span id="analyze-status-message" style="color: #3CB371; font-size: 24px;">Analyzing Upload Data</span>
+                    </h4>
+                    <div>
+                      <h4 style="padding-left:10px;">Message Log:</h4>
+                      <pre class="analyze-message" style="color: #3CB371; font-size: 24px;"></pre>
+                    </div>
+                    <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                      <div id="myAnalyzeBar">0%</div>
+                    </div>
+                  </div>
+
+
+                  <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+                    <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
+                  </div>
+                </main>
+            </div>
+          </div>
+        </div>
+        <!-- end analyze data modal -->
+        <!-- begin mined block checking modal -->
+        <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #840032;">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Waiting
+                  For Confirmation | ethoFS Block Tracker</h5>
+                <br>
+                <center>
+                  <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+                </center>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <main>
+                  <div class="box node" style="width:100%; background: #000000; background-color: #000;">
+                    <h3 style="padding: 20px;">Ether-1 Transaction Status:
+                      <span id="mining-status-message" style="color: #3CB371; font-size: 24px; text-align: center !important;">In
+                        Progress</span>
+                    </h3>
+                    <div>
+                      <h3 style="padding-left:20px;">Message Log:</h3>
+                      <center>
+                        <span class="mining-message" id="mining-message" style="color: #3CB371; font-size: 24px;"></span>
+                      </center>
+                    </div>
+                    <div class="summary" style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
+                      <h3 style="font-size: 24px;">Current Ether-1 Block Height:
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <span id="block-height" style="color: #3CB371; font-size: 24px;">0</span>
+                      </h3>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end mined block checking modal -->
+        <!-- begin preparing upload modal -->
+        <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #840032;">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Preparing
+                  Data Upload | ethoFS Block Tracker</h5>
+                <br>
+                <center>
+                  <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+                </center>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <main>
+                  <div class="box node" style="width:100%; background: #000000;">
+                    <h3 style="padding: 20px;">ETHOFS UPLOAD STATUS:
+                      <span id="preparing-status-message" style="color: #3CB371; font-size: 24px;">PREPARING UPLOAD</span>
+                    </h3>
+                    <div>
+                      <h3 style="padding-left:20px;">Message Log:</h3>
+                      <span class="mining-message" id="preparing-message" style="color: #3CB371;">Preparing Data For Upload</span>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end preparing upload modal -->
+        <!-- begin contract detail modal -->
+        <div class="modal fade" id="contractDetailModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #840032;">
+              <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel" style="color:white;">ethoFS Hosting Contract
+                  Details</h4>
+                <br>
+                <center>
+                  <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+                </center>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;" onclick="resetContractDetailTableRows();">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <main>
+                  <div class="box node" style="width:100%;">
+                    <center>
+                      <h3>ETHOFS HOSTING CONTRACT DETAILS</h3>
+                    </center>
+                  </div>
+                  <div class="summary" style="background: #000000; background-color: #000">
+                    <div id="earth"></div>
+                    <div class="box node" style="width:100%; background: #000000;">
+                      <table class="rwd-table" id="contract-detail-table" name="contract-detail-table">
+                        <tr style="border-color:#000; word-break: break-word;">
+                          <th>Contract Name</th>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <td data-th="Contract Name">
+                            <span id="contract-detail-name" name="contract-detail-name"></span>
+                          </td>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <th>Contract Deployment Block Height</th>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <td data-th="Contract Deployment Block Height">
+                            <span id="contract-detail-startblock" name="contract-detail-startblock"></span>
+                          </td>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <th>Contract Expiration Block Height</th>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <td data-th="Contract Expiration Block Height">
+                            <span id="contract-detail-endblock" name="contract-detail-endblock"></span>
+                          </td>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <th>Contract Status</th>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <td data-th="Contract Status">
+                            <span id="contract-detail-status" name="contract-detail-status"></span>
+                          </td>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <th>Total Contract Size</th>
+                        </tr>
+                        <tr style="border-color:#000;">
+                          <td data-th="Total Contract Size">
+                            <span id="contract-detail-size" name="contract-detail-size"></span>
+                          </td>
+                        </tr>
+                        <tr style="word-break: break-word">
+                          <th>Content Hash</th>
+                        </tr>
+                      </table>
+                    </div>
+                    <table class="rwd-table" id="contract-detail-extension-table" name="contract-detail-table">
+                      <tr>
+                        <th>Contract Extension Duration (Blocks)</th>
+                        <th>Cost</th>
+                      </tr>
+                      <tr>
+                        <td data-th="Contract Duration (Blocks)">
+                          <select class="js-select22" name="extend-contract" id="extend-contract" onchange="contractExtensionChange(this);">
+                            <option value="100000" selected="selected">100000
+                              - 15 Days
+                            </option>
+                            <option value="200000">200000
+                              - 30 Days
+                            </option>
+                            <option value="300000">300000
+                              - 45 Days
+                            </option>
+                            <option value="400000">400000
+                              - 60 Days
+                            </option>
+                            <option value="500000">500000
+                              - 75 Days
+                            </option>
+                            <option value="600000">600000
+                              - 90 Days
+                            </option>
+                            <option value="700000">700000
+                              - 105 Days
+                            </option>
+                            <option value="800000">800000
+                              - 120 Days
+                            </option>
+                            <option value="900000">900000
+                              - 135 Days
+                            </option>
+                            <option value="1000000">1000000
+                              - 150 Days
+                            </option>
+                          </select>
+                        </td>
+                        <td data-th="Cost">
+                          <span id="contract-extension-cost">0</span> ETHO
+                        </td>
+                      </tr>
+                    </table>
+                    <div class="table-data__tool-right" style="margin-left: 15px;">
+                      <button class="btn btn-primary" id="contract-extension-button" type="button" onclick="contractExtensionConfirmation();">Extend Hosting Contract</button>
+                      <br>
+                      <br>
+                    </div>
+
+                  </div>
+                </main>
+              </div>
+              <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="resetContractDetailTableRows();">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END MODAL -->
+      </div>
   </section>
+
+  <script>
+    if (typeof module === 'object') {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
   <!-- Jquery Core Js -->
   <script src="assets/dashboard/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap Core Js -->
@@ -669,4 +668,8 @@
   <script src="assets/dashboard/js/misc.js"></script>
   <!-- Demo Js -->
   <script src="assets/dashboard/js/demo.js"></script>
+  <script>
+    if (window.module)
+      module = window.module;
+  </script>
 </div>
