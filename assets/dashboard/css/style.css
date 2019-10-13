@@ -1,4 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+
+
 .rwd-table {
   margin: 1em 0;
   min-width: 300px;
@@ -323,8 +325,8 @@
   .navbar .navbar-collapse.in {
     overflow: visible; }
 
-.ls-closed .sidebar {
-  margin-left: -300px; }
+/*.ls-closed .sidebar {
+  margin-left: -300px; }*/
 
 .ls-closed section.content {
   margin-left: 15px; }
@@ -2609,7 +2611,7 @@
 @media (max-width: 767px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: 35px;
+    /*margin-left: 35px;*/
     width: 73%; }
   .navbar .navbar-header {
     display: inline-block;
@@ -2687,7 +2689,7 @@ a {
   animation: none !important; }
 
 section.content {
-  margin: 100px 15px 0 315px;
+  margin: 35px 15px 0 10px;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
   -webkit-transition: 0.5s;
@@ -7006,8 +7008,8 @@ fieldset[disabled] .form-control {
   .navbar .navbar-collapse.in {
     overflow: visible; }
 
-.ls-closed .sidebar {
-  margin-left: -300px; }
+/*.ls-closed .sidebar {
+  margin-left: -300px; }*/
 
 .ls-closed section.content {
   margin-left: 15px; }
@@ -7794,11 +7796,11 @@ fieldset[disabled] .form-control {
   display: none;
   z-index: 10; }
 
-.overlay-open .sidebar {
+/*.overlay-open .sidebar {
   margin-left: 0;
-  z-index: 99999999; }
+  z-index: 99999999; }*/
 
-.sidebar {
+/*.sidebar {
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -7806,7 +7808,6 @@ fieldset[disabled] .form-control {
   font-family: "Roboto", sans-serif;
   background: #000;
   color: white;
-  width: 300px;
   overflow: hidden;
   display: inline-block;
   height: calc(100vh - 70px);
@@ -8022,7 +8023,7 @@ fieldset[disabled] .form-control {
       .right-sidebar .nav-tabs li:first-child {
         width: 45%; }
       .right-sidebar .nav-tabs li:last-child {
-        width: 55%; }
+        width: 55%; }*/
 
 /* Bootstrap Notify ============================ */
 .bootstrap-notify-container {
@@ -8458,7 +8459,7 @@ fieldset[disabled] .form-control {
   border-radius: 0 !important; }
 
 /* For Internet Explorer 10 ===================== */
-html.ie10 .sidebar .menu .list li {
+/*html.ie10 .sidebar .menu .list li {
   line-height: 30px; }
 
 html.ie10 .sidebar .menu .list .ml-menu li.active a:not(.menu-toggle).toggled:before {
@@ -8466,7 +8467,7 @@ html.ie10 .sidebar .menu .list .ml-menu li.active a:not(.menu-toggle).toggled:be
   line-height: 20px !important; }
 
 html.ie10 .sidebar .user-info .info-container {
-  top: 15px; }
+  top: 15px; }*/
 
 html.ie10 .search-bar input[type="text"] {
   padding: 26px 60px 26px 56px; }
@@ -8478,12 +8479,12 @@ html.ie10 .bs-searchbox .form-control {
   width: 90%; }
 
 /* For Internet Explorer 11 ===================== */
-html.ie11 .sidebar .menu .list .ml-menu li.active a:not(.menu-toggle).toggled:before {
+/*html.ie11 .sidebar .menu .list .ml-menu li.active a:not(.menu-toggle).toggled:before {
   top: 6px !important;
   line-height: 20px !important; }
 
 html.ie11 .sidebar .user-info .info-container {
-  top: 15px; }
+  top: 15px; }*/
 
 html.ie11 .search-bar input[type="text"] {
   padding: 26px 60px 26px 56px; }

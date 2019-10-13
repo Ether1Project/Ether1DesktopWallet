@@ -24,6 +24,7 @@ locker.lock().then(function () {
 
     // and load the index.html of the app.
     mainWindow.loadFile("index.html");
+    mainWindow.webContents.openDevTools()
     EthoGeth.startGeth();
 
     // Open the DevTools.
