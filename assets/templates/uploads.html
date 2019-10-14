@@ -173,7 +173,7 @@
             </div>
           </div>
           <div class="modal-footer" style="background-color: #840032;">
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-login-button" onclick="window.ethofsLogin(document.getElementById('privatekey').value);">LOGIN</button>
+            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-login-button" onclick="ethofsLogin(document.getElementById('privatekey').value);">LOGIN</button>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@
             </div>
           </div>
           <div class="modal-footer" style="background-color: #840032;">
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button" onclick="window.AddNewUser(document.getElementById('username').value);">REGISTER</button>
+            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button" onclick="AddNewUser(document.getElementById('username').value);">REGISTER</button>
           </div>
         </div>
       </div>
@@ -356,7 +356,7 @@
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="window.startUploadProcess();">CONFIRM</button>
+                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="startUploadProcess();">CONFIRM</button>
                 </div>
               </main>
             </div>
@@ -665,7 +665,7 @@
   <!-- Custom Js -->
   <script src="assets/dashboard/js/admin.js"></script>
   <script src="assets/dashboard/js/bundle.js"></script>
-  <script src="assets/dashboard/js/misc.js"></script>
+  <script src="assets/dashboard/js/app.js"></script>
   <!-- Demo Js -->
   <script src="assets/dashboard/js/demo.js"></script>
   <script>

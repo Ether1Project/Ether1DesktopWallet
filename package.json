@@ -9,7 +9,7 @@
     "dist-win": "build --platform=win --arch=x64",
     "dist-linux": "build --platform=linux --arch=x64",
     "dist-osx": "build --platform=mac --arch=x64",
-    "bundle": "browserify assets/dashboard/js/app.js > assets/dashboard/js/bundle.js"
+    "bundle": "browserify assets/dashboard/js/node.js > assets/dashboard/js/bundle.js"
   },
   "build": {
     "appId": "Ether1DesktopWallet",
@@ -63,21 +63,26 @@
     "handlebars": ">=4.1.2",
     "moment": "^2.23.0",
     "nedb": "^1.8.0",
-    "single-instance": "0.0.1"
+    "single-instance": "0.0.1",
+    "ethereumjs-common": "^1.3.2",
+    "node-fetch": "^2.6.0",
+    "pull-file-reader": "^1.0.2",
+    "web3": "^1.2.1"
   },
   "devDependencies": {
+    "browserify": "^16.5.0",
     "electron": "^3.0.12",
     "electron-builder": "^20.38.3",
-    "js-beautify": "^1.9.0",
-    "unibeautify": "^0.17.0",
-    "unibeautify-cli": "^0.2.1",
-    "browserify": "^16.5.0",
+    "electron-rebuild": "^1.8.6",
     "ethereum-private-key-to-address": "0.0.2",
     "ethereumjs-common": "^1.3.2",
     "ipfs": "^0.38.0",
+    "js-beautify": "^1.9.0",
     "libp2p-pnet": "^0.1.0",
     "node-fetch": "^2.6.0",
     "pull-file-reader": "^1.0.2",
+    "unibeautify": "^0.17.0",
+    "unibeautify-cli": "^0.2.1",
     "web3": "^1.2.1"
   }
 }
