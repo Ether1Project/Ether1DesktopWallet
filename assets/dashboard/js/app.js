@@ -84,7 +84,7 @@ fetch('https://api.coinmarketcap.com/v2/ticker/3452/').then(response => {
 
 if (typeof web3 == 'undefined') {
     var web3 = new Web3()
-    web3.setProvider(new Web3.providers.HttpProvider('https://rpc.ether1.org'))
+    web3.setProvider(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
     $('#ethofsLoginModal').modal('show');
 } else {
     ethofsLogin("");
