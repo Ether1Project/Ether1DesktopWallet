@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="./assets/styles/buttons.css">
   <link rel="stylesheet" href="./assets/styles/style.css">
   <link rel="stylesheet" href="./assets/styles/forms.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/button.css">
   <!-- Insert this line above script imports -->
   <script>
     if (typeof module === 'object') {
@@ -49,6 +50,7 @@
   <script src="./assets/scripts/jquery.qrcode.min.js"></script>
   <script src="./assets/scripts/all.min.js"></script>
   <script src="./assets/scripts/Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
   <!-- Insert this line after script imports -->
   <script>
@@ -77,39 +79,53 @@
   <div class="inner">
     <!-- The sidebar -->
     <div class="sidebar">
+      <img src="assets/images/logo.png" alt="Ether-1 ethoFS Logo" style="width: 90%;padding-left: 5px;">
       <div class="sidebarIconWrapper iconSelected" id="mainNavBtnWalletsWrapper" data-tippy="Wallets" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnWallets" href="#">
-          <i class="fas fa-wallet fa-2x"></i>
+          <i class="fas fa-wallet fa-1x"></i>
+          <span class="walletID"> Wallets </span>
         </a>
       </div>
       <div class="sidebarIconWrapper iconSelected" id="mainNavBtnAddressBoookWrapper" data-tippy="Address Book" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnAddressBoook" href="#">
-          <i class="far fa-address-book fa-2x"></i>
+          <i class="far fa-address-book fa-1x"></i>
+          <span class="AddrBook"> Addresses </span>
         </a>
       </div>
       <div class="sidebarIconWrapper" id="mainNavBtnSendWrapper" data-tippy="Send Funds" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnSend" href="#">
-          <i class="fas fas fa-share-square fa-2x"></i>
+          <i class="fas fa-comment-dollar fa-1x"></i>
+          <span class="sendEtho"> Send </span>
         </a>
       </div>
       <div class="sidebarIconWrapper" id="mainNavBtnTransactionsWrapper" data-tippy="Transactions" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnTransactions" href="#">
-          <i class="fas fa-exchange-alt fa-2x"></i>
+          <i class="fas fa-exchange-alt fa-1x"></i>
+          <span class="txlist"> Transactions </span>
         </a>
       </div>
       <div class="sidebarIconWrapper" id="mainNavBtnUploadsWrapper" data-tippy="Uploads" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnUploads" href="#">
-          <i class="fa fa-cloud-upload-alt fa-2x"></i>
+          <i class="fa fa-cloud-upload-alt fa-1x"></i>
+          <span class="ethoFS"> ethoFS </span>
         </a>
       </div>
       <div class="sidebarIconWrapper" id="mainNavBtnMarketsWrapper" data-tippy="Markets" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnMarkets" href="#">
-          <i class="fas fa-poll fa-2x"></i>
+          <i class="fas fa-poll fa-1x"></i>
+          <span class="Markets"> Market </span>
         </a>
       </div>
       <div class="sidebarIconWrapper" id="mainNavBtnSettingsWrapper" data-tippy="Settings" data-tippy-delay="500">
         <a class="sidebarIcon" id="mainNavBtnSettings" href="#">
-          <i class="fas fa-cog fa-2x"></i>
+          <i class="fas fa-cog fa-1x"></i>
+          <span class="Settings"> Settings </span>
+        </a>
+      </div>
+      <div class="sidebarIconWrapper" id="mainNavBtnAboutWrapper" data-tippy="About" data-tippy-delay="500">
+        <a class="sidebarIcon" id="mainNavBtnAbout" href="#">
+          <i class="far fa-question-circle fa-1x"></i>
+          <span class="About"> About Us </span>
         </a>
       </div>
       <div id="peerCount">
@@ -133,6 +149,7 @@
       require('./renderer/addressBook.js');
       require('./renderer/transactions.js');
       require('./renderer/tableTransactions.js');
+      require('./renderer/about.js');
     </script>
   </div>
 

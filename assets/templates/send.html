@@ -4,11 +4,8 @@
       <div class="row">
         <div class="input-field col s6">
           <select id="sendFromAddress">
-            <option value="" disabled="disabled" selected="selected">Choose your address</option>
             {{#addressData}}
-              <option value="{{address}}">{{name}}
-                -
-                {{address}}</option>
+              <option value="{{address}}">{{name}} - {{address}}</option>
             {{/addressData}}
           </select>
           <label for="sendFromAddress">From address:</label>
