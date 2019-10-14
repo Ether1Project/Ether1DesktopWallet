@@ -74,6 +74,14 @@ var GlobalHostingContractDetailArray = new Array();
 var GlobalExtensionDuration;
 /*END OF MISC GLOBAL VARIABLES*/
 
+function isWindows() {
+    return navigator.platform.indexOf('Win') > -1
+}
+
+var pathSymbol = "/";
+if(isWindows()) {
+    pathSymbol = "\\";
+}
 
 fetch('https://api.coinmarketcap.com/v2/ticker/3452/').then(response => {
     return response.json();
@@ -444,6 +452,14 @@ function contractDurationChange(selectObj) {
     document.getElementById("contract-cost").innerHTML = round(ContractCost, 2);
     return false;
 }
+
+function contractModalSetup() {
+    var duration = document.getElementById('contract-duration').value;
+    GlobalContractDuration = duration;
+    var ContractCost = (((GlobalUploadSize / 1048576) * GlobalHostingCost) * (duration / 46522));
+    document.getElementById("contract-cost").innerHTML = round(ContractCost, 2);
+    return false;
+}
 /*************************************************************************************************************/
 //MISC ROUNDING FUNCTION
 function round(value, decimals) {
@@ -458,8 +474,12 @@ function finishUploadModal() {
 }
 
 function resetUploadModal() {
-    stopApplication();
-    resetUploadSystem();
+    var duration = document.getElementById('contract-duration').value;
+    GlobalContractDuration = duration;
+    var ContractCost = ((GlobalUploadSize / 1048576) * GlobalHostingCost) * (duration / 46522);
+    document.getElementById("contract-cost").innerHTML = round(ContractCost, 2);
+    document.getElementById("upload-hash").innerHTML = GlobalUploadHash;
+    document.getElementById("upload-size").innerHTML = GlobalUploadSize;
     return;
 }
 /*************************************************************************************************************/
@@ -857,19 +877,25 @@ function startUploadProcess() {
         const streamFiles = (files) => {
             const stream = node.addReadableStream()
             stream.on('data', function (data) {
-                console.log("Data...");
-                console.log(data);
+                //console.log("Data...");
+                //console.log(data);
                 GlobalHashArray.push(`${data.hash}`);
                 GlobalSizeArray.push(`${data.size}`);
                 GlobalPathArray.push(`${data.path}`);
                 GlobalUploadHash = `${data.hash}`;
                 GlobalUploadPath = `${data.path}`;
-                var splitString = GlobalUploadPath.split("/")
+                console.log("Path: " + data.path + "  Hash: " + data.hash);
+                //var comparePath = data.path.replace(pathSymbol, "/");
+                var comparePath = data.path.replace(/\\/g, '/');
+                console.log("Compare Path: " + comparePath);
+                var splitString = comparePath.split("/")
                 if (splitString.length == 1 || splitString[0] == "") {
+                //if (splitString.length == 1) {
                     streamFinishCount++;
                     GlobalMainHashArray.push(`${data.hash}`);
                     GlobalMainPathArray.push(`${data.path}`);
                     if (streamFinishCount == MainFileArray.length) {
+                        console.log("Finish Path: " + data.path + "  Hash: " + data.hash);
                         createMainHash();
                     }
                 }
@@ -944,18 +970,6 @@ function startUploadProcess() {
                 }
             }
         };
-    }
-
-    function updateUploadProgress(width) {
-        var elem = document.getElementById("myBar");
-        width = round(width, 2);
-        if (width >= 100) {
-            width = 100;
-            elem.style.width = width + '%';
-            elem.innerHTML = width * 1 + '%';
-        }
-        elem.style.width = width + '%';
-        elem.innerHTML = width * 1 + '%';
     }
 
     function createMainHash() {
@@ -1054,7 +1068,20 @@ function startUploadProcess() {
     /*****************************************************************************/
 }
 
+function updateUploadProgress(width) {
+    var elem = document.getElementById("myBar");
+    width = round(width, 2);
+    if (width >= 100) {
+        width = 100;
+        elem.style.width = width + '%';
+        elem.innerHTML = width * 1 + '%';
+    }
+    elem.style.width = width + '%';
+    elem.innerHTML = width * 1 + '%';
+}
+
 function resetUploadProcess() {
+    resetFileTable();
     updateUploadProgress(0);
     $uploadMessage.innerText = "Preparing Upload";
     document.getElementById("upload-status-message").textContent = "";
@@ -1080,6 +1107,7 @@ function onFileUpload(event) {
     document.getElementById("upload-confirm-button").style.visibility = "hidden";
     MainFileArray.push([]);
     let dirSelected = event.target.files;
+    let dirName = dirSelected[0].name;
     let dirPath = dirSelected[0].path;
     var streamCompareCount = 0;
     var totalUploadItems = 0;
@@ -1099,7 +1127,7 @@ function onFileUpload(event) {
     }
 
     function handleItem(filename, relativePath) {
-        var filepath = relativePath.concat('\\', filename);
+        var filepath = relativePath.concat(pathSymbol, filename);
         fs.stat(filepath, function (err, stats) {
             if (!err) {
                 if (stats.isDirectory()) {
@@ -1109,16 +1137,17 @@ function onFileUpload(event) {
                     totalUploadItems++;
                     console.log("File Path: " + filepath);
                     fs.readFile(filepath, function (err, file) {
+                        var updatedPath = filepath.replace(dirPath, dirName);
                         var filetowrite = {
-                            path: filepath,
+                            path: updatedPath,
                             content: file
                         };
-                        var filename = filepath;
+                        var filename = updatedPath;
                         MainFileArray[MainFileArray.length - 1].push(filetowrite);
                         GlobalUploadSize += Number(stats.size);
                         fileSize += Number(stats.size);
                         var totalUploadSizeMB = GlobalUploadSize / 1000000;
-                        appendFile(filepath, filename, stats.size, null);
+                        appendFile(updatedPath, filename, stats.size, null);
                         console.log("Path: " + filepath + " Size: " + stats.size + " Total Size: " + GlobalUploadSize);
                         document.getElementById("upload-size").textContent = totalUploadSizeMB;
                         contractDurationChange(document.getElementById('contract-duration').value);
