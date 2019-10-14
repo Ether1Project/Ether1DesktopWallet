@@ -1,7 +1,6 @@
 <head>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
-    type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
   <!-- Bootstrap Core Css -->
   <link href="assets/dashboard/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -13,11 +12,9 @@
 <link href="assets/dashboard/plugins/morrisjs/morris.css" rel="stylesheet" />-->
   <!-- Custom Css -->
   <link href="assets/dashboard/css/style.css" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
   <link href="assets/dashboard/css/themes/all-themes.css" rel="stylesheet" />
-  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css" rel="stylesheet">
   <script src="https://medium-widget.pixelpoint.io/widget.js"></script>
 
 </head>
@@ -95,7 +92,7 @@
       <div class="row clearfix">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
           <div class="card">
-            <div class="header bg-indigo">
+            <div class="header bg-blue">
               <h2>
                 What is ethoFS?
               </h2>
@@ -141,6 +138,7 @@
         </div>
       </div>
       <!-- #END# CPU Usage -->
+
       <!-- Table of hashes -->
       <div class="row clearfix">
         <div class="col-xs-24 col-sm-24 col-md-16 col-lg-16">
@@ -169,6 +167,7 @@
         </div>
       </div>
       <!-- #END# Hash Tables -->
+
       <!-- Login Modal -->
       <div class="modal fade" id="ethofsLoginModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -187,19 +186,18 @@
                 </tr>
                 <tr style="border-color:#000;">
                   <td data-th="Private Key">
-                    <input type="text" id="privatekey" name="privatekey" placeholder="Enter Private Key"
-                      style="color:White;">
+                    <input type="text" id="privatekey" name="privatekey" placeholder="Enter Private Key" style="color:White;">
                   </td>
                 </tr>
               </table>
             </div>
           </div>
           <div class="modal-footer" style="background-color: #840032;">
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-login-button"
-              onclick="ethofsLogin(document.getElementById('privatekey').value);">LOGIN</button>
+            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-login-button" onclick="ethofsLogin(document.getElementById('privatekey').value);">LOGIN</button>
           </div>
         </div>
       </div>
+
       <!-- Registration Modal -->
       <div class="modal fade" id="ethofsRegistrationModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -224,11 +222,11 @@
             </div>
           </div>
           <div class="modal-footer" style="background-color: #840032;">
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button"
-              onclick="AddNewUser(document.getElementById('username').value);">REGISTER</button>
+            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button" onclick="AddNewUser(document.getElementById('username').value);">REGISTER</button>
           </div>
         </div>
       </div>
+
       <!-- Default Size Modal -->
       <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -270,8 +268,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-              <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal"
-                data-target="#defaultModal2">NEXT</button>
+              <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal" data-target="#defaultModal2">NEXT</button>
             </div>
           </div>
         </div>
@@ -296,8 +293,7 @@
                       box to upload.
                     </p>
                   </center>
-                  <input type="file" id="fileUploadButton" webkitdirectory="true" mozdirectory="true" msdirectory="true"
-                    odirectory="true" directory="true" multiple="true">
+                  <input type="file" id="fileUploadButton" webkitdirectory="true" mozdirectory="true" msdirectory="true" odirectory="true" directory="true" multiple="true">
                 </div>
                 <div id="progress-container">
                   <div id="progress-bar"></div>
@@ -316,8 +312,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-              <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal"
-                data-target="#defaultModal3" onclick="resetUploadModal();">NEXT</button>
+              <button type="button" class="btn btn-link waves-effect" data-toggle="modal" data-dismiss="modal" data-target="#defaultModal3" onclick="resetUploadModal();">NEXT</button>
             </div>
           </div>
         </div>
@@ -339,8 +334,7 @@
                   </tr>
                   <tr style="border-color:#000;">
                     <td data-th="Contract Name">
-                      <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name"
-                        style="color:white;">
+                      <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
                     </td>
                   </tr>
                   <tr>
@@ -384,8 +378,7 @@
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"
-                    id="upload-confirm-button" onclick="startUploadProcess();">CONFIRM</button>
+                  <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="upload-confirm-button" onclick="startUploadProcess();">CONFIRM</button>
                 </div>
               </main>
             </div>
@@ -397,8 +390,7 @@
           <div class="modal-content" style="background-color: #840032;">
             <div class="modal-header">
               <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;"
-                  onclick="updateContractTable();">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;" onclick="updateContractTable();">
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <br>
@@ -417,29 +409,24 @@
                     <h3 style="padding-left:10px;">Message Log:</h3>
                     <span class="upload-message" style="color: #3CB371; font-size: 24px; padding: 10px"></span>
                   </div>
-                  <div class="summary"
-                    style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                  <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
                     <div id="myBar">0%</div>
                   </div>
                 </div>
               </main>
             </div>
-            <div class="modal-footer"
-              style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-              <button type="button" class="btn btn-primary" id="upload-check-button"
-                onclick="finishUploadModal(); event.stopPropagation();">Close</button>
+            <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+              <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-        aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="background-color: #840032;">
             <div class="modal-header">
               <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-                <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close"
-                  style="color:#ffffff;">
+                <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close" style="color:#ffffff;">
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <br>
@@ -459,17 +446,14 @@
                       <h4 style="padding-left:10px;">Message Log:</h4>
                       <pre class="analyze-message" style="color: #3CB371; font-size: 24px;"></pre>
                     </div>
-                    <div class="summary"
-                      style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                    <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
                       <div id="myAnalyzeBar">0%</div>
                     </div>
                   </div>
 
 
-                  <div class="modal-footer"
-                    style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-                    <button type="button" class="btn btn-primary" id="upload-check-button"
-                      onclick="finishUploadModal(); event.stopPropagation();">Close</button>
+                  <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+                    <button type="button" class="btn btn-primary" id="upload-check-button" onclick="finishUploadModal(); event.stopPropagation();">Close</button>
                   </div>
                 </main>
             </div>
@@ -478,8 +462,7 @@
       </div>
       <!-- end analyze data modal -->
       <!-- begin mined block checking modal -->
-      <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-        aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="background-color: #840032;">
             <div class="modal-header">
@@ -497,8 +480,7 @@
               <main>
                 <div class="box node" style="width:100%; background: #000000; background-color: #000;">
                   <h3 style="padding: 20px;">Ether-1 Transaction Status:
-                    <span id="mining-status-message"
-                      style="color: #3CB371; font-size: 24px; text-align: center !important;">In
+                    <span id="mining-status-message" style="color: #3CB371; font-size: 24px; text-align: center !important;">In
                       Progress</span>
                   </h3>
                   <div>
@@ -507,8 +489,7 @@
                       <span class="mining-message" id="mining-message" style="color: #3CB371; font-size: 24px;"></span>
                     </center>
                   </div>
-                  <div class="summary"
-                    style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
+                  <div class="summary" style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
                     <h3 style="font-size: 24px;">Current Ether-1 Block Height:
                       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                       <span id="block-height" style="color: #3CB371; font-size: 24px;">0</span>
@@ -522,8 +503,7 @@
       </div>
       <!-- end mined block checking modal -->
       <!-- begin preparing upload modal -->
-      <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-        aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="background-color: #840032;">
             <div class="modal-header">
@@ -556,8 +536,7 @@
       </div>
       <!-- end preparing upload modal -->
       <!-- begin contract detail modal -->
-      <div class="modal fade" id="contractDetailModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-        aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="contractDetailModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
           <div class="modal-content" style="background-color: #840032;">
             <div class="modal-header">
@@ -567,8 +546,7 @@
               <center>
                 <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
               </center>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;"
-                onclick="resetContractDetailTableRows();">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;" onclick="resetContractDetailTableRows();">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -635,8 +613,7 @@
                     </tr>
                     <tr>
                       <td data-th="Contract Duration (Blocks)">
-                        <select class="js-select22" name="extend-contract" id="extend-contract"
-                          onchange="contractExtensionChange(this);">
+                        <select class="js-select22" name="extend-contract" id="extend-contract" onchange="contractExtensionChange(this);">
                           <option value="100000" selected="selected">100000
                             - 15 Days
                           </option>
@@ -675,8 +652,7 @@
                     </tr>
                   </table>
                   <div class="table-data__tool-right" style="margin-left: 15px;">
-                    <button class="btn btn-primary" id="contract-extension-button" type="button"
-                      onclick="contractExtensionConfirmation();">Extend Hosting Contract</button>
+                    <button class="btn btn-primary" id="contract-extension-button" type="button" onclick="contractExtensionConfirmation();">Extend Hosting Contract</button>
                     <br>
                     <br>
                   </div>
@@ -684,10 +660,8 @@
                 </div>
               </main>
             </div>
-            <div class="modal-footer"
-              style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-              <button type="button" class="btn btn-primary" data-dismiss="modal"
-                onclick="resetContractDetailTableRows();">Close</button>
+            <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="resetContractDetailTableRows();">Close</button>
             </div>
           </div>
         </div>
@@ -702,12 +676,9 @@
       module = undefined;
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"
-    integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
   <!-- Jquery Core Js -->
-  <script src="assets/dashboard/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap Core Js -->
-  <script src="assets/dashboard/plugins/bootstrap/js/bootstrap.js"></script>
   <!-- Select Plugin Js -->
   <script src="assets/dashboard/plugins/bootstrap-select/js/bootstrap-select.js"></script>
   <!-- Slimscroll Plugin Js -->
