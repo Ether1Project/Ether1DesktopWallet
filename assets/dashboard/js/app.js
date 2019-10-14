@@ -986,7 +986,6 @@ function startUploadProcess() {
             from: GlobalUserAddress,
             value: contractCost
         };
-        $('#preparingUploadModal').modal('hide');
         console.log("Contract Address: " + GlobalControllerContractAddress + " Value: " + contractCost);
         if (privateKeyLogin == true) {
             const tx = {
@@ -1006,6 +1005,7 @@ function startUploadProcess() {
                             if (result) {
                                 console.log("Result: " + result);
                                 $('#minedBlockTrackerModal').modal('show');
+                                $('#preparingUploadModal').modal('hide');
                                 waitForReceipt(result, function(receipt) {
                                     console.log("Transaction Has Been Mined: " + receipt);
                                     $('#minedBlockTrackerModal').modal('hide');
@@ -1027,6 +1027,7 @@ function startUploadProcess() {
                 if (!error) {
                     if (result) {
                         $('#minedBlockTrackerModal').modal('show');
+                        $('#preparingUploadModal').modal('hide');
                         waitForReceipt(result, function(receipt) {
                             console.log("Transaction Has Been Mined: " + receipt);
                             $('#minedBlockTrackerModal').modal('hide');
