@@ -98,7 +98,7 @@ function ethofsLogin(privateKey) {
         GlobalPrivateKey = privateKey;
         privateKeyLogin = true;
         web3.eth.net.isListening()
-            .then(function() {
+            .then(function () {
                 console.log('ethoFS is connected')
                 let account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
                 console.log(account);
@@ -109,7 +109,7 @@ function ethofsLogin(privateKey) {
     } else {
         privateKeyLogin = false;
         web3 = new Web3(web3.currentProvider);
-        web3.eth.getAccounts(function(err, accounts) {
+        web3.eth.getAccounts(function (err, accounts) {
             if (err != null) {
                 console.error("An error occurred: " + err);
                 outputNoAddressContractTable();
@@ -132,11 +132,11 @@ function startEthofs() {
     console.log("Starting ethoFS");
     GlobalUserAddress = web3.eth.defaultAccount;
     var ethoFSAccounts = new web3.eth.Contract(GlobalControllerABI, GlobalControllerContractAddress);
-    ethoFSAccounts.methods.CheckAccountExistence(GlobalUserAddress).call(function(error, result) {
+    ethoFSAccounts.methods.CheckAccountExistence(GlobalUserAddress).call(function (error, result) {
         if (!error) {
             if (result) {
                 document.getElementById("accountaddress").textContent = web3.eth.defaultAccount;
-                ethoFSAccounts.methods.GetUserAccountName(GlobalUserAddress).call(function(error, result) {
+                ethoFSAccounts.methods.GetUserAccountName(GlobalUserAddress).call(function (error, result) {
                     if (!error) {
                         if (result) {
                             getBlockHeight(web3);
@@ -177,12 +177,12 @@ function AddNewUser(userName) {
         };
         var privateKey = '0x' + GlobalPrivateKey;
         web3.eth.accounts.signTransaction(tx, privateKey)
-            .then(function(signedTransactionData) {
-                web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+            .then(function (signedTransactionData) {
+                web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
                     if (!error) {
                         if (result) {
                             $('#minedBlockTrackerModal').modal('show');
-                            waitForReceipt(result, function(receipt) {
+                            waitForReceipt(result, function (receipt) {
                                 console.log("Transaction Has Been Mined: " + receipt);
                                 $('#minedBlockTrackerModal').modal('hide');
                                 ethofsLogin(GlobalPrivateKey);
@@ -196,12 +196,12 @@ function AddNewUser(userName) {
                 });
             });
     } else {
-        controller.methods.AddNewUserPublic(userName).send(function(error, result) {
+        controller.methods.AddNewUserPublic(userName).send(function (error, result) {
             if (!error) {
                 if (result) {
                     document.getElementById("wait").innerHTML = 'Waiting For Add User Confirmation.';
                     $('#minedBlockTrackerModal').modal('show');
-                    waitForReceipt(result, function(receipt) {
+                    waitForReceipt(result, function (receipt) {
                         console.log("Transaction Has Been Mined: " + receipt);
                         $('#minedBlockTrackerModal').modal('hide');
                         ethofsLogin("");
@@ -220,7 +220,7 @@ function AddNewUser(userName) {
 /*************************************************************************************************************/
 function getBlockHeight(web3) {
     console.log("Starting Block Height Detection..");
-    web3.eth.getBlockNumber(function(err, data) {
+    web3.eth.getBlockNumber(function (err, data) {
         document.getElementById("blocknumber").textContent = data;
         console.log("ETHO Block Number: " + data);
     });
@@ -228,7 +228,7 @@ function getBlockHeight(web3) {
 /*************************************************************************************************************/
 function getBalance(web3) {
     console.log("Starting Balance Detection..");
-    web3.eth.getBalance(web3.eth.defaultAccount, function(err, data) {
+    web3.eth.getBalance(web3.eth.defaultAccount, function (err, data) {
         var balance = "ETHO Balance: " + Number(web3.utils.fromWei(data, "ether")).toFixed(2);
         document.getElementById("ethobalance").textContent = balance;
         console.log("ETHO Balance: " + data);
@@ -246,10 +246,10 @@ function calculateCost(contractSize, contractDuration, hostingCost) {
 /*************************************************************************************************************/
 //CHECK FOR TX - BLOCK TO BE MINED
 function waitForReceipt(hash, cb) {
-    web3.eth.getTransactionReceipt(hash, function(err, receipt) {
+    web3.eth.getTransactionReceipt(hash, function (err, receipt) {
         document.getElementById("mining-status-message").textContent = "In Progress";
         $miningMessage.innerText = "Waiting For Transaction Confirmation";
-        web3.eth.getBlock('latest', function(e, res) {
+        web3.eth.getBlock('latest', function (e, res) {
             if (!e) {
                 document.getElementById("block-height").textContent = res.number;
             }
@@ -265,7 +265,7 @@ function waitForReceipt(hash, cb) {
                 cb(receipt);
             }
         } else {
-            setTimeout(function() {
+            setTimeout(function () {
                 waitForReceipt(hash, cb);
             }, 10000);
         }
@@ -285,13 +285,13 @@ function RemoveContract(hostingAddress, contentHash) {
         var privateKey = '0x' + GlobalPrivateKey;
         console.log("Private Key: " + privateKey);
         web3.eth.accounts.signTransaction(tx, privateKey)
-            .then(function(signedTransactionData) {
+            .then(function (signedTransactionData) {
                 console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-                web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+                web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
                     if (!error) {
                         if (result) {
                             $('#minedBlockTrackerModal').modal('show');
-                            waitForReceipt(result, function(receipt) {
+                            waitForReceipt(result, function (receipt) {
                                 console.log("Transaction Has Been Mined: " + receipt);
                                 $('#minedBlockTrackerModal').modal('hide');
                                 updateContractTable();
@@ -309,11 +309,11 @@ function RemoveContract(hostingAddress, contentHash) {
             to: GlobalControllerContractAddress,
             from: GlobalUserAddress,
         };
-        pinRemoving.methods.RemoveHostingContract(hostingAddress, contentHash).send(tx, function(error, result) {
+        pinRemoving.methods.RemoveHostingContract(hostingAddress, contentHash).send(tx, function (error, result) {
             if (!error) {
                 if (result) {
                     $('#minedBlockTrackerModal').modal('show');
-                    waitForReceipt(result, function(receipt) {
+                    waitForReceipt(result, function (receipt) {
                         console.log("Transaction Has Been Mined: " + receipt);
                         $('#minedBlockTrackerModal').modal('hide');
                         updateContractTable();
@@ -335,14 +335,14 @@ function updateContractTable() {
     var hostingContracts = "";
     var TotalContractCount = 0;
     var blockHeight = 0;
-    web3.eth.getBlockNumber(function(error, result) {
+    web3.eth.getBlockNumber(function (error, result) {
         if (!error) {
             blockHeight = result;
         } else
             console.error(error);
     });
     var ethoFSAccounts = new web3.eth.Contract(GlobalControllerABI, GlobalControllerContractAddress);
-    ethoFSAccounts.methods.GetUserAccountTotalContractCount(web3.eth.defaultAccount).call(function(error, result) {
+    ethoFSAccounts.methods.GetUserAccountTotalContractCount(web3.eth.defaultAccount).call(function (error, result) {
         TotalContractCount = result;
         GlobalTotalContractCount = result;
         const getContractData = async (ethoFSAccounts, account, TotalContractCount) => {
@@ -454,15 +454,13 @@ function finishUploadModal() {
     $('#uploadTrackerModal').modal('hide');
     stopApplication();
     resetUploadSystem();
-    updateContractTable();
-    return false;
+    return;
 }
 
 function resetUploadModal() {
     stopApplication();
     resetUploadSystem();
-    updateContractTable();
-    return false;
+    return;
 }
 /*************************************************************************************************************/
 //CHECK FOR PROPAGATED & AVAILABLE DATA ON NETWORK - FINAL VERIFICATION FOR UPLOADED CONTENT
@@ -657,14 +655,14 @@ function contractExtensionConfirmation() {
             var privateKey = '0x' + GlobalPrivateKey;
             console.log("Private Key: " + privateKey);
             web3.eth.accounts.signTransaction(tx, privateKey)
-                .then(function(signedTransactionData) {
+                .then(function (signedTransactionData) {
                     console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-                    web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+                    web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
                         if (!error) {
                             if (result) {
                                 $('#contractDetailModal').modal('hide');
                                 $('#minedBlockTrackerModal').modal('show');
-                                waitForReceipt(result, function(receipt) {
+                                waitForReceipt(result, function (receipt) {
                                     console.log("Transaction Has Been Mined: " + receipt);
                                     $('#minedBlockTrackerModal').modal('hide');
                                     updateContractTable();
@@ -679,12 +677,12 @@ function contractExtensionConfirmation() {
                 });
         } else {
 
-            ethoFSController.methods.ExtendContract(GlobalHostingContractDetailArray['address'], extensionDuration).send(transactionObject, function(error, result) {
+            ethoFSController.methods.ExtendContract(GlobalHostingContractDetailArray['address'], extensionDuration).send(transactionObject, function (error, result) {
                 if (!error) {
                     if (result) {
                         $('#contractDetailModal').modal('hide');
                         $('#minedBlockTrackerModal').modal('show');
-                        waitForReceipt(result, function(receipt) {
+                        waitForReceipt(result, function (receipt) {
                             console.log("Transaction Has Been Mined: " + receipt);
                             $('#minedBlockTrackerModal').modal('hide');
                             updateContractTable();
@@ -704,13 +702,14 @@ function contractExtensionConfirmation() {
    =========================================================================== */
 
 const subscribeToHealthChannel = () => {
-  window.node.pubsub.subscribe(info.id + "_alpha11", healthMessageHandler)
-    .catch(() => onError('An error occurred when subscribing to the health check workspace.'))
+    window.node.pubsub.subscribe(info.id + "_alpha11", healthMessageHandler)
+        .catch(() => onError('An error occurred when subscribing to the health check workspace.'))
 }
 const healthMessageHandler = (message) => {
     healthMessage = message.data.toString();
     UpdateHealthCheckInfo(healthMessage);
 }
+
 function UpdateHealthCheckInfo(healthMessage) {
     var mainMessage = healthMessage.split(";")[1];
     var splitMessage = mainMessage.split(",");
@@ -718,52 +717,54 @@ function UpdateHealthCheckInfo(healthMessage) {
     var availableStorageTotal = 0;
     var activeHistory = 0;
     var nodeCounter = 0;
-    splitMessage.forEach(function(nodeMessage, index) {
+    splitMessage.forEach(function (nodeMessage, index) {
         var nodeSplitMessage = nodeMessage.split(":");
         activeHistory = Number(nodeSplitMessage[5]);
-        if(activeHistory >= 5){
+        if (activeHistory >= 5) {
             nodeCounter++;
             usedStorageTotal += Number(nodeSplitMessage[8]);
             availableStorageTotal += Number(nodeSplitMessage[7]);
         }
-        if(index == (splitMessage.length - 1)){
+        if (index == (splitMessage.length - 1)) {
             updateStorageArrays(usedStorageTotal, availableStorageTotal, nodeCounter);
         }
     });
-    function updateStorageArrays(usedStorageTotal, availableStorageTotal, nodecount){
 
-        if(availableStorageArray.length >= 50){
-            if(availableStorageTotal > 0.75 * averageAvailableStorageTotal && availableStorageTotal < 1.25 * averageAvailableStorageTotal){
+    function updateStorageArrays(usedStorageTotal, availableStorageTotal, nodecount) {
+
+        if (availableStorageArray.length >= 50) {
+            if (availableStorageTotal > 0.75 * averageAvailableStorageTotal && availableStorageTotal < 1.25 * averageAvailableStorageTotal) {
                 availableStorageArray.push(availableStorageTotal);
                 availableStorageArray.shift();
             }
-        }else{
+        } else {
             availableStorageArray.push(availableStorageTotal);
         }
-        if(nodeCountArray.length >= 50){
+        if (nodeCountArray.length >= 50) {
             nodeCountArray.push(nodecount);
             nodeCountArray.shift();
-        }else{
+        } else {
             nodeCountArray.push(nodecount);
         }
         calculateStorageAverages(usedStorageArray, availableStorageArray, nodeCountArray);
     }
-    function calculateStorageAverages(usedStorageArray, availableStorageArray, nodeCountArray){
+
+    function calculateStorageAverages(usedStorageArray, availableStorageArray, nodeCountArray) {
 
         var sumAvailableStorage = 0;
-        availableStorageArray.forEach(function(value, index) {
+        availableStorageArray.forEach(function (value, index) {
             sumAvailableStorage += value;
-            if(index == (availableStorageArray.length - 1)){
-                averageAvailableStorageTotal = (sumAvailableStorage/availableStorageArray.length);
-                document.getElementById("nodestorage").textContent=(round(2+((averageAvailableStorageTotal)/1000000), 1)) + "TB";
+            if (index == (availableStorageArray.length - 1)) {
+                averageAvailableStorageTotal = (sumAvailableStorage / availableStorageArray.length);
+                document.getElementById("nodestorage").textContent = (round(2 + ((averageAvailableStorageTotal) / 1000000), 1)) + "TB";
             }
         });
         var sumNodeCount = 0;
-        nodeCountArray.forEach(function(value, index) {
+        nodeCountArray.forEach(function (value, index) {
             sumNodeCount += value;
-            if(index == (nodeCountArray.length - 1)){
-                var averageNodeCount = (sumNodeCount/nodeCountArray.length) + 19;
-                document.getElementById("nodecount").textContent=(round(averageNodeCount, 0));
+            if (index == (nodeCountArray.length - 1)) {
+                var averageNodeCount = (sumNodeCount / nodeCountArray.length) + 19;
+                document.getElementById("nodecount").textContent = (round(averageNodeCount, 0));
             }
         });
     }
@@ -779,16 +780,16 @@ const exitMessageHandler = (message) => {
 }
 
 const subscribeToMessaging = () => {
-  for(var i = 4; i < PeersForChannel.length; i++){
-    window.node.pubsub.subscribe(PeersForChannel[i] + "PinningChannel_alpha11", messageHandler)
-    .catch(() => onError('An error occurred when subscribing to the workspace.'))
-  }
+    for (var i = 4; i < PeersForChannel.length; i++) {
+        window.node.pubsub.subscribe(PeersForChannel[i] + "PinningChannel_alpha11", messageHandler)
+            .catch(() => onError('An error occurred when subscribing to the workspace.'))
+    }
 }
 const unsubscribeToMessaging = () => {
-  for(var i = 4; i < PeersForChannel.length; i++){
-  window.node.pubsub.unsubscribe(PeersForChannel[i] + "PinningChannel_alpha11", exitMessageHandler)
-    .catch(() => onError('An error occurred when unsubscribing to the workspace.'))
-  }
+    for (var i = 4; i < PeersForChannel.length; i++) {
+        window.node.pubsub.unsubscribe(PeersForChannel[i] + "PinningChannel_alpha11", exitMessageHandler)
+            .catch(() => onError('An error occurred when unsubscribing to the workspace.'))
+    }
 }
 const publishImmediatePin = (hash) => {
     const data = Buffer.from(hash)
@@ -802,16 +803,6 @@ const publishImmediatePin = (hash) => {
 /* ===========================================================================
    Files handling
    =========================================================================== */
-const sendFileList = () => FILES.forEach((hash) => publishHash(hash))
-
-/*const updateProgress = (bytesLoaded) => {
-    let percent = 100 - ((bytesLoaded / fileSize) * 100)
-    if (percent <= 5) {
-        document.getElementById("upload-confirm-button").style.visibility = "visible";
-    }
-    $progressBar.style.transform = `translateX(${-percent}%)`
-}*/
-
 const resetProgress = () => {
     $progressBar.style.transform = 'translateX(-100%)'
 }
@@ -865,7 +856,7 @@ function startUploadProcess() {
     for (var i = 0; i < MainFileArray.length; i++) {
         const streamFiles = (files) => {
             const stream = node.addReadableStream()
-            stream.on('data', function(data) {
+            stream.on('data', function (data) {
                 console.log("Data...");
                 console.log(data);
                 GlobalHashArray.push(`${data.hash}`);
@@ -878,7 +869,7 @@ function startUploadProcess() {
                     streamFinishCount++;
                     GlobalMainHashArray.push(`${data.hash}`);
                     GlobalMainPathArray.push(`${data.path}`);
-                    if(streamFinishCount == MainFileArray.length) {
+                    if (streamFinishCount == MainFileArray.length) {
                         createMainHash();
                     }
                 }
@@ -896,14 +887,14 @@ function startUploadProcess() {
         let hashVerificationArray = [...GlobalHashArray, ...GlobalMainHashArray];
         hashVerificationArray.push(GlobalMainContentHash);
         var hashConfirmationCount = 0;
-
+        var uploadCompleteFlag = false;
 
         for (var i = 0; i < MainHashArray.length; i++) {
             console.log("Sending Immediate Pin Request: " + MainHashArray[i]);
             publishImmediatePin(MainHashArray[i]);
         }
-        setTimeout(function() {
-            hashVerificationArray.forEach(function(hash) {
+        setTimeout(function () {
+            hashVerificationArray.forEach(function (hash) {
                 verifyDataUpload(hash);
             });
         }, 5000);
@@ -923,19 +914,34 @@ function startUploadProcess() {
                     if (confirmationPercentage >= 99) {
                         $uploadMessage.innerText = "Upload Complete";
                         document.getElementById("upload-status-message").textContent = "Complete";
-                        finishUploadModal();
+                        if(!uploadCompleteFlag) {
+                            uploadCompleteFlag = true;
+                            updateContractTable();
+                            finishUploadModal();
+                        }   
+                        return;
                     }
                 } else {
-                    setTimeout(function() {
-                        verifyDataUpload(hash)
-                    }, 2000);
+                    var confirmationPercentage = Math.ceil((hashConfirmationCount / hashVerificationArray.length) * 100);
+                    if (confirmationPercentage < 99) {
+                        setTimeout(function () {
+                            verifyDataUpload(hash)
+                        }, 2000);
+                    } else {
+                        return;
+                    }
                 }
             } catch (error) {
                 console.log(error);
                 console.log("Data Confirmation Error: " + error.status);
-                setTimeout(function() {
-                    verifyDataUpload(hash)
-                }, 2000);
+                var confirmationPercentage = Math.ceil((hashConfirmationCount / hashVerificationArray.length) * 100);
+                if (confirmationPercentage < 99) {
+                    setTimeout(function () {
+                        verifyDataUpload(hash)
+                    }, 2000);
+                } else {
+                    return;
+                }
             }
         };
     }
@@ -998,15 +1004,15 @@ function startUploadProcess() {
             var privateKey = '0x' + GlobalPrivateKey;
             console.log("Private Key: " + privateKey);
             web3.eth.accounts.signTransaction(tx, privateKey)
-                .then(function(signedTransactionData) {
+                .then(function (signedTransactionData) {
                     console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-                    web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+                    web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
                         if (!error) {
                             if (result) {
                                 console.log("Result: " + result);
                                 $('#minedBlockTrackerModal').modal('show');
                                 $('#preparingUploadModal').modal('hide');
-                                waitForReceipt(result, function(receipt) {
+                                waitForReceipt(result, function (receipt) {
                                     console.log("Transaction Has Been Mined: " + receipt);
                                     $('#minedBlockTrackerModal').modal('hide');
                                     $('#nodeModal').modal('hide');
@@ -1023,12 +1029,12 @@ function startUploadProcess() {
                     });
                 });
         } else {
-            pinAdding.methods.AddNewContract(GlobalMainContentHash, HostingContractName, HostingContractDuration, pinSize, pinSize, contentHashString, contentPathString).send(transactionObject, function(error, result) {
+            pinAdding.methods.AddNewContract(GlobalMainContentHash, HostingContractName, HostingContractDuration, pinSize, pinSize, contentHashString, contentPathString).send(transactionObject, function (error, result) {
                 if (!error) {
                     if (result) {
                         $('#minedBlockTrackerModal').modal('show');
                         $('#preparingUploadModal').modal('hide');
-                        waitForReceipt(result, function(receipt) {
+                        waitForReceipt(result, function (receipt) {
                             console.log("Transaction Has Been Mined: " + receipt);
                             $('#minedBlockTrackerModal').modal('hide');
                             $('#nodeModal').modal('hide');
@@ -1049,6 +1055,9 @@ function startUploadProcess() {
 }
 
 function resetUploadProcess() {
+    updateUploadProgress(0);
+    $uploadMessage.innerText = "Preparing Upload";
+    document.getElementById("upload-status-message").textContent = "";
     MainFileArray = new Array();
     GlobalUploadSize = 0;
 }
@@ -1078,8 +1087,8 @@ function onFileUpload(event) {
 
     function readDirectoryContents(directory) {
         console.log("Directory Path: " + directory);
-        fs.readdir(directory, function(err, filesUploaded) {
-            if(!err) {
+        fs.readdir(directory, function (err, filesUploaded) {
+            if (!err) {
                 for (let i = 0; filesUploaded.length > i; i++) {
                     handleItem(filesUploaded[i], directory);
                 }
@@ -1091,39 +1100,39 @@ function onFileUpload(event) {
 
     function handleItem(filename, relativePath) {
         var filepath = relativePath.concat('\\', filename);
-        fs.stat(filepath, function(err, stats) {
-            if(!err) {
-            if(stats.isDirectory()) {
-                readDirectoryContents(filepath)
+        fs.stat(filepath, function (err, stats) {
+            if (!err) {
+                if (stats.isDirectory()) {
+                    readDirectoryContents(filepath)
+                } else {
+                    streamCompareCount++;
+                    totalUploadItems++;
+                    console.log("File Path: " + filepath);
+                    fs.readFile(filepath, function (err, file) {
+                        var filetowrite = {
+                            path: filepath,
+                            content: file
+                        };
+                        var filename = filepath;
+                        MainFileArray[MainFileArray.length - 1].push(filetowrite);
+                        GlobalUploadSize += Number(stats.size);
+                        fileSize += Number(stats.size);
+                        var totalUploadSizeMB = GlobalUploadSize / 1000000;
+                        appendFile(filepath, filename, stats.size, null);
+                        console.log("Path: " + filepath + " Size: " + stats.size + " Total Size: " + GlobalUploadSize);
+                        document.getElementById("upload-size").textContent = totalUploadSizeMB;
+                        contractDurationChange(document.getElementById('contract-duration').value);
+                        streamCompareCount--;
+                        updateAnalyzeProgress(((totalUploadItems - streamCompareCount) / totalUploadItems));
+                        if (streamCompareCount == 0) {
+                            document.getElementById("upload-hash").textContent = "READY FOR UPLOAD";
+                            document.getElementById("upload-confirm-button").style.visibility = "visible";
+                        }
+                    });
+                }
             } else {
-                streamCompareCount ++;
-                totalUploadItems ++;
-                console.log("File Path: " + filepath);
-                fs.readFile(filepath, function(err, file) {
-                    var filetowrite = {
-                        path: filepath,
-                        content: file
-                    };
-                    var filename = filepath;
-                    MainFileArray[MainFileArray.length - 1].push(filetowrite);
-                    GlobalUploadSize += Number(stats.size);
-                    fileSize += Number(stats.size);
-                    var totalUploadSizeMB = GlobalUploadSize / 1000000;
-                    appendFile(filepath, filename, stats.size, null);
-                    console.log("Path: " + filepath + " Size: " + stats.size + " Total Size: " + GlobalUploadSize);
-                    document.getElementById("upload-size").textContent = totalUploadSizeMB;
-                    contractDurationChange(document.getElementById('contract-duration').value);
-                    streamCompareCount--;
-                    updateAnalyzeProgress(((totalUploadItems - streamCompareCount) / totalUploadItems));
-                    if (streamCompareCount == 0) {
-                        document.getElementById("upload-hash").textContent = "READY FOR UPLOAD";
-                        document.getElementById("upload-confirm-button").style.visibility = "visible";
-                    }
-                });
+                console.log("File Stats Error: " + err);
             }
-        } else {
-            console.log("File Stats Error: " + err);
-        }            
         });
     }
 }
@@ -1167,7 +1176,7 @@ function onDrop(event) {
                 getFile(entry);
 
                 function getFile(entry) {
-                    entry.file(function(file) {
+                    entry.file(function (file) {
                         readFileContents(file)
                             .then((buffer) => {
                                 var filePath = entry.fullPath;
@@ -1194,10 +1203,10 @@ function onDrop(event) {
 
             } else if (entry.isDirectory) {
                 let directoryReader = entry.createReader();
-                directoryReader.readEntries(function(entries) {
+                directoryReader.readEntries(function (entries) {
                     streamCompareCount += entries.length - 1;
                     totalItemCount += entries.length - 1;
-                    entries.forEach(function(newEntry) {
+                    entries.forEach(function (newEntry) {
                         handleEntry(newEntry);
                     });
                 });
@@ -1346,6 +1355,7 @@ function startApplication() {
 function extendedStartApplication() {
     $ethomessage.innerText = GlobalUserAddress;
 }
+
 function stopApplication() {
     resetUploadProcess();
     resetFileTable();

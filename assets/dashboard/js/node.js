@@ -72,7 +72,6 @@ function start() {
                     updateView('ready', window.node)
                     onSuccess('Node is ready.')
                     setInterval(refreshPeerList, 10000)
-                    setInterval(sendFileList, 10000)
                 })
                 .catch((error) => onError(error))
         })
