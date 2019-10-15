@@ -1,4 +1,6 @@
-const {ipcRenderer} = require("electron");
+const {
+  ipcRenderer
+} = require("electron");
 
 class About {
   constructor() {}
@@ -6,6 +8,13 @@ class About {
   renderAbout() {
     EthoMainGUI.renderTemplate("about.html", {});
     $(document).trigger("render_about");
+    let shell = require('electron').shell
+    document.addEventListener('click', function(event) {
+      if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
+        event.preventDefault()
+        shell.openExternal(event.target.href)
+      }
+    })
   }
 }
 

@@ -8,6 +8,13 @@ const {
 const singleInstance = require("single-instance");
 const path = require("path");
 const fs = require("fs");
+let shell = require('electron').shell
+document.addEventListener('click', function(event) {
+  if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
+    event.preventDefault()
+    shell.openExternal(event.target.href)
+  }
+})
 
 var locker = new singleInstance("Ether1DesktopWallet");
 
