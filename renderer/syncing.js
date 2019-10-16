@@ -1,6 +1,6 @@
 // In renderer process (web page).
 const {ipcRenderer} = require("electron");
-
+var web3;
 // Set the provider you want from Web3.providers
 SyncProgress = new ProgressBar.Line("#syncProgress", {
   strokeWidth: 6,
@@ -120,7 +120,7 @@ function StartSyncProcess() {
 var InitWeb3 = setInterval(function () {
   try {
     web3Local = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
-
+    
     web3Local.eth.net.isListening(function (error, success) {
       if (!error) {
         $(document).trigger("onGethReady");

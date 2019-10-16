@@ -68,12 +68,12 @@ function start() {
                     
                     window.info = id
                     console.log("Getting ethoFS Node ID...");
-                    subscribeToHealthChannel()
-                    updateView('ready', window.node)
-                    onSuccess('Node is ready.')
-                    setInterval(refreshPeerList, 10000)
+                    EthoUploads.subscribeToHealthChannel()
+                    EthoUploads.updateView('ready', window.node)
+                    EthoUploads.onSuccess('Node is ready.')
+                    setInterval(EthoUploads.refreshPeerList, 10000)
                 })
-                .catch((error) => onError(error))
+                .catch((error) => EthoUploads.onError(error))
         })
     }
 }

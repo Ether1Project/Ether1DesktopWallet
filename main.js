@@ -8,7 +8,6 @@ const {
 const singleInstance = require("single-instance");
 const path = require("path");
 const fs = require("fs");
-
 var locker = new singleInstance("Ether1DesktopWallet");
 
 locker.lock().then(function() {
