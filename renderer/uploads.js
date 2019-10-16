@@ -104,7 +104,7 @@ class Uploads {
 
   beforeLoginState() {
     var statsRow = document.getElementById("stats-row");
-    statsRow.style.display = "none";
+    //statsRow.style.display = "none";
     var uploadButton = document.getElementById("main-upload-button");
     uploadButton.style.display = "none";
   }

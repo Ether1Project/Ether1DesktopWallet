@@ -67,6 +67,7 @@ body.pg-loaded>.inner {
   right: 0;
   bottom: 20px;
   background-color: #212529;
+  overflow: auto;
 }
 
 /* Style the main content */
