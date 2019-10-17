@@ -1,7 +1,6 @@
 <head>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
-    type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
   <!-- Bootstrap Core Css -->
   <!--<link href="assets/dashboard/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">-->
@@ -13,8 +12,7 @@
 <link href="assets/dashboard/plugins/morrisjs/morris.css" rel="stylesheet" />-->
   <!-- Custom Css -->
   <link href="assets/dashboard/css/style.css" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
   <link href="assets/dashboard/css/themes/all-themes.css" rel="stylesheet" />
   <script src="https://medium-widget.pixelpoint.io/widget.js"></script>
@@ -130,13 +128,11 @@
 
             </div>
             <center>
-              <button type="button" class="btn bg-indigo waves-effect" id="main-upload-button"
-                style="margin: 10px; display:inline-block;">
+              <button type="button" class="btn bg-indigo waves-effect" id="main-upload-button" style="margin: 10px; display:inline-block;">
                 <i class="material-icons">cloud_upload</i>
                 <span>Upload to ethoFS</span>
               </button>
-              <button type="button" class="btn bg-indigo waves-effect" id="main-login-button"
-                style="margin: 10px; display:inline-block;">
+              <button type="button" class="btn bg-indigo waves-effect" id="main-login-button" style="margin: 10px; display:inline-block;">
                 <i class="material-icons">fingerprint</i>
                 <span id="ethofs-login-button-text">Login To ethoFS</span>
               </button>
@@ -154,29 +150,25 @@
     <!-- #END# CPU Usage -->
 
     <!-- Table of hashes -->
-    <div class="row clearfix">
-      <div class="col-xs-24 col-sm-24 col-md-16 col-lg-16">
+    <div class="row">
+      <div class="col s12">
         <div class="card">
-          <div class="header">
-            <h2>ETHOFS HOSTING CONTRACTS</h2>
-          </div>
-          <div class="body">
-            <div class="table-responsive">
-              <table class="table table-hover dashboard-task-infos">
-                <thead>
-                  <tr>
-                    <th style="color:#000;">Name</th>
-                    <th style="color:#000;">ethoFS Contract Hash</th>
-                    <th style="color:#000;">Start Block</th>
-                    <th style="color:#000;">End Block</th>
-                    <th style="color:#000;">Status</th>
-                    <th style="color:#000;">Options</th>
-                  </tr>
-                </thead>
-                <tbody id="hostingcontractstablebody"></tbody>
-              </table>
-            </div>
-          </div>
+          <center><h2 style="color: white; background: #212529;">ETHOFS HOSTING CONTRACTS</h2></center>
+        </div>
+        <div class="responsive-table">
+          <table class="responsive-table">
+            <thead>
+              <tr>
+                <th style="color:#fff;">Name</th>
+                <th style="color:#fff;">ethoFS Contract Hash</th>
+                <th style="color:#fff;">Start Block</th>
+                <th style="color:#fff;">End Block</th>
+                <th style="color:#fff;">Status</th>
+                <th style="color:#fff;">Options</th>
+              </tr>
+            </thead>
+            <tbody id="hostingcontractstablebody" class="responsive-table"></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -204,8 +196,7 @@
               </tr>
               <tr style="border-color:#000;">
                 <td data-th="Private Key">
-                  <input type="text" id="privatekey" name="privatekey" placeholder="Enter Private Key"
-                    style="color:White;">
+                  <input type="text" id="privatekey" name="privatekey" placeholder="Enter Private Key" style="color:White;">
                 </td>
               </tr>
             </table>
@@ -245,8 +236,7 @@
           </div>
         </div>
         <div class="modal-footer" style="background-color: #840032;">
-          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"
-            id="ethofs-registration-button">REGISTER</button>
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button">REGISTER</button>
         </div>
       </div>
     </div>
@@ -317,8 +307,7 @@
                     box to upload.
                   </p>
                 </center>
-                <input type="file" id="fileUploadButton" webkitdirectory="true" mozdirectory="true" msdirectory="true"
-                  odirectory="true" directory="true" multiple="true">
+                <input type="file" id="fileUploadButton" webkitdirectory="true" mozdirectory="true" msdirectory="true" odirectory="true" directory="true" multiple="true">
               </div>
               <div id="progress-container">
                 <div id="progress-bar"></div>
@@ -359,8 +348,7 @@
                 </tr>
                 <tr style="border-color:#000;">
                   <td data-th="Contract Name">
-                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name"
-                      style="color:white;">
+                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
                   </td>
                 </tr>
                 <tr>
@@ -417,10 +405,6 @@
         <div class="modal-content" style="background-color: #840032;">
           <div class="modal-header">
             <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;"
-                id="tracker-close-button">
-                <span aria-hidden="true">&times;</span>
-              </button>
               <br>
               <center>
                 <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
@@ -437,29 +421,24 @@
                   <h3 style="padding-left:10px;">Message Log:</h3>
                   <span class="upload-message" style="color: #3CB371; font-size: 24px; padding: 10px"></span>
                 </div>
-                <div class="summary"
-                  style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
                   <div id="myBar">0%</div>
                 </div>
               </div>
             </main>
           </div>
-          <div class="modal-footer"
-            style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-            <button type="button" class="btn btn-primary" id="upload-check-button"
-              onclick="event.stopPropagation();">Close</button>
+          <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+            <button type="button" class="btn btn-primary" id="upload-check-button" onclick="event.stopPropagation();">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-      aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #840032;">
           <div class="modal-header">
             <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
-              <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close"
-                style="color:#ffffff;">
+              <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close" style="color:#ffffff;">
                 <span aria-hidden="true">&times;</span>
               </button>
               <br>
@@ -479,17 +458,14 @@
                     <h4 style="padding-left:10px;">Message Log:</h4>
                     <pre class="analyze-message" style="color: #3CB371; font-size: 24px;"></pre>
                   </div>
-                  <div class="summary"
-                    style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                  <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
                     <div id="myAnalyzeBar">0%</div>
                   </div>
                 </div>
 
 
-                <div class="modal-footer"
-                  style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
-                  <button type="button" class="btn btn-primary" id="upload-check-button"
-                    onclick="event.stopPropagation();">Close</button>
+                <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+                  <button type="button" class="btn btn-primary" id="upload-check-button" onclick="event.stopPropagation();">Close</button>
                 </div>
               </main>
           </div>
@@ -499,8 +475,7 @@
     <!-- end analyze data modal -->
 
     <!-- begin mined block checking modal -->
-    <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-      aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #840032;">
           <div class="modal-header">
@@ -510,16 +485,12 @@
             <center>
               <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
             </center>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
             <main>
               <div class="box node" style="width:100%; background: #000000; background-color: #000;">
                 <h3 style="padding: 20px;">Ether-1 Transaction Status:
-                  <span id="mining-status-message"
-                    style="color: #3CB371; font-size: 24px; text-align: center !important;">In
+                  <span id="mining-status-message" style="color: #3CB371; font-size: 24px; text-align: center !important;">In
                     Progress</span>
                 </h3>
                 <div>
@@ -528,8 +499,7 @@
                     <span class="mining-message" id="mining-message" style="color: #3CB371; font-size: 24px;"></span>
                   </center>
                 </div>
-                <div class="summary"
-                  style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
+                <div class="summary" style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
                   <h3 style="font-size: 24px;">Current Ether-1 Block Height:
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <span id="block-height" style="color: #3CB371; font-size: 24px;">0</span>
@@ -544,8 +514,7 @@
     <!-- end mined block checking modal -->
 
     <!-- begin preparing upload modal -->
-    <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
-      aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color: #840032;">
           <div class="modal-header">
@@ -555,9 +524,6 @@
             <center>
               <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
             </center>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#ffffff;">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
             <main>
@@ -691,8 +657,7 @@
               </div>
             </main>
           </div>
-          <div class="modal-footer"
-            style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+          <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
             <div class="row clearfix">
               <button class="btn btn-primary" id="contract-extension-button" type="button">Extend Hosting
                 Contract</button>
