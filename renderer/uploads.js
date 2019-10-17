@@ -356,7 +356,6 @@ class Uploads {
       pinRemoving.methods.RemoveHostingContract(hostingAddress, contentHash).send(tx, function (error, result) {
         if (!error) {
           if (result) {
-            //$('#minedBlockTrackerModal').modal('open');
             EthoUploads.waitForReceipt(result, function (receipt) {
               console.log("Transaction Has Been Mined: " + receipt);
               $('#minedBlockTrackerModal').iziModal('close');
@@ -643,8 +642,6 @@ class Uploads {
       var table = document.getElementById("contract-detail-table");
       var row = table.insertRow(count + 10);
       var cell1 = row.insertCell(0);
-      //var cell2 = row.insertCell(1);
-      //cell1.innerHTML = ethoFSHostingContractPath;
       cell1.innerHTML = '<a  href="http://data.ethofs.com/ipfs/' + ethoFSHostingContractHash + '" target="_blank" style="word-break: break-word">' + ethoFSHostingContractHash + '</a>';
     }
 
@@ -910,20 +907,16 @@ class Uploads {
       const streamFiles = (files) => {
         const stream = node.addReadableStream()
         stream.on('data', function (data) {
-          //console.log("Data...");
-          //console.log(data);
           GlobalHashArray.push(`${data.hash}`);
           GlobalSizeArray.push(`${data.size}`);
           GlobalPathArray.push(`${data.path}`);
           GlobalUploadHash = `${data.hash}`;
           GlobalUploadPath = `${data.path}`;
           console.log("Path: " + data.path + "  Hash: " + data.hash);
-          //var comparePath = data.path.replace(pathSymbol, "/");
           var comparePath = data.path.replace(/\\/g, '/');
           console.log("Compare Path: " + comparePath);
           var splitString = comparePath.split("/")
           if (splitString.length == 1 || splitString[0] == "") {
-            //if (splitString.length == 1) {
             streamFinishCount++;
             GlobalMainHashArray.push(`${data.hash}`);
             GlobalMainPathArray.push(`${data.path}`);
@@ -1361,10 +1354,6 @@ class Uploads {
     $logs.innerHTML = msg
   }
 
-
-  //window.onerror = EthoUploads.onError
-
-
   updateView(state, ipfs) {
     if (states[state] !== undefined) {
       states[state]()
@@ -1374,13 +1363,6 @@ class Uploads {
   }
 
   startApplication() {
-    // Setup event listeners
-    //document.getElementById("drag-container").addEventListener('dragenter', EthoUploads.onDragEnter)
-    //document.getElementById("drag-container").addEventListener('dragover', EthoUploads.onDragEnter)
-    //document.getElementById("drag-container").addEventListener('drop', EthoUploads.onDrop)
-    //document.getElementById("drag-container").addEventListener('dragleave', EthoUploads.onDragLeave)
-    //document.getElementById("fileUploadButton").addEventListener("change", EthoUploads.onFileUpload)
-    //start()
     window.startNode()
     EthoUploads.extendedStartApplication()
   }
@@ -1461,7 +1443,7 @@ $(document).on("render_uploads", function () {
     $('#defaultModal2').iziModal('open');
     $('#defaultModal').iziModal('close');
     EthoUploads.resetUploadProcess();
-  });         
+  });
 
   $(document).on("click", "#defaultModal2-close", function (event) {
     $('#defaultModal2').iziModal('close');
