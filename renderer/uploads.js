@@ -40,6 +40,7 @@ let messageFlag = 0;
 let messageString = "";
 let healthMessage = "";
 let averageAvailableStorageTotal = 0;
+var switchFlag = null;
 
 /*SET CONTRACTS UP HERE*/
 var GlobalChannelString = "ethoFSPinningChannel_alpha11";
@@ -111,13 +112,17 @@ class Uploads {
     statsRow.style.display = "block";
     var uploadButton = document.getElementById("main-upload-button");
     uploadButton.style.display = "block";
-    var loginButton = document.getElementById("main-login-button");
-    loginButton.style.display = "none";
+    document.getElementById("ethofs-login-button-text").innerHTML = "Switch User";
+    switchFlag = "SWITCH";
+    //var loginButton = document.getElementById("main-login-button");
+    //loginButton.style.display = "none";
   }
 
   checkLogin() {
-    if (GlobalPrivateKey == null) {
-      EthoUploads.beforeLoginState();
+    if (GlobalPrivateKey == null || GlobalPrivateKey == "SWITCH") {
+      if (GlobalPrivateKey == null) {
+        EthoUploads.beforeLoginState();
+      }
       web3 = new Web3()
       web3.setProvider(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
       $('#ethofsLoginModal').iziModal();
@@ -1421,6 +1426,7 @@ $(document).on("render_uploads", function () {
   });
 
   $(document).on("click", "#main-login-button", function (event) {
+    GlobalPrivateKey = switchFlag;
     EthoUploads.checkLogin();
   });
 
