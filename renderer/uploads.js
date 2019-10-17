@@ -1431,6 +1431,8 @@ $(document).on("render_uploads", function () {
   });
 
   $(document).on("click", "#main-upload-button", function (event) {
+    $('#defaultModal').iziModal();
+    $('#defaultModal').iziModal('open');
     EthoUploads.resetUploadProcess();
   });
 
