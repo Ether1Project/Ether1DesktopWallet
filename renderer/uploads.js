@@ -899,8 +899,6 @@ class Uploads {
 
   startUploadProcess() {
     console.log("Starting Upload Process..");
-    $("#preparingUploadModal").iziModal();
-    $('#preparingUploadModal').iziModal('open');
     var streamFinishCount = 0;
     for (var i = 0; i < MainFileArray.length; i++) {
       const streamFiles = (files) => {
@@ -1436,15 +1434,40 @@ $(document).on("render_uploads", function () {
     EthoUploads.resetUploadProcess();
   });
 
+  $(document).on("click", "#defaultModal-close", function (event) {
+    $('#defaultModal').iziModal('close');
+  });
+
+  $(document).on("click", "#defaultModal-next", function (event) {
+    $('#defaultModal2').iziModal();
+    $('#defaultModal2').iziModal('open');
+    $('#defaultModal').iziModal('close');
+    EthoUploads.resetUploadProcess();
+  });         
+
+  $(document).on("click", "#defaultModal2-close", function (event) {
+    $('#defaultModal2').iziModal('close');
+  });
+
   $(document).on("click", "#ethofs-registration-button", function (event) {
     EthoUploads.AddNewUser(document.getElementById('username').value);
   });
 
   $(document).on("click", "#confirm-files-button", function (event) {
+    $('#defaultModal3').iziModal();
+    $('#defaultModal3').iziModal('open');
+    $('#defaultModal2').iziModal('close');
     EthoUploads.resetUploadModal();
   });
 
+  $(document).on("click", "#defaultModal3-close", function (event) {
+    $('#defaultModal3').iziModal('close');
+  });
+
   $(document).on("click", "#upload-confirm-button", function (event) {
+    $('#preparingUploadModal').iziModal();
+    $('#preparingUploadModal').iziModal('open');
+    $('#defaultModal3').iziModal('close');
     EthoUploads.startUploadProcess();
   });
 
