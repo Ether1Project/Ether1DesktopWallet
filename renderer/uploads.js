@@ -15,15 +15,12 @@ const request = require('request');
 var $ethomessage;
 var $nodeId;
 var $uploadMessage;
-var $analyzeMessage;
-var $nodeAddresses;
 var $logs;
 // Files
 var $fetchButton;
 var $dragContainer;
 var $progressBar;
 var $fileHistory;
-var $emptyRow;
 // Misc
 var $allDisabledButtons;
 var $allDisabledInputs;
@@ -227,6 +224,7 @@ class Uploads {
               if (result) {
                 $('#minedBlockTrackerModal').iziModal();
                 $('#minedBlockTrackerModal').iziModal('open');
+                $miningMessage = document.querySelector('.mining-message')
                 EthoUploads.waitForReceipt(result, function (receipt) {
                   console.log("Transaction Has Been Mined: " + receipt);
                   $('#minedBlockTrackerModal').iziModal('close');
@@ -247,6 +245,7 @@ class Uploads {
             document.getElementById("wait").innerHTML = 'Waiting For Add User Confirmation.';
             $('#minedBlockTrackerModal').iziModal();
             $('#minedBlockTrackerModal').iziModal('open');
+            $miningMessage = document.querySelector('.mining-message')
             EthoUploads.waitForReceipt(result, function (receipt) {
               console.log("Transaction Has Been Mined: " + receipt);
               $('#minedBlockTrackerModal').iziModal('close');
@@ -291,7 +290,7 @@ class Uploads {
   //CHECK FOR TX - BLOCK TO BE MINED
   waitForReceipt(hash, cb) {
     web3.eth.getTransactionReceipt(hash, function (err, receipt) {
-      document.getElementById("mining-status-message").textContent = "In Progress";
+      //document.getElementById("mining-status-message").textContent = "In Progress";
       $miningMessage.innerText = "Waiting For Transaction Confirmation";
       web3.eth.getBlock('latest', function (e, res) {
         if (!e) {
@@ -304,7 +303,7 @@ class Uploads {
       }
       if (receipt !== null) {
         $miningMessage.innerText = "Transaction Confirmed";
-        document.getElementById("mining-status-message").textContent = "Complete";
+        //document.getElementById("mining-status-message").textContent = "Complete";
         if (cb) {
           cb(receipt);
         }
@@ -335,6 +334,7 @@ class Uploads {
               if (result) {
                 $('#minedBlockTrackerModal').iziModal();
                 $('#minedBlockTrackerModal').iziModal('open');
+                $miningMessage = document.querySelector('.mining-message')
                 EthoUploads.waitForReceipt(result, function (receipt) {
                   console.log("Transaction Has Been Mined: " + receipt);
                   $('#minedBlockTrackerModal').iziModal('close');
@@ -520,6 +520,7 @@ class Uploads {
     $('#uploadTrackerModal').iziModal();
     $('#uploadTrackerModal').iziModal('open');
     document.getElementById("upload-hash").innerHTML = HostingContractName;
+    $uploadMessage = document.querySelector('.upload-message')
     return false;
   }
 
@@ -677,10 +678,11 @@ class Uploads {
   contractExtensionChange(selectObj) {
     var index = selectObj.selectedIndex;
     var extensionDuration = selectObj.options[index].value;
+    console.log("Extenstion Duration: " + extensionDuration);
     GlobalExtensionDuration = extensionDuration;
     document.getElementById("contract-extension-button").style.visibility = "visible";
     var extensionCost = ((GlobalHostingContractDetailArray['storage'] / 1048576) * GlobalHostingCost) * (extensionDuration / 46522);
-    document.getElementById("contract-extension-cost").innerHTML = round(extensionCost, 2);
+    document.getElementById("contract-extension-cost").innerHTML = EthoUploads.round(extensionCost, 2);
   }
 
   //CONTRACT EXTENSION CONFIRM
@@ -711,7 +713,7 @@ class Uploads {
               if (!error) {
                 if (result) {
                   $("#contractDetailModal").iziModal("close");
-                  $("#contractDetailModal").iziModal();
+                  $("#minedBlockTrackerModal").iziModal();
                   $("#minedBlockTrackerModal").iziModal("open");
                   EthoUploads.waitForReceipt(result, function (receipt) {
                     console.log("Transaction Has Been Mined: " + receipt);
@@ -850,10 +852,12 @@ class Uploads {
   }
 
   resetProgress() {
+    $progressBar = document.querySelector('#progress-bar')
     $progressBar.style.transform = 'translateX(-100%)'
   }
 
   appendFile(name, hash, size, data) {
+    $fileHistory = document.querySelector('#file-history tbody')
     const file = new window.Blob([data], {
       type: 'application/octet-binary'
     })
@@ -891,9 +895,11 @@ class Uploads {
   }
 
   onDragEnter(event) {
+    $dragContainer = document.querySelector('#drag-container')
     $dragContainer.classList.add('dragging')
   }
   onDragLeave() {
+    $dragContainer = document.querySelector('#drag-container')
     $dragContainer.classList.remove('dragging')
   }
 
@@ -961,7 +967,7 @@ class Uploads {
           if (response.status == 200) {
             hashConfirmationCount++;
             var confirmationPercentage = Math.ceil((hashConfirmationCount / hashVerificationArray.length) * 100);
-            updateUploadProgress(confirmationPercentage);
+            EthoUploads.updateUploadProgress(confirmationPercentage);
             console.log("Data Upload Confirmation Received: " + hashConfirmationCount + "/" + hashVerificationArray.length);
             $uploadMessage.innerText = "Upload Confirmation Received: " + hashConfirmationCount + "/" + hashVerificationArray.length;
             if (confirmationPercentage >= 99) {
@@ -969,8 +975,8 @@ class Uploads {
               document.getElementById("upload-status-message").textContent = "Complete";
               if (!uploadCompleteFlag) {
                 uploadCompleteFlag = true;
-                updateContractTable();
-                finishUploadModal();
+                EthoUploads.updateContractTable();
+                EthoUploads.finishUploadModal();
               }
               return;
             }
@@ -1052,6 +1058,7 @@ class Uploads {
                   console.log("Result: " + result);
                   $("#minedBlockTrackerModal").iziModal();
                   $('#minedBlockTrackerModal').iziModal('open');
+                  $miningMessage = document.querySelector('.mining-message')
                   $('#preparingUploadModal').iziModal('close');
                   EthoUploads.waitForReceipt(result, function (receipt) {
                     console.log("Transaction Has Been Mined: " + receipt);
@@ -1075,6 +1082,7 @@ class Uploads {
             if (result) {
               $('#minedBlockTrackerModal').iziModal();
               $('#minedBlockTrackerModal').iziModal('open');
+              $miningMessage = document.querySelector('.mining-message')
               $('#preparingUploadModal').iziModal('close');
               EthoUploads.waitForReceipt(result, function (receipt) {
                 console.log("Transaction Has Been Mined: " + receipt);
@@ -1177,7 +1185,7 @@ class Uploads {
               EthoUploads.appendFile(updatedPath, filename, stats.size, null);
               console.log("Path: " + filepath + " Size: " + stats.size + " Total Size: " + GlobalUploadSize);
               document.getElementById("upload-size").textContent = totalUploadSizeMB;
-              EthoUploads.contractDurationChange(document.getElementById('contract-duration').value);
+              EthoUploads.contractDurationChange(document.getElementById('contract-duration'));
               streamCompareCount--;
               EthoUploads.updateAnalyzeProgress(((totalUploadItems - streamCompareCount) / totalUploadItems));
               if (streamCompareCount == 0) {
@@ -1243,11 +1251,11 @@ class Uploads {
                   GlobalUploadSize += Number(file.size);
                   fileSize += Number(file.size);
                   var totalUploadSizeMB = GlobalUploadSize / 1000000;
-                  appendFile(entry.fullPath, entry.name, file.size, null);
+                  EthoUploads.appendFile(entry.fullPath, entry.name, file.size, null);
                   document.getElementById("upload-size").textContent = totalUploadSizeMB;
-                  contractDurationChange(document.getElementById('contract-duration').value);
+                  EthoUploads.contractDurationChange(document.getElementById('contract-duration'));
                   streamCompareCount--;
-                  updateAnalyzeProgress(((totalItemCount - streamCompareCount) / totalItemCount));
+                  EthoUploads.updateAnalyzeProgress(((totalItemCount - streamCompareCount) / totalItemCount));
                   if (streamCompareCount == 0) {
                     document.getElementById("upload-hash").textContent = "READY FOR UPLOAD";
                     document.getElementById("upload-confirm-button").style.visibility = "visible";
@@ -1367,11 +1375,11 @@ class Uploads {
 
   startApplication() {
     // Setup event listeners
-    document.getElementById("drag-container").addEventListener('dragenter', EthoUploads.onDragEnter)
-    document.getElementById("drag-container").addEventListener('dragover', EthoUploads.onDragEnter)
-    document.getElementById("drag-container").addEventListener('drop', EthoUploads.onDrop)
-    document.getElementById("drag-container").addEventListener('dragleave', EthoUploads.onDragLeave)
-    document.getElementById("fileUploadButton").addEventListener("change", EthoUploads.onFileUpload)
+    //document.getElementById("drag-container").addEventListener('dragenter', EthoUploads.onDragEnter)
+    //document.getElementById("drag-container").addEventListener('dragover', EthoUploads.onDragEnter)
+    //document.getElementById("drag-container").addEventListener('drop', EthoUploads.onDrop)
+    //document.getElementById("drag-container").addEventListener('dragleave', EthoUploads.onDragLeave)
+    //document.getElementById("fileUploadButton").addEventListener("change", EthoUploads.onFileUpload)
     //start()
     window.startNode()
     EthoUploads.extendedStartApplication()
@@ -1399,26 +1407,36 @@ EthoUploads = new Uploads();
 
 $(document).on("render_uploads", function () {
 
-  // Node
+  // Misc
   $ethomessage = document.querySelector('.etho-message')
   $nodeId = document.querySelector('.node-id')
-  $uploadMessage = document.querySelector('.upload-message')
-  $analyzeMessage = document.querySelector('.analyze-message')
-  $nodeAddresses = document.querySelector('.node-addresses')
   $logs = document.querySelector('#logs')
-  // Files
   $fetchButton = document.querySelector('#fetch-btn')
-  $dragContainer = document.querySelector('#drag-container')
-  $progressBar = document.querySelector('#progress-bar')
-  $fileHistory = document.querySelector('#file-history tbody')
-  $emptyRow = document.querySelector('.empty-row')
-  // Misc
   $allDisabledButtons = document.querySelectorAll('button:disabled')
   $allDisabledInputs = document.querySelectorAll('input:disabled')
   $allDisabledElements = document.querySelectorAll('.disabled')
-  $miningMessage = document.querySelector('.mining-message')
 
   EthoUploads.beforeLoginState();
+
+  $(document).on("dragenter", "#drag-container", function (event) {
+    EthoUploads.onDragEnter(event);
+  });
+
+  $(document).on("dragover", "#drag-container", function (event) {
+    EthoUploads.onDragEnter(event);
+  });
+
+  $(document).on("drop", "#drag-container", function (event) {
+    EthoUploads.onDrop(event);
+  });
+
+  $(document).on("dragleave", "#drag-container", function (event) {
+    EthoUploads.onDragLeave(event);
+  });
+
+  $(document).on("change", "#fileUploadButton", function (event) {
+    EthoUploads.onFileUpload(event);
+  });
 
   $(document).on("click", "#main-login-button", function (event) {
     EthoUploads.checkLogin();
@@ -1484,15 +1502,16 @@ $(document).on("render_uploads", function () {
   });
 
   $(document).on("click", "#reset-table-button", function (event) {
+    $("#contractDetailModal").iziModal("close");
     EthoUploads.resetContractDetailTableRows();
   });
 
   $(document).on("change", "#contract-duration", function (event) {
-    EthoUploads.contractDurationChange(document.getElementById('contract-duration').value);
+    EthoUploads.contractDurationChange(document.getElementById('contract-duration'));
   });
 
   $(document).on("change", "#extend-contract", function (event) {
-    EthoUploads.contractDurationChange(document.getElementById('extend-contract').value);
+    EthoUploads.contractExtensionChange(document.getElementById('extend-contract'));
   });
 
   fetch('https://api.coinmarketcap.com/v2/ticker/3452/').then(response => {
