@@ -1,6 +1,6 @@
 html {
-  color: #aaa;
-  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -42,7 +42,7 @@ body.pg-loaded>.inner {
 #peerCount {
   bottom: 0;
   height: 20px;
-  color: #aaa;
+  color: #fff;
   position: absolute;
   font-size: 0.8em;
   padding-left: 5px;
@@ -110,7 +110,7 @@ body.pg-loaded>.inner {
 
 .modalBody {
   margin: 20px;
-  color: #333;
+  color: #fff;
 }
 
 #dlgGeneralError .modalBody {
@@ -161,11 +161,11 @@ body.pg-loaded>.inner {
 #dlgAddressListBody {
   margin: 0px;
   padding: 20px;
-  background-color: #333;
+  background-color: #fff;
 }
 
 #dlgAddressList .modalBody {
-  color: #aaa;
+  color: #fff;
 }
 
 .btn-dialog-confirm {
@@ -198,7 +198,7 @@ body.pg-loaded>.inner {
 }
 
 #transactionsWrapper {
-  color: #aaa;
+  color: #fff;
   padding-top: 10px;
 }
 
