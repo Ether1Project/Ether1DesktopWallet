@@ -27,7 +27,7 @@
           <th scope="col" class="no-sort"></th>
           <th scope="col">Name</th>
           <th scope="col">Address</th>
-          <th scope="col"class="no-sort"></th>
+          <th scope="col" class="no-sort"></th>
           <th scope="col" data-sort-method='number'>Balance</th>
         </tr>
       </thead>
@@ -48,7 +48,7 @@
                 <i class="fas fa-qrcode"></i>
               </button>
             </td>
-            <td>{{balance}}</td>
+            <td id="colorbal" style="color: red;">{{balance}}</td>
           </tr>
         {{/addressData}}
       </tbody>
@@ -76,32 +76,32 @@
 
 <!-- The modal to change wallet name -->
 <div id="dlgChangeWalletName" class="modalDialog" data-izimodal-title="Wallet Name" data-izimodal-subtitle="Enter the name for this address" data-izimodal-icon="icon-home">
-<div class="modalBody">
-  <div class="form-group">
-    <label for="inputWalletName">Type Name:</label>
-    <input type="text" class="form-control" id="inputWalletName">
+  <div class="modalBody">
+    <div class="form-group">
+      <label for="inputWalletName">Type Name:</label>
+      <input type="text" class="form-control" id="inputWalletName">
+    </div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeWalletNameConfirm">Confirm</button>
   </div>
-  <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnChangeWalletNameConfirm">Confirm</button>
-</div>
 </div>
 
 <!-- The modal to import from private key -->
 <div id="dlgImportFromPrivateKey" class="modalDialog" data-izimodal-title="Import private key" data-izimodal-subtitle="Import account from private key" data-izimodal-icon="icon-home">
-<div class="modalBody">
-  <div class="form-group">
-    <label for="inputPrivateKey">Private Key:</label>
-    <input type="password" class="form-control" id="inputPrivateKey">
+  <div class="modalBody">
+    <div class="form-group">
+      <label for="inputPrivateKey">Private Key:</label>
+      <input type="password" class="form-control" id="inputPrivateKey">
+    </div>
+    <div class="form-group">
+      <label for="walletPasswordSecond">Account Password:</label>
+      <input type="password" class="form-control" id="keyPasswordFirst">
+    </div>
+    <div class="form-group">
+      <label for="walletPasswordSecond">Confirm Password:</label>
+      <input type="password" class="form-control" id="keyPasswordSecond">
+    </div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnImportFromPrivateKeyConfirm">Import</button>
   </div>
-  <div class="form-group">
-    <label for="walletPasswordSecond">Account Password:</label>
-    <input type="password" class="form-control" id="keyPasswordFirst">
-  </div>
-  <div class="form-group">
-    <label for="walletPasswordSecond">Confirm Password:</label>
-    <input type="password" class="form-control" id="keyPasswordSecond">
-  </div>
-  <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnImportFromPrivateKeyConfirm">Import</button>
-</div>
 </div>
 
 <span id="nodestorage" style="display:none;">Loading</span>
