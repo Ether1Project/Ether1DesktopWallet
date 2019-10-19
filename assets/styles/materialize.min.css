@@ -6192,10 +6192,10 @@ select.browser-default {
 }
 
 select {
-  background-color: #443e3ee6;
+  background-color: #fff;
   width: 100%;
   padding: 5px;
-  border: 1px solid #000000;
+  border: 3px solid #840032;
   height: 30px;
   padding-top: 35px;
   margin-top: 10px;
@@ -6217,7 +6217,7 @@ select {
 .select-wrapper input.select-dropdown {
   position: relative;
   cursor: pointer;
-  background-color: transparent;
+  background-color: #fff;
   border: none;
   border-bottom: 1px solid #9e9e9e;
   outline: none;
@@ -6246,7 +6246,8 @@ select {
   bottom: 0;
   margin: auto 0;
   z-index: 0;
-  fill: rgba(0, 0, 0, 0.87)
+  fill: rgba(0, 0, 0, 0.87);
+  background-color: #fff
 }
 
 .select-wrapper+label {
@@ -6311,7 +6312,8 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
   height: 40px;
   width: 40px;
   margin: 5px 15px;
-  float: right
+  float: right;
+  background-color: #fff
 }
 
 .select-dropdown li.optgroup {
