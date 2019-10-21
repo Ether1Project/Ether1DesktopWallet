@@ -1501,15 +1501,15 @@ $(document).on("render_uploads", function () {
     } else {
       loginPassword = document.getElementById('walletpassword').value;
       loginAddress = $("#sendFromAddress").find("option:selected").val().trim();
-        var accountsPath = getKeyStoreLocation();
-        var keyObject = keythereum.importFromFile(loginAddress, accountsPath);
-        var privateKey = keythereum.recover(loginPassword, keyObject);
-        var key = privateKey.toString('hex');
-        GlobalPrivateKey = key;
-        console.log("Global Private Key: " + GlobalPrivateKey);
-        EthoUploads.ethofsLogin(GlobalPrivateKey);
+      var accountsPath = getKeyStoreLocation();
+      var keyObject = keythereum.importFromFile(loginAddress, accountsPath);
+      var privateKey = keythereum.recover(loginPassword, keyObject);
+      var key = privateKey.toString('hex');
+      GlobalPrivateKey = key;
+      console.log("Global Private Key: " + GlobalPrivateKey);
+      EthoUploads.ethofsLogin(GlobalPrivateKey);
     }
-    
+
   });
 
   $(document).on("click", "#main-upload-button", function (event) {
