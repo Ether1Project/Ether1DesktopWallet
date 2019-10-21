@@ -146,7 +146,7 @@ class Uploads {
       GlobalPrivateKey = privateKey;
       privateKeyLogin = true;
       web3.eth.net.isListening()
-        .then(function() {
+        .then(function () {
           console.log('ethoFS is connected')
           var account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
           console.log(account);
@@ -157,7 +157,7 @@ class Uploads {
     } else {
       privateKeyLogin = false;
       web3 = new Web3(web3.currentProvider);
-      web3.eth.getAccounts(function(err, accounts) {
+      web3.eth.getAccounts(function (err, accounts) {
         if (err != null) {
           console.error("An error occurred: " + err);
           EthoUploads.outputNoAddressContractTable();
@@ -182,11 +182,11 @@ class Uploads {
     console.log("Starting ethoFS");
     GlobalUserAddress = web3.eth.defaultAccount;
     var ethoFSAccounts = new web3.eth.Contract(GlobalControllerABI, GlobalControllerContractAddress);
-    ethoFSAccounts.methods.CheckAccountExistence(GlobalUserAddress).call(function(error, result) {
+    ethoFSAccounts.methods.CheckAccountExistence(GlobalUserAddress).call(function (error, result) {
       if (!error) {
         if (result) {
           document.getElementById("accountaddress").textContent = web3.eth.defaultAccount;
-          ethoFSAccounts.methods.GetUserAccountName(GlobalUserAddress).call(function(error, result) {
+          ethoFSAccounts.methods.GetUserAccountName(GlobalUserAddress).call(function (error, result) {
             if (!error) {
               if (result) {
                 EthoUploads.getBlockHeight(web3);
@@ -227,14 +227,14 @@ class Uploads {
       };
       var privateKey = '0x' + GlobalPrivateKey;
       web3.eth.accounts.signTransaction(tx, privateKey)
-        .then(function(signedTransactionData) {
-          web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+        .then(function (signedTransactionData) {
+          web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
             if (!error) {
               if (result) {
                 $('#minedBlockTrackerModal').iziModal();
                 $('#minedBlockTrackerModal').iziModal('open');
                 $miningMessage = document.querySelector('.mining-message')
-                EthoUploads.waitForReceipt(result, function(receipt) {
+                EthoUploads.waitForReceipt(result, function (receipt) {
                   console.log("Transaction Has Been Mined: " + receipt);
                   $('#minedBlockTrackerModal').iziModal('close');
                   EthoUploads.ethofsLogin(GlobalPrivateKey);
@@ -248,14 +248,14 @@ class Uploads {
           });
         });
     } else {
-      controller.methods.AddNewUserPublic(userName).send(function(error, result) {
+      controller.methods.AddNewUserPublic(userName).send(function (error, result) {
         if (!error) {
           if (result) {
             document.getElementById("wait").innerHTML = 'Waiting For Add User Confirmation.';
             $('#minedBlockTrackerModal').iziModal();
             $('#minedBlockTrackerModal').iziModal('open');
             $miningMessage = document.querySelector('.mining-message')
-            EthoUploads.waitForReceipt(result, function(receipt) {
+            EthoUploads.waitForReceipt(result, function (receipt) {
               console.log("Transaction Has Been Mined: " + receipt);
               $('#minedBlockTrackerModal').iziModal('close');
               ethofsLogin("");
@@ -275,14 +275,14 @@ class Uploads {
   }
   getBlockHeight(web3) {
     console.log("Starting Block Height Detection..");
-    web3.eth.getBlockNumber(function(err, data) {
+    web3.eth.getBlockNumber(function (err, data) {
       document.getElementById("blocknumber").textContent = data;
       console.log("ETHO Block Number: " + data);
     });
   }
   getBalance(web3) {
     console.log("Starting Balance Detection..");
-    web3.eth.getBalance(web3.eth.defaultAccount, function(err, data) {
+    web3.eth.getBalance(web3.eth.defaultAccount, function (err, data) {
       var balance = "ETHO Balance: " + Number(web3.utils.fromWei(data, "ether")).toFixed(2);
       document.getElementById("ethobalance").textContent = balance;
       console.log("ETHO Balance: " + data);
@@ -298,10 +298,10 @@ class Uploads {
   }
   //CHECK FOR TX - BLOCK TO BE MINED
   waitForReceipt(hash, cb) {
-    web3.eth.getTransactionReceipt(hash, function(err, receipt) {
+    web3.eth.getTransactionReceipt(hash, function (err, receipt) {
       //document.getElementById("mining-status-message").textContent = "In Progress";
       $miningMessage.innerText = "Waiting For Transaction Confirmation";
-      web3.eth.getBlock('latest', function(e, res) {
+      web3.eth.getBlock('latest', function (e, res) {
         if (!e) {
           document.getElementById("block-height").textContent = res.number;
         }
@@ -317,7 +317,7 @@ class Uploads {
           cb(receipt);
         }
       } else {
-        setTimeout(function() {
+        setTimeout(function () {
           EthoUploads.waitForReceipt(hash, cb);
         }, 10000);
       }
@@ -338,15 +338,15 @@ class Uploads {
       console.log("Private Key: " + privateKey);
       console.log("Hosting Address: " + hostingAddress + "   Removal Hash: " + contentHash);
       web3.eth.accounts.signTransaction(tx, privateKey)
-        .then(function(signedTransactionData) {
+        .then(function (signedTransactionData) {
           console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-          web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+          web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
             if (!error) {
               if (result) {
                 $('#minedBlockTrackerModal').iziModal();
                 $('#minedBlockTrackerModal').iziModal('open');
                 $miningMessage = document.querySelector('.mining-message')
-                EthoUploads.waitForReceipt(result, function(receipt) {
+                EthoUploads.waitForReceipt(result, function (receipt) {
                   console.log("Transaction Has Been Mined: " + receipt);
                   $('#minedBlockTrackerModal').iziModal('close');
                   EthoUploads.updateContractTable();
@@ -364,10 +364,10 @@ class Uploads {
         to: GlobalControllerContractAddress,
         from: GlobalUserAddress,
       };
-      pinRemoving.methods.RemoveHostingContract(hostingAddress, contentHash).send(tx, function(error, result) {
+      pinRemoving.methods.RemoveHostingContract(hostingAddress, contentHash).send(tx, function (error, result) {
         if (!error) {
           if (result) {
-            EthoUploads.waitForReceipt(result, function(receipt) {
+            EthoUploads.waitForReceipt(result, function (receipt) {
               console.log("Transaction Has Been Mined: " + receipt);
               $('#minedBlockTrackerModal').iziModal('close');
               EthoUploads.updateContractTable();
@@ -388,14 +388,14 @@ class Uploads {
     var hostingContracts = "";
     var TotalContractCount = 0;
     var blockHeight = 0;
-    web3.eth.getBlockNumber(function(error, result) {
+    web3.eth.getBlockNumber(function (error, result) {
       if (!error) {
         blockHeight = result;
       } else
         console.error(error);
     });
     var ethoFSAccounts = new web3.eth.Contract(GlobalControllerABI, GlobalControllerContractAddress);
-    ethoFSAccounts.methods.GetUserAccountTotalContractCount(web3.eth.defaultAccount).call(function(error, result) {
+    ethoFSAccounts.methods.GetUserAccountTotalContractCount(web3.eth.defaultAccount).call(function (error, result) {
       TotalContractCount = result;
       GlobalTotalContractCount = result;
       const getContractData = async (ethoFSAccounts, account, TotalContractCount) => {
@@ -720,15 +720,15 @@ class Uploads {
         var privateKey = '0x' + GlobalPrivateKey;
         console.log("Private Key: " + privateKey);
         web3.eth.accounts.signTransaction(tx, privateKey)
-          .then(function(signedTransactionData) {
+          .then(function (signedTransactionData) {
             console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-            web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+            web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
               if (!error) {
                 if (result) {
                   $("#contractDetailModal").iziModal("close");
                   $("#minedBlockTrackerModal").iziModal();
                   $("#minedBlockTrackerModal").iziModal("open");
-                  EthoUploads.waitForReceipt(result, function(receipt) {
+                  EthoUploads.waitForReceipt(result, function (receipt) {
                     console.log("Transaction Has Been Mined: " + receipt);
                     $("#minedBlockTrackerModal").iziModal("close");
                     EthoUploads.updateContractTable();
@@ -743,13 +743,13 @@ class Uploads {
           });
       } else {
 
-        ethoFSController.methods.ExtendContract(GlobalHostingContractDetailArray['address'], extensionDuration).send(transactionObject, function(error, result) {
+        ethoFSController.methods.ExtendContract(GlobalHostingContractDetailArray['address'], extensionDuration).send(transactionObject, function (error, result) {
           if (!error) {
             if (result) {
               $('#contractDetailModal').iziModal('close');
               $("#minedBlockTrackerModal").iziModal();
               $('#minedBlockTrackerModal').iziodal('open');
-              EthoUploads.waitForReceipt(result, function(receipt) {
+              EthoUploads.waitForReceipt(result, function (receipt) {
                 console.log("Transaction Has Been Mined: " + receipt);
                 $('#minedBlockTrackerModal').iziModal('close');
                 EthoUploads.updateContractTable();
@@ -779,7 +779,7 @@ class Uploads {
     var availableStorageTotal = 0;
     var activeHistory = 0;
     var nodeCounter = 0;
-    splitMessage.forEach(function(nodeMessage, index) {
+    splitMessage.forEach(function (nodeMessage, index) {
       var nodeSplitMessage = nodeMessage.split(":");
       activeHistory = Number(nodeSplitMessage[5]);
       if (activeHistory >= 5) {
@@ -814,7 +814,7 @@ class Uploads {
     function calculateStorageAverages(usedStorageArray, availableStorageArray, nodeCountArray) {
 
       var sumAvailableStorage = 0;
-      availableStorageArray.forEach(function(value, index) {
+      availableStorageArray.forEach(function (value, index) {
         sumAvailableStorage += value;
         if (index == (availableStorageArray.length - 1)) {
           averageAvailableStorageTotal = (sumAvailableStorage / availableStorageArray.length);
@@ -822,7 +822,7 @@ class Uploads {
         }
       });
       var sumNodeCount = 0;
-      nodeCountArray.forEach(function(value, index) {
+      nodeCountArray.forEach(function (value, index) {
         sumNodeCount += value;
         if (index == (nodeCountArray.length - 1)) {
           var averageNodeCount = (sumNodeCount / nodeCountArray.length) + 19;
@@ -922,7 +922,7 @@ class Uploads {
     for (var i = 0; i < MainFileArray.length; i++) {
       const streamFiles = (files) => {
         const stream = node.addReadableStream()
-        stream.on('data', function(data) {
+        stream.on('data', function (data) {
           GlobalHashArray.push(`${data.hash}`);
           GlobalSizeArray.push(`${data.size}`);
           GlobalPathArray.push(`${data.path}`);
@@ -961,8 +961,8 @@ class Uploads {
         console.log("Sending Immediate Pin Request: " + MainHashArray[i]);
         EthoUploads.publishImmediatePin(MainHashArray[i]);
       }
-      setTimeout(function() {
-        hashVerificationArray.forEach(function(hash) {
+      setTimeout(function () {
+        hashVerificationArray.forEach(function (hash) {
           verifyDataUpload(hash);
         });
       }, 5000);
@@ -992,7 +992,7 @@ class Uploads {
           } else {
             var confirmationPercentage = Math.ceil((hashConfirmationCount / hashVerificationArray.length) * 100);
             if (confirmationPercentage < 99) {
-              setTimeout(function() {
+              setTimeout(function () {
                 verifyDataUpload(hash)
               }, 2000);
             } else {
@@ -1004,7 +1004,7 @@ class Uploads {
           console.log("Data Confirmation Error: " + error.status);
           var confirmationPercentage = Math.ceil((hashConfirmationCount / hashVerificationArray.length) * 100);
           if (confirmationPercentage < 99) {
-            setTimeout(function() {
+            setTimeout(function () {
               verifyDataUpload(hash)
             }, 2000);
           } else {
@@ -1059,9 +1059,9 @@ class Uploads {
         var privateKey = '0x' + GlobalPrivateKey;
         console.log("Private Key: " + privateKey);
         web3.eth.accounts.signTransaction(tx, privateKey)
-          .then(function(signedTransactionData) {
+          .then(function (signedTransactionData) {
             console.log("Signed TX Data: " + signedTransactionData.rawTransaction);
-            web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function(error, result) {
+            web3.eth.sendSignedTransaction(signedTransactionData.rawTransaction, function (error, result) {
               if (!error) {
                 if (result) {
                   console.log("Result: " + result);
@@ -1069,7 +1069,7 @@ class Uploads {
                   $('#minedBlockTrackerModal').iziModal('open');
                   $miningMessage = document.querySelector('.mining-message')
                   $('#preparingUploadModal').iziModal('close');
-                  EthoUploads.waitForReceipt(result, function(receipt) {
+                  EthoUploads.waitForReceipt(result, function (receipt) {
                     console.log("Transaction Has Been Mined: " + receipt);
                     $('#minedBlockTrackerModal').iziModal('close');
                     $('#nodeModal').iziModal('close');
@@ -1086,14 +1086,14 @@ class Uploads {
             });
           });
       } else {
-        pinAdding.methods.AddNewContract(GlobalMainContentHash, HostingContractName, HostingContractDuration, pinSize, pinSize, contentHashString, contentPathString).send(transactionObject, function(error, result) {
+        pinAdding.methods.AddNewContract(GlobalMainContentHash, HostingContractName, HostingContractDuration, pinSize, pinSize, contentHashString, contentPathString).send(transactionObject, function (error, result) {
           if (!error) {
             if (result) {
               $('#minedBlockTrackerModal').iziModal();
               $('#minedBlockTrackerModal').iziModal('open');
               $miningMessage = document.querySelector('.mining-message')
               $('#preparingUploadModal').iziModal('close');
-              EthoUploads.waitForReceipt(result, function(receipt) {
+              EthoUploads.waitForReceipt(result, function (receipt) {
                 console.log("Transaction Has Been Mined: " + receipt);
                 $('#minedBlockTrackerModal').iziModal('close');
                 $('#nodeModal').iziModal('close');
@@ -1160,7 +1160,7 @@ class Uploads {
 
     function readDirectoryContents(directory) {
       console.log("Directory Path: " + directory);
-      fs.readdir(directory, function(err, filesUploaded) {
+      fs.readdir(directory, function (err, filesUploaded) {
         if (!err) {
           for (let i = 0; filesUploaded.length > i; i++) {
             handleItem(filesUploaded[i], directory);
@@ -1173,7 +1173,7 @@ class Uploads {
 
     function handleItem(filename, relativePath) {
       var filepath = relativePath.concat(pathSymbol, filename);
-      fs.stat(filepath, function(err, stats) {
+      fs.stat(filepath, function (err, stats) {
         if (!err) {
           if (stats.isDirectory()) {
             readDirectoryContents(filepath)
@@ -1181,7 +1181,7 @@ class Uploads {
             streamCompareCount++;
             totalUploadItems++;
             console.log("File Path: " + filepath);
-            fs.readFile(filepath, function(err, file) {
+            fs.readFile(filepath, function (err, file) {
               var updatedPath = filepath.replace(dirPath, dirName);
               var filetowrite = {
                 path: updatedPath,
@@ -1251,7 +1251,7 @@ class Uploads {
           function getFile(entry) {
             document.getElementById("upload-hash").textContent = "ANALYZING UPLOAD DATA";
             document.getElementById("upload-confirm-button").style.visibility = "hidden";
-            entry.file(function(file) {
+            entry.file(function (file) {
               readFileContents(file)
                 .then((buffer) => {
                   var filePath = entry.fullPath;
@@ -1278,10 +1278,10 @@ class Uploads {
 
         } else if (entry.isDirectory) {
           let directoryReader = entry.createReader();
-          directoryReader.readEntries(function(entries) {
+          directoryReader.readEntries(function (entries) {
             streamCompareCount += entries.length - 1;
             totalItemCount += entries.length - 1;
-            entries.forEach(function(newEntry) {
+            entries.forEach(function (newEntry) {
               handleEntry(newEntry);
             });
           });
@@ -1406,9 +1406,25 @@ class Uploads {
 EthoUploads = new Uploads();
 
 
-$(document).on("render_uploads", function() {
+$(document).on("render_uploads", function () {
   $('#privatekeytable').hide();
   $('#walletpasswordtable').hide();
+
+  if (isFullySynced) {
+    (function ($, _M) {
+      M.toast({
+        html: 'Node is fully synced and operational.',
+        displayLength: 10000
+      });
+    }(jQuery, M));
+  } else {
+    (function ($, _M) {
+      M.toast({
+        html: 'Node is still syncing. Please do not attempt to use the wallet or ethoFS upload system.',
+        displayLength: 10000
+      });
+    }(jQuery, M));
+  }
   // Misc
   $ethomessage = document.querySelector('.etho-message')
   $nodeId = document.querySelector('.node-id')
@@ -1420,32 +1436,32 @@ $(document).on("render_uploads", function() {
 
   EthoUploads.beforeLoginState();
 
-  $(document).on("dragenter", "#drag-container", function(event) {
+  $(document).on("dragenter", "#drag-container", function (event) {
     EthoUploads.onDragEnter(event);
   });
 
-  $(document).on("dragover", "#drag-container", function(event) {
+  $(document).on("dragover", "#drag-container", function (event) {
     EthoUploads.onDragEnter(event);
   });
 
-  $(document).on("drop", "#drag-container", function(event) {
+  $(document).on("drop", "#drag-container", function (event) {
     EthoUploads.onDrop(event);
   });
 
-  $(document).on("dragleave", "#drag-container", function(event) {
+  $(document).on("dragleave", "#drag-container", function (event) {
     EthoUploads.onDragLeave(event);
   });
 
-  $(document).on("change", "#fileUploadButton", function(event) {
+  $(document).on("change", "#fileUploadButton", function (event) {
     EthoUploads.onFileUpload(event);
   });
 
-  $(document).on("click", "#main-login-button", function(event) {
+  $(document).on("click", "#main-login-button", function (event) {
     GlobalPrivateKey = switchFlag;
     EthoUploads.checkLogin();
 
     $('#ethofsLoginModal').iziModal({
-      onOpened: function() {
+      onOpened: function () {
         console.log("Login Setup Opened ..");
         var addressBook = EthoDatatabse.getWallets();
         console.log("Getting Address List...");
@@ -1462,7 +1478,7 @@ $(document).on("render_uploads", function() {
           }
         }
 
-        $("#sendFromAddress").on("change", function() {
+        $("#sendFromAddress").on("change", function () {
           var optionText = $(this).find("option:selected").text();
           var optionTextValue = $(this).find("option:selected").val();
           $("#sendFromAddressName").html(optionText.trim());
@@ -1474,13 +1490,6 @@ $(document).on("render_uploads", function() {
             $('#walletpasswordtable').hide();
             $('#privatekeytable').show();
           } else {
-            (function($, _M) {
-              M.toast({
-                html: '<i class="small material-icons">warning </i> If your wallet has a default name e.g: Account 1, you will not be able to select it.',
-                displayLength: 10000,
-                classes: 'warning'
-              });
-            }(jQuery, M));
             privateKeyLogin = false;
             $("#sendFromAddressValue").show();
             $('#privatekeytable').hide();
@@ -1490,17 +1499,24 @@ $(document).on("render_uploads", function() {
           }
         });
       },
-      onOpening: function(modal) {
+      onOpening: function (modal) {
         console.log("Opening Login Setup..");
         $("#sendFromAddressValue").hide();
         $('#walletpasswordtable').hide();
         $('#privatekeytable').hide();
+        (function ($, _M) {
+          M.toast({
+            html: '<i class="small material-icons">warning </i> If your wallet has a default name e.g: Account 1, you will not be able to select it.',
+            displayLength: 10000,
+            classes: 'warning'
+          });
+        }(jQuery, M));
       }
     });
     $('#ethofsLoginModal').iziModal('open');
   });
 
-  $(document).on("click", "#ethofs-login-button", function(event) {
+  $(document).on("click", "#ethofs-login-button", function (event) {
     if (privateKeyLogin == true) {
       GlobalPrivateKey = document.getElementById('privatekey').value;
       console.log("Global Private Key: " + GlobalPrivateKey);
@@ -1519,36 +1535,36 @@ $(document).on("render_uploads", function() {
 
   });
 
-  $(document).on("click", "#main-upload-button", function(event) {
+  $(document).on("click", "#main-upload-button", function (event) {
     $('#defaultModal').iziModal();
     $('#defaultModal').iziModal('open');
     EthoUploads.resetUploadProcess();
   });
 
-  $(document).on("click", "#defaultModal-close", function(event) {
+  $(document).on("click", "#defaultModal-close", function (event) {
     $('#defaultModal').iziModal('close');
     EthoUploads.resetUploadSystem();
     EthoUploads.resetUploadModal();
   });
 
-  $(document).on("click", "#defaultModal-next", function(event) {
+  $(document).on("click", "#defaultModal-next", function (event) {
     $('#defaultModal2').iziModal();
     $('#defaultModal2').iziModal('open');
     $('#defaultModal').iziModal('close');
     EthoUploads.resetUploadProcess();
   });
 
-  $(document).on("click", "#defaultModal2-close", function(event) {
+  $(document).on("click", "#defaultModal2-close", function (event) {
     $('#defaultModal2').iziModal('close');
     EthoUploads.resetUploadSystem();
     EthoUploads.resetUploadModal();
   });
 
-  $(document).on("click", "#ethofs-registration-button", function(event) {
+  $(document).on("click", "#ethofs-registration-button", function (event) {
     EthoUploads.AddNewUser(document.getElementById('username').value);
   });
 
-  $(document).on("click", "#confirm-files-button", function(event) {
+  $(document).on("click", "#confirm-files-button", function (event) {
     $('#defaultModal3').iziModal();
     $('#defaultModal3').iziModal('open');
     document.getElementById("contract-cost").innerHTML = EthoUploads.round(GlobalContractCost, 2);
@@ -1558,41 +1574,41 @@ $(document).on("render_uploads", function() {
     EthoUploads.resetUploadModal();
   });
 
-  $(document).on("click", "#defaultModal3-close", function(event) {
+  $(document).on("click", "#defaultModal3-close", function (event) {
     $('#defaultModal3').iziModal('close');
     EthoUploads.resetUploadSystem();
     EthoUploads.resetUploadModal();
   });
 
-  $(document).on("click", "#upload-confirm-button", function(event) {
+  $(document).on("click", "#upload-confirm-button", function (event) {
     $('#preparingUploadModal').iziModal();
     $('#preparingUploadModal').iziModal('open');
     $('#defaultModal3').iziModal('close');
     EthoUploads.startUploadProcess();
   });
 
-  $(document).on("click", "#tracker-close-button", function(event) {
+  $(document).on("click", "#tracker-close-button", function (event) {
     EthoUploads.updateContractTable();
   });
 
-  $(document).on("click", "#upload-check-button", function(event) {
+  $(document).on("click", "#upload-check-button", function (event) {
     EthoUploads.finishUploadModal();
   });
 
-  $(document).on("click", "#contract-extension-button", function(event) {
+  $(document).on("click", "#contract-extension-button", function (event) {
     EthoUploads.contractExtensionConfirmation();
   });
 
-  $(document).on("click", "#reset-table-button", function(event) {
+  $(document).on("click", "#reset-table-button", function (event) {
     $("#contractDetailModal").iziModal("close");
     EthoUploads.resetContractDetailTableRows();
   });
 
-  $(document).on("change", "#contract-duration", function(event) {
+  $(document).on("change", "#contract-duration", function (event) {
     EthoUploads.contractDurationChange(document.getElementById('contract-duration'));
   });
 
-  $(document).on("change", "#extend-contract", function(event) {
+  $(document).on("change", "#extend-contract", function (event) {
     EthoUploads.contractExtensionChange(document.getElementById('extend-contract'));
   });
 

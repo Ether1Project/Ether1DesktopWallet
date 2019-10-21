@@ -61,12 +61,6 @@ function StartSyncProcess() {
                 if (!EthoTransactions.getIsSyncing()) {
                   SyncProgress.animate(1);
                   SyncProgress.setText(vsprintf("%d/%d (100%%)", [localBlock.number, localBlock.number]));
-                  (function($, _M) {
-                    M.toast({
-                      html: 'Your Node is still syncing please do not attempt to use the wallet.',
-                      displayLength: 10000
-                    });
-                  }(jQuery, M));
                 }
 
                 if (alreadyCatchedUp == false) {
@@ -82,12 +76,6 @@ function StartSyncProcess() {
 
                   // signal that the sync is complete
                   $(document).trigger("onSyncComplete");
-                  (function($, _M) {
-                    M.toast({
-                      html: 'Your Node is fully synced and operational.',
-                      displayLength: 40000
-                    });
-                  }(jQuery, M));
                 }
               }
             } else {
