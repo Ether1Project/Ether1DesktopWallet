@@ -172,7 +172,6 @@ class Blockchain {
         } else {
           rendererData.sumBalance = parseFloat(rendererData.sumBalance).toFixed(2);
           clbSuccess(rendererData);
-          document.getElementById('colorbal').style.color = "#49e449";
         }
       });
     }
