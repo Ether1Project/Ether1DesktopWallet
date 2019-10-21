@@ -1,6 +1,9 @@
 // In renderer process (web page).
-const {ipcRenderer} = require("electron");
+const {
+  ipcRenderer
+} = require("electron");
 var web3;
+
 // Set the provider you want from Web3.providers
 SyncProgress = new ProgressBar.Line("#syncProgress", {
   strokeWidth: 6,
@@ -34,8 +37,8 @@ SyncProgress = new ProgressBar.Line("#syncProgress", {
 SyncProgress.setText("Waiting for blockchain, please wait...");
 isFullySynced = false;
 
-var peerCountInterval = setInterval(function () {
-  web3Local.eth.net.getPeerCount(function (error, count) {
+var peerCountInterval = setInterval(function() {
+  web3Local.eth.net.getPeerCount(function(error, count) {
     $("#peerCount").html(vsprintf("Peer Count: %d", [count]));
   });
 }, 5000);
@@ -44,20 +47,26 @@ function StartSyncProcess() {
   var alreadyCatchedUp = false;
   var nodeSyncInterval = null;
 
-  var subscription = web3Local.eth.subscribe("syncing", function (error, sync) {
+  var subscription = web3Local.eth.subscribe("syncing", function(error, sync) {
     if (!error) {
       if (!sync) {
         if (nodeSyncInterval) {
           clearInterval(nodeSyncInterval);
         }
 
-        nodeSyncInterval = setInterval(function () {
-          web3Local.eth.getBlock("latest", function (error, localBlock) {
+        nodeSyncInterval = setInterval(function() {
+          web3Local.eth.getBlock("latest", function(error, localBlock) {
             if (!error) {
               if (localBlock.number > 0) {
                 if (!EthoTransactions.getIsSyncing()) {
                   SyncProgress.animate(1);
                   SyncProgress.setText(vsprintf("%d/%d (100%%)", [localBlock.number, localBlock.number]));
+                  (function($, _M) {
+                    M.toast({
+                      html: 'Your Node is still syncing please do not attempt to use the wallet.',
+                      displayLength: 10000
+                    });
+                  }(jQuery, M));
                 }
 
                 if (alreadyCatchedUp == false) {
@@ -73,6 +82,12 @@ function StartSyncProcess() {
 
                   // signal that the sync is complete
                   $(document).trigger("onSyncComplete");
+                  (function($, _M) {
+                    M.toast({
+                      html: 'Your Node is fully synced and operational.',
+                      displayLength: 40000
+                    });
+                  }(jQuery, M));
                 }
               }
             } else {
@@ -84,7 +99,7 @@ function StartSyncProcess() {
     } else {
       EthoMainGUI.showGeneralError(error);
     }
-  }).on("data", function (sync) {
+  }).on("data", function(sync) {
     if (sync && sync.HighestBlock > 0) {
       SyncProgress.animate(sync.CurrentBlock / sync.HighestBlock);
       SyncProgress.setText(vsprintf("%d/%d (%d%%)", [
@@ -93,10 +108,11 @@ function StartSyncProcess() {
         Math.floor(sync.CurrentBlock / sync.HighestBlock * 100)
       ]));
     }
-  }).on("changed", function (isSyncing) {
+  }).on("changed", function(isSyncing) {
     if (isSyncing) {
-      nodeSyncInterval = setInterval(function () {
-        web3Local.eth.isSyncing(function (error, sync) {
+
+      nodeSyncInterval = setInterval(function() {
+        web3Local.eth.isSyncing(function(error, sync) {
           if (!error && sync) {
             SyncProgress.animate(sync.currentBlock / sync.highestBlock);
             SyncProgress.setText(vsprintf("%d/%d (%d%%)", [
@@ -117,11 +133,11 @@ function StartSyncProcess() {
   });
 }
 
-var InitWeb3 = setInterval(function () {
+var InitWeb3 = setInterval(function() {
   try {
     web3Local = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
-    
-    web3Local.eth.net.isListening(function (error, success) {
+
+    web3Local.eth.net.isListening(function(error, success) {
       if (!error) {
         $(document).trigger("onGethReady");
         clearInterval(InitWeb3);
