@@ -70,7 +70,7 @@
     "pull-file-reader": "^1.0.2",
     "single-instance": "0.0.1",
     "web3": "^1.2.1",
-    "keythereum": "^2.0.0"
+    "keythereum": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^16.5.0",
@@ -86,6 +86,6 @@
     "unibeautify": "^0.17.0",
     "unibeautify-cli": "^0.2.1",
     "web3": "^1.2.1",
-    "keythereum": "^2.0.0"
+    "keythereum": "^1.0.0"
   }
 }
