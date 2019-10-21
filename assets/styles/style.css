@@ -13,6 +13,11 @@ body.pg-loaded>.inner {
   display: block;
 }
 
+.warning {
+  background-color: yellow;
+  color: black;
+}
+
 /* Style the sidebar - fixed full height */
 .sidebar {
   height: 100%;

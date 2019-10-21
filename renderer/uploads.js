@@ -1477,8 +1477,9 @@ $(document).on("render_uploads", function() {
             console.log("I'm Running bro");
             (function($, _M) {
               M.toast({
-                html: 'If you wallet has a default name, it will not be able to be selected.',
-                displayLength: 10000
+                html: '<i class="small material-icons">warning </i> If your wallet has a default name e.g: Account 1, you will not be able to select it.',
+                displayLength: 10000,
+                classes: 'warning'
               });
             }(jQuery, M));
             privateKeyLogin = false;
