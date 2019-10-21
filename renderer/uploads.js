@@ -1474,7 +1474,6 @@ $(document).on("render_uploads", function() {
             $('#walletpasswordtable').hide();
             $('#privatekeytable').show();
           } else {
-            console.log("I'm Running bro");
             (function($, _M) {
               M.toast({
                 html: '<i class="small material-icons">warning </i> If your wallet has a default name e.g: Account 1, you will not be able to select it.',
