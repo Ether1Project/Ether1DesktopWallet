@@ -2,14 +2,15 @@ const {
   ipcRenderer
 } = require("electron");
 const privateKeyToAddress = require('ethereum-private-key-to-address');
-
+const os = require("os");
+const path = require("path");
 const Buf = require('buffer').Buffer;
 const Common = require('ethereumjs-common');
 const fetch = require("node-fetch");
 const fs = require('fs');
-
 const fileReaderPullStream = require('pull-file-reader')
 const request = require('request');
+const keythereum = require("keythereum");
 
 // Node
 var $ethomessage;
@@ -53,6 +54,7 @@ var $miningMessage;
 
 /*START OF MISC GLOBAL VARIABLES*/
 
+var loginAddress;
 var privateKeyLogin = false;
 var GlobalPrivateKey;
 var minimumContractCost = 10000000000000000;
@@ -129,8 +131,6 @@ class Uploads {
       }
       web3 = new Web3()
       web3.setProvider(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
-      $('#ethofsLoginModal').iziModal();
-      $('#ethofsLoginModal').iziModal('open');
     } else {
       EthoUploads.ethofsLogin(GlobalPrivateKey);
     }
@@ -148,7 +148,7 @@ class Uploads {
       web3.eth.net.isListening()
         .then(function () {
           console.log('ethoFS is connected')
-          let account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
+          var account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
           console.log(account);
           web3.eth.accounts.wallet.add(account)
           web3.eth.defaultAccount = account.address;
@@ -1190,8 +1190,8 @@ class Uploads {
               var filename = updatedPath;
               MainFileArray[MainFileArray.length - 1].push(filetowrite);
               GlobalUploadSize += Number(stats.size);
-              GlobalUploadSizeMB += Number(stats.size)/1000000;
-              fileSize += Number(stats.size)/1000000;
+              GlobalUploadSizeMB += Number(stats.size) / 1000000;
+              fileSize += Number(stats.size) / 1000000;
               var totalUploadSizeMB = GlobalUploadSizeMB;
               EthoUploads.appendFile(updatedPath, filename, stats.size, null);
               console.log("Path: " + filepath + " Size: " + stats.size + " Total Size: " + GlobalUploadSize);
@@ -1407,7 +1407,8 @@ EthoUploads = new Uploads();
 
 
 $(document).on("render_uploads", function () {
-
+  $('#privatekeytable').hide();
+  $('#walletpasswordtable').hide();
   // Misc
   $ethomessage = document.querySelector('.etho-message')
   $nodeId = document.querySelector('.node-id')
@@ -1442,10 +1443,73 @@ $(document).on("render_uploads", function () {
   $(document).on("click", "#main-login-button", function (event) {
     GlobalPrivateKey = switchFlag;
     EthoUploads.checkLogin();
+
+    $('#ethofsLoginModal').iziModal({
+      onOpened: function () {
+        console.log("Login Setup Opened ..");
+        var addressBook = EthoDatatabse.getWallets();
+        console.log("Getting Address List...");
+
+        $('#sendFromAddress').empty();
+        $('#sendFromAddress').append(new Option('Login With Private Key', 'privatekey'))
+        $('#privatekeytable').show();
+        var option = $(this).find("option:selected").text();
+        $("#sendFromAddressName").html(option.trim());
+
+        for (var key in addressBook.names) {
+          if (addressBook.names.hasOwnProperty(key)) {
+            $('#sendFromAddress').append(new Option(addressBook.names[key], key))
+          }
+        }
+
+        $("#sendFromAddress").on("change", function () {
+          var optionText = $(this).find("option:selected").text();
+          var optionTextValue = $(this).find("option:selected").val();
+          $("#sendFromAddressName").html(optionText.trim());
+          console.log("Address Name: " + optionText)
+          console.log("Address: " + optionText)
+          if (optionTextValue == 'privatekey') {
+            privateKeyLogin = true;
+            $("#sendFromAddressValue").hide();
+            $('#walletpasswordtable').hide();
+            $('#privatekeytable').show();
+          } else {
+            privateKeyLogin = false;
+            $("#sendFromAddressValue").show();
+            $('#privatekeytable').hide();
+            $('#walletpasswordtable').show();
+            $("#sendFromAddressValue").html(optionTextValue.trim());
+            loginAddress = optionTextValue.trim();
+          }
+        });
+      },
+      onOpening: function (modal) {
+        console.log("Opening Login Setup..");
+        $("#sendFromAddressValue").hide();
+        $('#walletpasswordtable').hide();
+        $('#privatekeytable').hide();
+      }
+    });
+    $('#ethofsLoginModal').iziModal('open');
   });
 
   $(document).on("click", "#ethofs-login-button", function (event) {
-    EthoUploads.ethofsLogin(document.getElementById('privatekey').value);
+    if (privateKeyLogin == true) {
+      GlobalPrivateKey = document.getElementById('privatekey').value;
+      console.log("Global Private Key: " + GlobalPrivateKey);
+      EthoUploads.ethofsLogin(GlobalPrivateKey);
+    } else {
+      loginPassword = document.getElementById('walletpassword').value;
+      loginAddress = $("#sendFromAddress").find("option:selected").val().trim();
+        var accountsPath = getKeyStoreLocation();
+        var keyObject = keythereum.importFromFile(loginAddress, accountsPath);
+        var privateKey = keythereum.recover(loginPassword, keyObject);
+        var key = privateKey.toString('hex');
+        GlobalPrivateKey = key;
+        console.log("Global Private Key: " + GlobalPrivateKey);
+        EthoUploads.ethofsLogin(GlobalPrivateKey);
+    }
+    
   });
 
   $(document).on("click", "#main-upload-button", function (event) {
@@ -1459,19 +1523,6 @@ $(document).on("render_uploads", function () {
     EthoUploads.resetUploadSystem();
     EthoUploads.resetUploadModal();
   });
-
-  /*$("#defaultModal1").on("close", function () {
-    EthoUploads.resetUploadSystem();
-    EthoUploads.resetUploadModal();
-  });
-  $("#defaultModal2").on("close", function () {
-    EthoUploads.resetUploadSystem();
-    EthoUploads.resetUploadModal();
-  });
-  $("#defaultModal3").on("close", function () {
-    EthoUploads.resetUploadSystem();
-    EthoUploads.resetUploadModal();
-  });*/
 
   $(document).on("click", "#defaultModal-next", function (event) {
     $('#defaultModal2').iziModal();
@@ -1545,3 +1596,13 @@ $(document).on("render_uploads", function () {
     document.getElementById("ethoprice").textContent = EthoUploads.round(ethoPriceUSD, 4);
   }).catch(err => {});
 });
+
+function getKeyStoreLocation() {
+  switch (os.type()) {
+    case "Darwin":
+      return path.join(os.homedir(), "Library", "Ether1");
+      break;
+    default:
+      return path.join(process.env.APPDATA, "Ether1");
+  }
+}
