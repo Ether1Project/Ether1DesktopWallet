@@ -4651,7 +4651,7 @@ small {
 }
 
 .btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
-  background-color: #1d7d74
+  background-color: #c3300f
 }
 
 .btn, .btn-large, .btn-small {
