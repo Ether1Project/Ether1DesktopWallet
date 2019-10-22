@@ -171,6 +171,7 @@ body.pg-loaded>.inner {
 
 #dlgAddressList .modalBody {
   color: #fff;
+  background-color: #212529;
 }
 
 .btn-dialog-confirm {
