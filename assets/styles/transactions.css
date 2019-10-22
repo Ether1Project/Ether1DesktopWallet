@@ -1,53 +1,53 @@
 /*
  * Table button styles
  */
- 
-.dt-button { 
+
+.dt-button {
   margin-left: 10px !important;
-  color: #ffffff !important; 
-  background-color: #7A1336 !important; 
-  border: 1px solid #450118 !important; 
-  background-image: none !important; 
-} 
-  
-.dt-button:hover, 
-.dt-button:focus, 
-.dt-button.active, 
-.open .dropdown-toggle.dt-button { 
-  color: #ffffff !important; 
-  background-color: #B01549 !important; 
-  border: 1px solid #450118 !important; 
-  background-image: none !important; 
-} 
-  
-.dt-button.active, 
-.open .dropdown-toggle.dt-button.dt-button { 
-  background-image: none !important; 
-} 
-  
-.dt-button.disabled, 
-.dt-button[disabled], 
-fieldset[disabled] .dt-button, 
-.dt-button.disabled:hover, 
-.dt-button[disabled]:hover, 
-fieldset[disabled] .dt-button:hover, 
-.dt-button.disabled:focus, 
-.dt-button[disabled]:focus, 
-fieldset[disabled] .dt-button:focus, 
-.dt-button.disabled:active, 
-.dt-button[disabled]:active, 
-fieldset[disabled] .dt-button:active, 
-.dt-button.disabled.active, 
-.dt-button[disabled].active, 
-fieldset[disabled] .dt-button.active { 
-  background-color: #7A1336 !important; 
-  border-color: #450118 !important; 
-} 
-  
-.dt-button .badge { 
-  color: #7A1336 !important; 
-  background-color: #ffffff !important; 
-}  
+  color: #ffffff !important;
+  background-color: #7A1336 !important;
+  border: 1px solid #450118 !important;
+  background-image: none !important;
+}
+
+.dt-button:hover,
+.dt-button:focus,
+.dt-button.active,
+.open .dropdown-toggle.dt-button {
+  color: #ffffff !important;
+  background-color: #B01549 !important;
+  border: 1px solid #450118 !important;
+  background-image: none !important;
+}
+
+.dt-button.active,
+.open .dropdown-toggle.dt-button.dt-button {
+  background-image: none !important;
+}
+
+.dt-button.disabled,
+.dt-button[disabled],
+fieldset[disabled] .dt-button,
+.dt-button.disabled:hover,
+.dt-button[disabled]:hover,
+fieldset[disabled] .dt-button:hover,
+.dt-button.disabled:focus,
+.dt-button[disabled]:focus,
+fieldset[disabled] .dt-button:focus,
+.dt-button.disabled:active,
+.dt-button[disabled]:active,
+fieldset[disabled] .dt-button:active,
+.dt-button.disabled.active,
+.dt-button[disabled].active,
+fieldset[disabled] .dt-button.active {
+  background-color: #7A1336 !important;
+  border-color: #450118 !important;
+}
+
+.dt-button .badge {
+  color: #7A1336 !important;
+  background-color: #ffffff !important;
+}
 
 /*
  * Table styles
@@ -246,12 +246,12 @@ table.dataTable {
   table.dataTable tbody th.dt-body-nowrap,
   table.dataTable tbody td.dt-body-nowrap {
     white-space: nowrap; }
- 
+
 table.dataTable,
 table.dataTable th,
 table.dataTable td {
   box-sizing: content-box; }
- 
+
 /*
  * Control feature layout
  */
@@ -367,7 +367,9 @@ table.dataTable td {
   .dataTables_wrapper .dataTables_info,
   .dataTables_wrapper .dataTables_processing,
   .dataTables_wrapper .dataTables_paginate {
-    color: #333333; }
+    color: #333333;
+    display: none;
+   }
   .dataTables_wrapper .dataTables_scroll {
     clear: both; }
     .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
@@ -393,7 +395,7 @@ table.dataTable td {
     content: "";
     clear: both;
     height: 0; }
- 
+
 @media screen and (max-width: 767px) {
   .dataTables_wrapper .dataTables_info,
   .dataTables_wrapper .dataTables_paginate {
