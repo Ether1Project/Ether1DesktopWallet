@@ -3869,7 +3869,7 @@ section.content {
 .noUi-connect {
   height: 3px;
   top: 6px;
-  background-color: #26A69A;
+  background-color: #840032;
   box-shadow: none;
 }
 
@@ -3878,7 +3878,7 @@ section.content {
   height: 15px;
   border-radius: 50%;
   box-shadow: none;
-  background-color: #26A69A;
+  background-color: #840032;
   border: none;
   left: -5px;
   top: -6px;
@@ -3902,7 +3902,7 @@ section.content {
   width: 30px;
   top: -17px;
   left: -2px;
-  background-color: #26A69A;
+  background-color: #840032;
   border-radius: 50%;
   transition: border-radius 0.25s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
   transform: scale(0.5) rotate(-45deg);
@@ -4901,8 +4901,8 @@ section.content {
   top: 0;
   width: 20px;
   height: 20px;
-  border: 2px solid #26a69a;
-  background-color: #26a69a;
+  border: 2px solid #840032;
+  background-color: #840032;
   z-index: 0;
 }
 

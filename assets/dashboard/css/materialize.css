@@ -71,12 +71,12 @@
 [type="radio"]:checked+label:after,
 [type="radio"].with-gap:checked+label:before,
 [type="radio"].with-gap:checked+label:after {
-  border: 2px solid #26a69a;
+  border: 2px solid #840032;
 }
 
 [type="radio"]:checked+label:after,
 [type="radio"].with-gap:checked+label:after {
-  background-color: #26a69a;
+  background-color: #840032;
   z-index: 0;
 }
 
@@ -210,8 +210,8 @@ form p:last-child {
   height: 22px;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
-  border-right: 2px solid #26a69a;
-  border-bottom: 2px solid #26a69a;
+  border-right: 2px solid #840032;
+  border-bottom: 2px solid #840032;
   -webkit-transform: rotate(40deg);
   transform: rotate(40deg);
   -webkit-backface-visibility: hidden;
@@ -233,7 +233,7 @@ form p:last-child {
   height: 22px;
   border-top: none;
   border-left: none;
-  border-right: 2px solid #26a69a;
+  border-right: 2px solid #840032;
   border-bottom: none;
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
@@ -302,8 +302,8 @@ form p:last-child {
   top: 0;
   width: 20px;
   height: 20px;
-  border: 2px solid #26a69a;
-  background-color: #26a69a;
+  border: 2px solid #840032;
+  background-color: #840032;
   z-index: 0;
 }
 
@@ -315,8 +315,8 @@ form p:last-child {
 
 [type="checkbox"].filled-in.tabbed:checked:focus+label:after {
   border-radius: 2px;
-  background-color: #26a69a;
-  border-color: #26a69a;
+  background-color: #840032;
+  border-color: #840032;
 }
 
 [type="checkbox"].filled-in:disabled:not(:checked)+label:before {
@@ -363,7 +363,7 @@ form p:last-child {
 }
 
 .switch label input[type=checkbox]:checked+.lever:after {
-  background-color: #26a69a;
+  background-color: #840032;
   left: 24px;
 }
 
