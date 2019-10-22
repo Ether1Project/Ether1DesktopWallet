@@ -56,7 +56,7 @@ class SendTransaction {
 }
 
 $(document).on("render_send", function () {
-  $("select").formSelect({classes: "fromAddressSelect"});
+  //$("select").formSelect({classes: "fromAddressSelect"});
 
   $("#sendFromAddress").on("change", function () {
     var optionText = $(this).find("option:selected").text();
