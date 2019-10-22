@@ -46,7 +46,7 @@ class tableTransactions {
             } else if (data == 1) {
               return '<i class="fas fa-arrow-right"></i>';
             } else {
-              return '<i class="fas fa-arrows-alt-h"></i>';
+              return '<i class="fas fa-arrow-right"></i>';
             }
           }
         }, {
