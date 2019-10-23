@@ -106,6 +106,12 @@ class Uploads {
 
   constructor() {}
 
+  checkExistingLogin() {
+    if (GlobalPrivateKey != null) {
+      EthoUploads.checkLogin();
+    }
+  }
+
   beforeLoginState() {
     var statsRow = document.getElementById("stats-row");
     //statsRow.style.display = "none";
@@ -546,12 +552,10 @@ class Uploads {
     GlobalUploadHash = "";
     GlobalUploadPath = "";
     GlobalContractCost = 0;
-    var TableBody = document.getElementById("file-history-body");
-    TableBody.innerHTML = '<tr class="empty-row"><td colspan="4">There are no files awaiting upload</td></tr>';
     var duration = document.getElementById('contract-duration').value;
     GlobalContractDuration = duration;
     GlobalContractCost = ((GlobalUploadSize / 1048576) * GlobalHostingCost) * (duration / 46522);
-    document.getElementById("contract-cost").innerHTML = round(ContractCost, 2);
+    document.getElementById("contract-cost").innerHTML = EthoUploads.round(GlobalContractCost, 2);
     document.getElementById("upload-hash").innerHTML = "";
     document.getElementById("upload-size").innerHTML = 0;
     GlobalContractCost = 0;
@@ -818,7 +822,10 @@ class Uploads {
         sumAvailableStorage += value;
         if (index == (availableStorageArray.length - 1)) {
           averageAvailableStorageTotal = (sumAvailableStorage / availableStorageArray.length);
-          document.getElementById("nodestorage").textContent = (EthoUploads.round(2 + ((averageAvailableStorageTotal) / 1000000), 1)) + "TB";
+          var element = document.getElementById("nodestorage");
+          if (typeof (element) != 'undefined' && element != null) {
+            element.textContent = (EthoUploads.round(2 + ((averageAvailableStorageTotal) / 1000000), 1)) + "TB";
+          }
         }
       });
       var sumNodeCount = 0;
@@ -826,7 +833,10 @@ class Uploads {
         sumNodeCount += value;
         if (index == (nodeCountArray.length - 1)) {
           var averageNodeCount = (sumNodeCount / nodeCountArray.length) + 19;
-          document.getElementById("nodecount").textContent = (EthoUploads.round(averageNodeCount, 0));
+          var element = document.getElementById("nodecount");
+          if (typeof (element) != 'undefined' && element != null) {
+            element.textContent = (EthoUploads.round(averageNodeCount, 0));
+          }
         }
       });
     }
@@ -902,8 +912,12 @@ class Uploads {
   }
 
   resetFileTable() {
-    while ($fileHistory.hasChildNodes()) {
-      $fileHistory.removeChild($fileHistory.firstChild);
+    if (typeof ($fileHistory) != 'undefined' && $fileHistory != null) {
+      while ($fileHistory.hasChildNodes()) {
+        $fileHistory.removeChild($fileHistory.firstChild);
+      }
+      //var TableBody = document.getElementById("file-history-body");
+      //TableBody.innerHTML = '<tr class="empty-row"><td colspan="4">There are no files awaiting upload</td></tr>';
     }
   }
 
@@ -1125,9 +1139,8 @@ class Uploads {
   }
 
   resetUploadProcess() {
-    EthoUploads.resetFileTable();
     EthoUploads.updateUploadProgress(0);
-    $uploadMessage.innerText = "Preparing Upload";
+    //$uploadMessage.innerText = "Preparing Upload";
     document.getElementById("upload-status-message").textContent = "";
     MainFileArray = new Array();
     GlobalUploadSize = 0;
@@ -1211,6 +1224,7 @@ class Uploads {
     }
   }
   onDrop(event) {
+    console.log(event);
     MainFileArray.push([]);
     document.getElementById("upload-hash").textContent = "ANALYZING UPLOAD DATA";
     document.getElementById("upload-confirm-button").style.visibility = "hidden";
@@ -1223,7 +1237,7 @@ class Uploads {
       GlobalMainPathArray.push(GlobalUploadPath);
     }
     const dt = event.dataTransfer
-    const filesDropped = dt.files
+    //const filesDropped = dt.files
     const itemsDropped = dt.items
 
     function readFileContents(file) {
@@ -1392,7 +1406,6 @@ class Uploads {
 
   stopApplication() {
     EthoUploads.resetUploadProcess();
-    EthoUploads.resetFileTable();
   }
 
 
@@ -1435,6 +1448,8 @@ $(document).on("render_uploads", function () {
   $allDisabledElements = document.querySelectorAll('.disabled')
 
   EthoUploads.beforeLoginState();
+  EthoUploads.checkExistingLogin(GlobalPrivateKey);
+
 
   $(document).on("dragenter", "#drag-container", function (event) {
     EthoUploads.onDragEnter(event);
@@ -1445,7 +1460,7 @@ $(document).on("render_uploads", function () {
   });
 
   $(document).on("drop", "#drag-container", function (event) {
-    EthoUploads.onDrop(event);
+    EthoUploads.onDrop(event.originalEvent);
   });
 
   $(document).on("dragleave", "#drag-container", function (event) {
@@ -1548,7 +1563,12 @@ $(document).on("render_uploads", function () {
   });
 
   $(document).on("click", "#defaultModal-next", function (event) {
-    $('#defaultModal2').iziModal();
+    $('#defaultModal2').iziModal({
+      onOpening: function () {
+        EthoUploads.resetFileTable();
+      }
+    });
+
     $('#defaultModal2').iziModal('open');
     $('#defaultModal').iziModal('close');
     EthoUploads.resetUploadProcess();
