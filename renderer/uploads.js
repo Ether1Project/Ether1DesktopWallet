@@ -106,6 +106,12 @@ class Uploads {
 
   constructor() {}
 
+  checkExistingLogin() {
+    if (GlobalPrivateKey != null) {
+      EthoUploads.checkLogin();
+    }
+  }
+
   beforeLoginState() {
     var statsRow = document.getElementById("stats-row");
     //statsRow.style.display = "none";
@@ -818,7 +824,10 @@ class Uploads {
         sumAvailableStorage += value;
         if (index == (availableStorageArray.length - 1)) {
           averageAvailableStorageTotal = (sumAvailableStorage / availableStorageArray.length);
-          document.getElementById("nodestorage").textContent = (EthoUploads.round(2 + ((averageAvailableStorageTotal) / 1000000), 1)) + "TB";
+          var element = document.getElementById("nodestorage");
+          if (typeof (element) != 'undefined' && element != null) {
+            element.textContent = (EthoUploads.round(2 + ((averageAvailableStorageTotal) / 1000000), 1)) + "TB";
+          }
         }
       });
       var sumNodeCount = 0;
@@ -826,7 +835,10 @@ class Uploads {
         sumNodeCount += value;
         if (index == (nodeCountArray.length - 1)) {
           var averageNodeCount = (sumNodeCount / nodeCountArray.length) + 19;
-          document.getElementById("nodecount").textContent = (EthoUploads.round(averageNodeCount, 0));
+          var element = document.getElementById("nodecount");
+          if (typeof (element) != 'undefined' && element != null) {
+            element.textContent = (EthoUploads.round(averageNodeCount, 0));
+          }
         }
       });
     }
@@ -1435,6 +1447,8 @@ $(document).on("render_uploads", function () {
   $allDisabledElements = document.querySelectorAll('.disabled')
 
   EthoUploads.beforeLoginState();
+  EthoUploads.checkExistingLogin(GlobalPrivateKey);
+
 
   $(document).on("dragenter", "#drag-container", function (event) {
     EthoUploads.onDragEnter(event);
