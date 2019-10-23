@@ -1,6 +1,6 @@
 {
   "name": "Ether1Wallet",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Desktop wallet for Ether-1 ($ETHO)",
   "main": "main.js",
   "scripts": {
