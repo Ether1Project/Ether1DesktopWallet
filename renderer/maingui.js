@@ -52,7 +52,7 @@ class MainGUI {
     $("#dlgGeneralError").iziModal();
     $("#dlgGeneralError").iziModal("open");
 
-    $("#btnGeneralErrorOK").click(function() {
+    $("#btnGeneralErrorOK").click(function () {
       $("#dlgGeneralError").iziModal("close");
     });
   }
@@ -64,12 +64,12 @@ class MainGUI {
     $("#dlgGeneralConfirm").iziModal();
     $("#dlgGeneralConfirm").iziModal("open");
 
-    $("#btnGeneralConfirmYes").click(function() {
+    $("#btnGeneralConfirmYes").click(function () {
       $("#dlgGeneralConfirm").iziModal("close");
       callback(true);
     });
 
-    $("#btnGeneralConfirmNo").click(function() {
+    $("#btnGeneralConfirmNo").click(function () {
       $("#dlgGeneralConfirm").iziModal("close");
       callback(false);
     });
@@ -82,12 +82,12 @@ class MainGUI {
     $("#dlgAboutInfo").iziModal();
     $("#dlgAboutInfo").iziModal("open");
 
-    $("#urlOpenLicence, #urlOpenGitHub").off("click").on("click", function(even) {
+    $("#urlOpenLicence, #urlOpenGitHub").off("click").on("click", function (even) {
       event.preventDefault();
       ipcRenderer.send("openURL", $(this).attr("href"));
     });
 
-    $("#btnAboutInfoClose").off("click").on("click", function(even) {
+    $("#btnAboutInfoClose").off("click").on("click", function (even) {
       $("#dlgAboutInfo").iziModal("close");
     });
   }
@@ -112,47 +112,47 @@ class MainGUI {
   }
 }
 
-ipcRenderer.on("showAboutDialog", function(event, message) {
+ipcRenderer.on("showAboutDialog", function (event, message) {
   EthoMainGUI.showAboutDialog(message);
 });
 
-$("#mainNavBtnTransactions").click(function() {
+$("#mainNavBtnTransactions").click(function () {
   EthoTransactions.clearFilter();
   EthoMainGUI.changeAppState("transactions");
   EthoTransactions.renderTransactions();
 });
 
-$("#mainNavBtnAddressBoook").click(function() {
+$("#mainNavBtnAddressBoook").click(function () {
   EthoMainGUI.changeAppState("addressBook");
   EthoAddressBook.renderAddressBook();
 });
 
-$("#mainNavBtnSend").click(function() {
+$("#mainNavBtnSend").click(function () {
   EthoMainGUI.changeAppState("send");
   EthoSend.renderSendState();
 });
 
-$("#mainNavBtnWallets").click(function() {
+$("#mainNavBtnWallets").click(function () {
   EthoMainGUI.changeAppState("account");
   EthoWallets.renderWalletsState();
 });
 
-$("#mainNavBtnMarkets").click(function() {
+$("#mainNavBtnMarkets").click(function () {
   EthoMainGUI.changeAppState("markets");
   EthoMarkets.renderMarkets();
 });
 
-$("#mainNavBtnUploads").click(function() {
+$("#mainNavBtnUploads").click(function () {
   EthoMainGUI.changeAppState("uploads");
   EthoUploads.renderUploads();
 });
 
-$("#mainNavBtnSettings").click(function() {
+$("#mainNavBtnSettings").click(function () {
   EthoMainGUI.changeAppState("settings");
   EthoSettings.renderSettingsState();
 });
 
-$("#mainNavBtnAbout").click(function() {
+$("#mainNavBtnAbout").click(function () {
   EthoMainGUI.changeAppState("about");
   EthoAbout.renderAbout();
 });
