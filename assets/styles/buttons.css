@@ -1,45 +1,196 @@
-.btn-etho { 
-    color: #ffffff; 
-    background-color: #7A1336; 
-    border-color: #450118; 
-  } 
-   
-  .btn-etho:hover, 
-  .btn-etho:focus, 
-  .btn-etho:active, 
-  .btn-etho.active, 
-  .open .dropdown-toggle.btn-etho { 
-    color: #ffffff; 
-    background-color: #B01549; 
-    border-color: #450118; 
-  } 
-   
-  .btn-etho:active, 
-  .btn-etho.active, 
-  .open .dropdown-toggle.btn-etho { 
-    background-image: none; 
-  } 
-   
-  .btn-etho.disabled, 
-  .btn-etho[disabled], 
-  fieldset[disabled] .btn-etho, 
-  .btn-etho.disabled:hover, 
-  .btn-etho[disabled]:hover, 
-  fieldset[disabled] .btn-etho:hover, 
-  .btn-etho.disabled:focus, 
-  .btn-etho[disabled]:focus, 
-  fieldset[disabled] .btn-etho:focus, 
-  .btn-etho.disabled:active, 
-  .btn-etho[disabled]:active, 
-  fieldset[disabled] .btn-etho:active, 
-  .btn-etho.disabled.active, 
-  .btn-etho[disabled].active, 
-  fieldset[disabled] .btn-etho.active { 
-    background-color: #7A1336; 
-    border-color: #450118; 
-  } 
-   
-  .btn-etho .badge { 
-    color: #7A1336; 
-    background-color: #ffffff; 
-  }
+.btn-etho {
+  color: #ffffff;
+  background-color: #840032;
+  border-color: #103024;
+}
+
+.btn-etho:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #840032;
+  color: #000;
+}
+
+,
+.btn-etho:focus,
+.btn-etho:active,
+.btn-etho.active,
+.open .dropdown-toggle.btn-etho {
+  color: #ffffff;
+  background-color: #3cc492;
+  border-color: #103024;
+}
+
+.btn-etho:active,
+.btn-etho.active,
+.open .dropdown-toggle.btn-etho {
+  background-image: none;
+}
+
+.btn-etho.disabled,
+.btn-etho[disabled],
+fieldset[disabled] .btn-etho,
+.btn-etho.disabled:hover,
+.btn-etho[disabled]:hover,
+fieldset[disabled] .btn-etho:hover,
+.btn-etho.disabled:focus,
+.btn-etho[disabled]:focus,
+fieldset[disabled] .btn-etho:focus,
+.btn-etho.disabled:active,
+.btn-etho[disabled]:active,
+fieldset[disabled] .btn-etho:active,
+.btn-etho.disabled.active,
+.btn-etho[disabled].active,
+fieldset[disabled] .btn-etho.active {
+  background-color: #840032;
+  border-color: #450118;
+}
+
+.btn-etho .badge {
+  color: #840032;
+  background-color: #ffffff;
+}
+
+.button2 {
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 2px;
+  position: relative;
+  background-color: #840032;
+  border: none;
+  color: #fff;
+  padding: 2px;
+  width: 100px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  box-shadow: 0 5px 15px #193047;
+  border-radius: 4px;
+}
+
+.button2:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #840032;
+  color: #000;
+}
+
+.button2:after {
+  content: "";
+  background: #840032;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button2:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.button2:focus {
+  outline: 0;
+}
+
+.button3 {
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 1px;
+  position: relative;
+  background-color: #840032;
+  border: none;
+  color: #fff;
+  width: 110px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  box-shadow: 0 5px 15px #193047;
+  border-radius: 4px;
+}
+
+.button3:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #840032;
+  color: #000;
+}
+
+.button3:after {
+  content: "";
+  background: #840032;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button3:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.button3:focus {
+  outline: 0;
+}
+
+.button4 {
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 2px;
+  position: relative;
+  background-color: #840032;
+  border: none;
+  color: #fff;
+  padding: 8px;
+  width: 150px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.button4:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #840032;
+  color: #000;
+}
+
+.button4:after {
+  content: "";
+  background: #840032;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button4:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.button4:focus {
+  outline: 0;
+}

@@ -1,5 +1,7 @@
 // In renderer process (web page).
-const {ipcRenderer} = require("electron");
+const {
+  ipcRenderer
+} = require("electron");
 
 class MainGUI {
   constructor() {
@@ -26,8 +28,14 @@ class MainGUI {
       case "markets":
         $("#mainNavBtnMarketsWrapper").addClass("iconSelected");
         break;
+      case "uploads":
+        $("#mainNavBtnUploadsWrapper").addClass("iconSelected");
+        break;
       case "settings":
         $("#mainNavBtnSettingsWrapper").addClass("iconSelected");
+        break;
+      case "about":
+        $("#mainNavBtnAboutWrapper").addClass("iconSelected");
         break;
       default: // do nothing for now
     }
@@ -134,9 +142,19 @@ $("#mainNavBtnMarkets").click(function () {
   EthoMarkets.renderMarkets();
 });
 
+$("#mainNavBtnUploads").click(function () {
+  EthoMainGUI.changeAppState("uploads");
+  EthoUploads.renderUploads();
+});
+
 $("#mainNavBtnSettings").click(function () {
   EthoMainGUI.changeAppState("settings");
   EthoSettings.renderSettingsState();
+});
+
+$("#mainNavBtnAbout").click(function () {
+  EthoMainGUI.changeAppState("about");
+  EthoAbout.renderAbout();
 });
 
 EthoMainGUI = new MainGUI();

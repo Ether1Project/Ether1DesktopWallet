@@ -1,44 +1,47 @@
 .select-wrapper .caret {
-    fill: #aaa;
+  fill: #aaa;
 }
 
-.select-dropdown
-{
-    color: #aaa;
+.select-dropdown {
+  color: #aaa;
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-    color: rgb(36, 13, 21);
+  color: rgb(36, 13, 21);
 }
 
 #sendFeeRange {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .card-panel {
-    background-color: #333
+  background-color: #333
 }
 
 .sendWrapper input {
-    color: #aaa;
+  color: #aaa;
 }
 
-#tableTransactionsForAll .fa-arrow-right {
-    color: #8B0000;
+#tableTransactionsForAll .fa-sign-in-alt {
+  color: green;
+}
+
+#tableTransactionsForAll .fa-sign-out-alt {
+  color: red;
 }
 
 #tableTransactionsForAll .fa-arrow-left {
-    color: #228B22;
+  color: #228B22;
 }
 
 #tableTransactionsForAll .fa-arrows-alt-h {
-    color: #DCDCDC;
+  color: #DCDCDC;
 }
 
 #tableTransactionsForAll .fa-question {
-    color: #DCDCDC;
+  color: #DCDCDC;
 }
 
 #tableTransactionsForAll .fa-check {
-    color: #228B22;
+  color: #228B22;
 }

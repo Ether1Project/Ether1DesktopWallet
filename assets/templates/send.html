@@ -4,24 +4,20 @@
       <div class="row">
         <div class="input-field col s6">
           <select id="sendFromAddress">
-            <option value="" disabled="disabled" selected="selected">Choose your address</option>
             {{#addressData}}
-              <option value="{{address}}">{{name}}
-                -
-                {{address}}</option>
+              <option value="{{address}}">{{name}} - {{address}}</option>
             {{/addressData}}
           </select>
-          <label for="sendFromAddress">From address:</label>
           <small id="sendFromAddressName" class="form-text text-muted"></small>
         </div>
         <div class="input-field col s6">
           <label for="sendToAddress" class="active">To address:</label>
           <div class="addressInputWrapper">
             <input id="sendToAddress" placeholder="recipient address" type="text">
-            <button type="button" class="btn btn-etho btnSendToolButton" id="btnAddToAddressBook">
+            <button type="button" class="btn button3 btnSendToolButton" id="btnAddToAddressBook">
               <i class="fas fa-plus"></i>
             </button>
-            <button type="button" class="btn btn-etho btnSendToolButton" id="btnLookForToAddress">
+            <button type="button" class="btn button3 btnSendToolButton" id="btnLookForToAddress">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -30,19 +26,19 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="sendAmmount" placeholder="0" type="number" value="0">
+          <input id="sendAmmount" placeholder="0" type="number">
           <label for="sendAmmount" class="active">Amount:</label>
         </div>
         <div class="input-field col s6">
           <div class="input-field col s12">
             <span id="sendMaxAmmount">0</span><span>ETHO</span>
-            <button type="button" class="btn btn-etho" id="btnSendAll">ALL</button>
+            <button type="button" class="button4" id="btnSendAll">ALL</button>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <button type="button" class="btn btn-etho" id="btnSendTransaction">Send</button>
+          <button type="button" class="button4" id="btnSendTransaction">Send</button>
         </div>
       </div>
     </form>
@@ -99,7 +95,7 @@
       <label for="usr">Type Password:</label>
       <input type="password" class="form-control" id="walletPassword">
     </div>
-    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnSendWalletPasswordConfirm">Confirm</button>
+    <button type="button" class="btn button3 btn-dialog-confirm" id="btnSendWalletPasswordConfirm">Confirm</button>
   </div>
 </div>
 
@@ -115,6 +111,7 @@
       <label for="usr">Address Name:</label>
       <input type="text" class="form-control" id="inputAddressName">
     </div>
-    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnAddAddressToBookConfirm">Confirm</button>
+    <button type="button" class="btn button3 btn-dialog-confirm" id="btnAddAddressToBookConfirm">Confirm</button>
   </div>
 </div>
+<span id="nodestorage" style="display:none;">Loading</span>

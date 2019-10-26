@@ -1,175 +1,194 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Ether-1 Desktop Wallet</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/styles/materialize.min.css">
-    <link rel="stylesheet" href="./assets/styles/datatables.min.css">
-    <link rel="stylesheet" href="./assets/styles/iziModal.min.css">
-    <link rel="stylesheet" href="./assets/styles/iziToast.min.css">
-    <link rel="stylesheet" href="./assets/styles/transactions.css">
-    <link rel="stylesheet" href="./assets/styles/please-wait.css">
-    <link rel="stylesheet" href="./assets/styles/indicators.css">
-    <link rel="stylesheet" href="./assets/styles/tablesort.css">
-    <link rel="stylesheet" href="./assets/styles/all.min.css">
-    <link rel="stylesheet" href="./assets/styles/spinner.css">
-    <link rel="stylesheet" href="./assets/styles/buttons.css">
-    <link rel="stylesheet" href="./assets/styles/style.css">
-    <link rel="stylesheet" href="./assets/styles/forms.css">
-    <!-- Insert this line above script imports -->
-    <script>
-      if (typeof module === 'object') {
-        window.module = module;
-        module = undefined;
-      }
-    </script>
+<head>
+  <meta charset="UTF-8">
+  <title>Ether-1 Desktop Wallet</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles/materialize.min.css">
+  <link rel="stylesheet" href="./assets/styles/datatables.min.css">
+  <link rel="stylesheet" href="./assets/styles/iziModal.min.css">
+  <link rel="stylesheet" href="./assets/styles/iziToast.min.css">
+  <link rel="stylesheet" href="./assets/styles/transactions.css">
+  <link rel="stylesheet" href="./assets/styles/please-wait.css">
+  <link rel="stylesheet" href="./assets/styles/indicators.css">
+  <link rel="stylesheet" href="./assets/styles/tablesort.css">
+  <link rel="stylesheet" href="./assets/styles/all.min.css">
+  <link rel="stylesheet" href="./assets/styles/spinner.css">
+  <link rel="stylesheet" href="./assets/styles/buttons.css">
+  <link rel="stylesheet" href="./assets/styles/style.css">
+  <link rel="stylesheet" href="./assets/styles/forms.css">
+  <link rel="stylesheet" href="./assets/styles/about.css">
+  <!-- Insert this line above script imports -->
+  <script>
+    if (typeof module === 'object') {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
+  <span id="nodestorage" style="display:none;">Loading</span>
 
-    <!-- normal script imports etc -->
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
-    <script src="./assets/scripts/jquery.min.js"></script>
-    <script src="./assets/scripts/handlebars.js"></script>
-    <script src="./assets/scripts/materialize.min.js"></script>
-    <script src="./assets/scripts/datatables.min.js"></script>
-    <script src="./assets/scripts/iziModal.min.js"></script>
-    <script src="./assets/scripts/iziToast.min.js"></script>
-    <script src="./assets/scripts/tippy.min.js"></script>
-    <script src="./assets/scripts/progressbar.min.js"></script>
-    <script src="./assets/scripts/sprintf.min.js"></script>
-    <script src="./assets/scripts/please-wait.js "></script>
-    <script src="./assets/scripts/moment.min.js"></script>
-    <script src="./assets/scripts/datetime-moment.js"></script>
-    <script src="./assets/scripts/datatables-absolute.js"></script>
-    <script src="./assets/scripts/jquery.floatThead.min.js"></script>
-    <script src="./assets/scripts/tablesort.min.js"></script>
-    <script src="./assets/scripts/tablesort.number.min.js"></script>
-    <script src="./assets/scripts/jquery.qrcode.min.js"></script>
-    <script src="./assets/scripts/all.min.js"></script>
-    <script src="./assets/scripts/Chart.js"></script>
+  <!-- normal script imports etc -->
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <script src="./assets/scripts/jquery.min.js"></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script src="./assets/scripts/handlebars.js"></script>
+  <script src="./assets/scripts/materialize.min.js"></script>
+  <script src="./assets/scripts/datatables.min.js"></script>
+  <script src="./assets/scripts/iziModal.min.js"></script>
+  <script src="./assets/scripts/iziToast.min.js"></script>
+  <script src="./assets/scripts/tippy.min.js"></script>
+  <script src="./assets/scripts/progressbar.min.js"></script>
+  <script src="./assets/scripts/sprintf.min.js"></script>
+  <script src="./assets/scripts/please-wait.js "></script>
+  <script src="./assets/scripts/moment.min.js"></script>
+  <script src="./assets/scripts/datetime-moment.js"></script>
+  <script src="./assets/scripts/datatables-absolute.js"></script>
+  <script src="./assets/scripts/jquery.floatThead.min.js"></script>
+  <script src="./assets/scripts/tablesort.min.js"></script>
+  <script src="./assets/scripts/tablesort.number.min.js"></script>
+  <script src="./assets/scripts/jquery.qrcode.min.js"></script>
+  <script src="./assets/scripts/all.min.js"></script>
+  <script src="./assets/scripts/Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.8/dist/semantic.min.js"></script>
+  <script src="assets/dashboard/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+  <script src="assets/dashboard/plugins/node-waves/waves.js"></script>
+  <script src="assets/dashboard/plugins/jquery-countto/jquery.countTo.js"></script>
 
-    <!-- Insert this line after script imports -->
-    <script>
-      if (window.module) 
-        module = window.module;
-    </script>
-  </head>
 
-  <body>
-    <script>
-      var loading_screen = pleaseWait({logo: "assets/images/logo.png", backgroundColor: '#000000', loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"});
+  <!-- Insert this line after script imports -->
+  <script>
+    if (window.module)
+      module = window.module;
+  </script>
+</head>
 
-      $(document).on("onGethReady", function () {
-        loading_screen.finish();
-      });
+<body>
 
-      $(window).on("beforeunload", function () {
-        EthoBlockchain.closeConnection();
-      })
-    </script>
-    <div class="inner">
-      <!-- The sidebar -->
-      <div class="sidebar">
-        <div class="sidebarIconWrapper iconSelected" id="mainNavBtnWalletsWrapper" data-tippy="Wallets" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnWallets" href="#">
-            <i class="fas fa-wallet fa-2x"></i>
-          </a>
-        </div>
-        <div class="sidebarIconWrapper iconSelected" id="mainNavBtnAddressBoookWrapper" data-tippy="Address Book" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnAddressBoook" href="#">
-            <i class="far fa-address-book fa-2x"></i>
-          </a>
-        </div>
-        <div class="sidebarIconWrapper" id="mainNavBtnSendWrapper" data-tippy="Send Funds" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnSend" href="#">
-            <i class="fas fas fa-share-square fa-2x"></i>
-          </a>
-        </div>
-        <div class="sidebarIconWrapper" id="mainNavBtnTransactionsWrapper" data-tippy="Transactions" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnTransactions" href="#">
-            <i class="fas fa-exchange-alt fa-2x"></i>
-          </a>
-        </div>
-        <div class="sidebarIconWrapper" id="mainNavBtnMarketsWrapper" data-tippy="Markets" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnMarkets" href="#">
-            <i class="fas fa-poll fa-2x"></i>
-          </a>
-        </div>
-        <div class="sidebarIconWrapper" id="mainNavBtnSettingsWrapper" data-tippy="Settings" data-tippy-delay="500">
-          <a class="sidebarIcon" id="mainNavBtnSettings" href="#">
-            <i class="fas fa-cog fa-2x"></i>
-          </a>
-        </div>
+  <script>
+    var loading_screen = pleaseWait({
+      logo: "assets/images/logo.png",
+      backgroundColor: '#000000',
+      loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"
+    });
+
+    $(document).on("onGethReady", function() {
+      loading_screen.finish();
+    });
+
+    $(window).on("beforeunload", function() {
+      EthoBlockchain.closeConnection();
+    })
+  </script>
+  <div class="inner">
+    <!-- The sidebar -->
+    <div class="ui left demo vertical inverted sidebar labeled icon menu">
+      <a class="item">
+        <img src="assets/images/logo.png" alt="Ether-1 ethoFS Logo" style="width: 90%;padding-left: 5px;">
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnWallets" href="#" data-tippy="Wallets" data-tippy-delay="100">
+          <i class="fas fa-wallet fa-1x"></i>
+          <span class="walletID"> Wallets </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnAddressBoook" href="#" data-tippy="Address Book" data-tippy-delay="100">
+          <i class="far fa-address-book fa-1x"></i>
+          <span class="AddrBook"> Addresses </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnSend" href="#" data-tippy="Send Funds" data-tippy-delay="100">
+          <i class="fas fa-comment-dollar fa-1x"></i>
+          <span class="sendEtho"> Send </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnTransactions" href="#" data-tippy="Transactions" data-tippy-delay="100">
+          <i class="fas fa-exchange-alt fa-1x"></i>
+          <span class="txlist"> Transactions </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnUploads" href="#" data-tippy="ethoFS" data-tippy-delay="100">
+          <i class="fa fa-cloud-upload-alt fa-1x"></i>
+          <span class="ethoFS"> ethoFS </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnMarkets" href="#" data-tippy="Markets" data-tippy-delay="100">
+          <i class="fas fa-poll fa-1x"></i>
+          <span class="Markets"> Market </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnSettings" href="#" data-tippy="Settings" data-tippy-delay="100">
+          <i class="fas fa-cog fa-1x"></i>
+          <span class="Settings"> Settings </span>
+        </a>
+        <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnAbout" href="#" data-tippy="About us" data-tippy-delay="100">
+          <i class="far fa-question-circle fa-1x"></i>
+          <span class="About"> About Us </span>
+        </a>
         <div id="peerCount">
           Peer Count: 0
         </div>
-      </div>
-      <div id="mainContent"></div>
-      <div id="syncProgress"></div>
-      <script>
-        // You can also require other files to run in this process
-        require('./renderer/send.js');
-        require('./renderer/utils.js');
-        require('./renderer/maingui.js');
-        require('./renderer/syncing.js');
-        require('./renderer/markets.js');
-        require('./renderer/settings.js');
-        require('./renderer/wallets.js');
-        require('./renderer/database.js');
-        require('./renderer/blockchain.js');
-        require('./renderer/addressBook.js');
-        require('./renderer/transactions.js');
-        require('./renderer/tableTransactions.js');
-      </script>
     </div>
+    <div id="mainContent"></div>
+    <div id="syncProgress"></div>
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer/about.js');
+      require('./renderer/send.js');
+      require('./renderer/utils.js');
+      require('./renderer/maingui.js');
+      require('./renderer/syncing.js');
+      require('./renderer/markets.js');
+      require('./renderer/uploads.js');
+      require('./renderer/settings.js');
+      require('./renderer/wallets.js');
+      require('./renderer/database.js');
+      require('./renderer/blockchain.js');
+      require('./renderer/addressBook.js');
+      require('./renderer/transactions.js');
+      require('./renderer/tableTransactions.js');
+    </script>
+  </div>
 
-    <!-- The modal for general error -->
-    <div id="dlgGeneralError" class="modalDialog" data-izimodal-title="Application Error" data-izimodal-subtitle="Something went wrong, don't kill the fish..." data-izimodal-icon="icon-home">
-      <div class="modalBody">
-        <div class="form-group">
-          <span id="txtGeneralError"></span>
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralErrorOK">OK</button>
-      </div>
-    </div>
-
-    <!-- The modal for general confirmation -->
-    <div id="dlgGeneralConfirm" class="modalDialog" data-izimodal-title="Confirmation" data-izimodal-subtitle="" data-izimodal-icon="icon-home">
-      <div class="modalBody">
-        <div class="form-group">
-          <span id="txtGeneralConfirm"></span>
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnGeneralConfirmNo">No</button>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralConfirmYes">Yes</button>
-      </div>
-    </div>
-
-    <!-- The modal for about info -->
-    <div id="dlgAboutInfo" class="modalDialog" data-izimodal-title="About Ether1 Wallet" data-izimodal-icon="icon-home">
-      <div class="modalBody">
-        <div class="aboutInfo">
-          <div class="infoText" id="aboutInfoWallet">Ether1 Wallet</div>
-          <div class="infoText" id="aboutInfoGitHub">GitHub:
-            <a id="urlOpenGitHub" href="https://github.com/taeguscromis/Ether1DesktopWallet">https://github.com/taeguscromis/Ether1DesktopWallet</a>
-          </div>
-          <div class="infoText" id="aboutInfoLicence">Made under
-            <a id="urlOpenLicence" href="https://choosealicense.com/licenses/gpl-3.0">GPL v3.0</a>
-            licence
-          </div>
-          <div class="infoText" id="aboutInfoVersion">Version:
-            <span id="versionNumber"></span></div>
-        </div>
-        <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnAboutInfoClose">Close</button>
-      </div>
-    </div>
-  </body>
-
-  <!-- The modal for QR-Code info -->
-  <div id="dlgShowAddressQRCode" class="modalDialog" data-izimodal-title="Address QR-Code" data-izimodal-subtitle="Scan the QR-Code to get the address..." data-izimodal-icon="icon-home">
+  <!-- The modal for general error -->
+  <div id="dlgGeneralError" class="modalDialog" data-izimodal-title="Application Error" data-izimodal-subtitle="Something went wrong, don't kill the fish..." data-izimodal-icon="icon-home">
     <div class="modalBody">
-      <div id="addrQRCode"></div>
-      <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnScanQRCodeClose">Close</button>
+      <div class="form-group">
+        <span id="txtGeneralError"></span>
+      </div>
+      <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralErrorOK">OK</button>
     </div>
   </div>
+
+  <!-- The modal for general confirmation -->
+  <div id="dlgGeneralConfirm" class="modalDialog" data-izimodal-title="Confirmation" data-izimodal-subtitle="" data-izimodal-icon="icon-home">
+    <div class="modalBody">
+      <div class="form-group">
+        <span id="txtGeneralConfirm"></span>
+      </div>
+      <button type="button" class="btn btn-etho btn-dialog-cancel" id="btnGeneralConfirmNo">No</button>
+      <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnGeneralConfirmYes">Yes</button>
+    </div>
+  </div>
+
+  <!-- The modal for about info -->
+  <div id="dlgAboutInfo" class="modalDialog" data-izimodal-title="About Ether1 Wallet" data-izimodal-icon="icon-home">
+    <div class="modalBody">
+      <div class="aboutInfo">
+        <div class="infoText" id="aboutInfoWallet">Ether1 Wallet</div>
+        <div class="infoText" id="aboutInfoGitHub">GitHub:
+          <a id="urlOpenGitHub" href="https://github.com/taeguscromis/Ether1DesktopWallet">https://github.com/taeguscromis/Ether1DesktopWallet</a>
+        </div>
+        <div class="infoText" id="aboutInfoLicence">Made under
+          <a id="urlOpenLicence" href="https://choosealicense.com/licenses/gpl-3.0">GPL v3.0</a>
+          licence
+        </div>
+        <div class="infoText" id="aboutInfoVersion">Version:
+          <span id="versionNumber"></span></div>
+      </div>
+      <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnAboutInfoClose">Close</button>
+    </div>
+  </div>
+</body>
+
+<!-- The modal for QR-Code info -->
+<div id="dlgShowAddressQRCode" class="modalDialog" data-izimodal-title="Address QR-Code" data-izimodal-subtitle="Scan the QR-Code to get the address..." data-izimodal-icon="icon-home">
+  <div class="modalBody">
+    <div id="addrQRCode"></div>
+    <button type="button" class="btn btn-etho btn-dialog-confirm" id="btnScanQRCodeClose">Close</button>
+  </div>
+</div>
 
 </html>

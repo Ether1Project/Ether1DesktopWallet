@@ -1,0 +1,710 @@
+<head>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  <link href="assets/dashboard/plugins/node-waves/waves.css" rel="stylesheet" />
+  <link href="assets/dashboard/plugins/animate-css/animate.css" rel="stylesheet" />
+  <link href="assets/dashboard/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link href="assets/dashboard/css/themes/all-themes.css" rel="stylesheet" />
+  <script src="https://medium-widget.pixelpoint.io/widget.js"></script>
+</head>
+
+<div class="marketStats">
+  <!-- #END# Page Loader -->
+  <!-- Overlay For Sidebars -->
+  <div class="overlay"></div>
+  <!-- #END# Overlay For Sidebars -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="block-header" style="margin-left: 12px;">
+        <h2>
+          <span id="accountaddress" style="word-break: break-word;"></span>
+          <span id="welcome-name">
+          </span>
+          <span id="ethobalance"></span>
+        </h2>
+      </div>
+      <!-- Widgets -->
+      <div class="row" id="stats-row">
+        <div class="col s3">
+          <div class="info-box bg-pink hover-expand-effect">
+            <div class="icon">
+              <i class="material-icons">device_hub</i>
+            </div>
+            <div class="content">
+              <div class="text">ethoFS Peers:</div>
+              <div class="text">
+                <span id="nodecount">Please Login</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s3">
+          <div class="info-box bg-cyan hover-expand-effect">
+            <div class="icon">
+              <i class="material-icons">sd_storage</i>
+            </div>
+            <div class="content">
+              <div class="text">Cost (MB/Week):</div>
+              <div class="text">
+                <span id="hostingprice">Please Login</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s3">
+          <div class="info-box bg-light-green hover-expand-effect">
+            <div class="icon">
+              <i class="material-icons">monetization_on</i>
+            </div>
+            <div class="content">
+              <div class="text">ETHO Price (USD):</div>
+              <div class="text">$
+                <span id="ethoprice">Please Login</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s3">
+          <div class="info-box bg-orange hover-expand-effect">
+            <div class="icon">
+              <i class="material-icons">assessment</i>
+            </div>
+            <div class="content">
+              <div class="text">Block Height:</div>
+              <div class="text">
+                <span id="blocknumber">Please Login</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- #END# Widgets -->
+      <div class="row">
+        <div class="col s6">
+          <div class="card" style="overflow: auto;">
+            <div class="header bg-blue">
+              <h2>
+                Latest Ether-1 News
+              </h2>
+            </div>
+            <div class="body">
+              <div id="medium-widget" style="overflow: auto;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CPU Usage-->
+        <div class="col s6">
+          <div class="card">
+            <div class="header bg-indigo">
+              <h2>
+                What is ethoFS?
+              </h2>
+            </div>
+            <div class="body">
+              ethoFS is a fully decentralized hosting platform that combines blockchain indexing
+              technology and the IPFS protocol to deliver decentralized content on-demand. The ethoFS
+              network is a fully functioning website hosting platform which
+              utilizes the node network for storage and bandwidth, along with providing DDoS protection,
+              censorship resistance and high reliability due to not having any single points of failure.
+
+              <br>
+              <p></p>
+              <h1></h1>
+              <h1></h1>
+              Ether-1's goal is to bring all this together by providing a streamlined, completely
+              decentralized development and content hosting platform that is usable by anyone.
+
+            </div>
+            <center>
+              <button type="button" class="btn bg-indigo waves-effect" id="main-upload-button" style="margin: 10px; display:inline-block;">
+                <i class="material-icons">cloud_upload</i>
+                <span>Upload to ethoFS</span>
+              </button>
+              <button type="button" class="btn bg-indigo waves-effect" id="main-login-button" style="margin: 10px; display:inline-block;">
+                <i class="material-icons">fingerprint</i>
+                <span id="ethofs-login-button-text">Login To ethoFS</span>
+              </button>
+            </center>
+
+
+
+
+          </div>
+          <h1></h1>
+          <br>
+        </div>
+      </div>
+    </div>
+    <!-- #END# CPU Usage -->
+
+    <!-- Table of hashes -->
+    <div class="row">
+      <div class="col s12">
+        <center>
+          <h4 style="color: white; background: #212529;">ETHOFS HOSTING CONTRACTS</h4>
+        </center>
+        <div class="responsive-table">
+          <table class="responsive-table">
+            <thead>
+              <tr>
+                <th style="color:#fff;">Name</th>
+                <th style="color:#fff;">ethoFS Contract Hash</th>
+                <th style="color:#fff;">Start Block</th>
+                <th style="color:#fff;">End Block</th>
+                <th style="color:#fff;">Status</th>
+                <th style="color:#fff;">Options</th>
+              </tr>
+            </thead>
+            <tbody id="hostingcontractstablebody" class="responsive-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Hash Tables -->
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="ethofsLoginModal" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032; padding-top:150px;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              <center>
+                <img src="assets/dashboard/images/ethofslogo.png" alt="Ether-1 ethoFS Logo">
+                <br>
+                <br> Login | ethoFS Upload Dashboard
+              </center>
+            </h4>
+          </div>
+          <div class="modal-body" style="width:100%; background: #000000; background-color: #000;">
+            <p>ethoFS Account Address Not Found - Please Login
+              With Wallet/Private Key Below</p>
+
+            <div class="input-field col s6">
+              <select id="sendFromAddress" style="background-color:White;">
+              </select>
+              <small id="sendFromAddressName" class="form-text text-muted"></small>
+              <small id="sendFromAddressValue" class="form-text text-muted"></small>
+            </div>
+
+            <table class="rwd-table" id="privatekeytable">
+              <tr style="border-color:#000;">
+                <th>Private Key:</th>
+              </tr>
+              <tr style="border-color:#000;">
+                <td data-th="Private Key">
+                  <input type="password" id="privatekey" name="privatekey" placeholder="Enter Private Key" style="color:White;">
+                </td>
+              </tr>
+            </table>
+            <table class="rwd-table" id="walletpasswordtable">
+              <tr style="border-color:#000;">
+                <th>Wallet Password:</th>
+              </tr>
+              <tr style="border-color:#000;">
+                <td data-th="Wallet Password">
+                  <input type="password" id="walletpassword" name="walletpassword" placeholder="Enter Wallet Password" style="color:White;">
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer" style="background-color: #840032;">
+          <button type="button" class="btn btn-link waves-effect" id="ethofs-login-button">LOGIN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal fade" id="ethofsRegistrationModal" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032; padding-top:150px;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              <center>
+                <img src="assets/dashboard/images/ethofslogo.png" alt="Ether-1 ethoFS Logo">
+                <br>
+                <br> Registration | ethoFS Upload Dashboard
+              </center>
+            </h4>
+          </div>
+          <div class="modal-body" style="width:100%; background: #000000; background-color: #000;">
+            <p>ethoFS Account Registration</p>
+            <table class="rwd-table">
+              <tr style="border-color:#000;">
+                <th>ethoFS User Name Registration</th>
+              </tr>
+              <tr style="border-color:#000;">
+                <td data-th="User Name">
+                  <input type="text" id="username" name="username" placeholder="Enter User Name" style="color:white;">
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer" style="background-color: #840032;">
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="ethofs-registration-button">REGISTER</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Size Modal -->
+    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              <center>
+                <img src="assets/dashboard/images/ethofslogo.png" alt="Ether-1 ethoFS Logo">
+                <br>
+                <br> Live Upload | ethoFS Browser Node
+              </center>
+            </h4>
+          </div>
+          <div class="modal-body">
+            <main>
+              <center>
+                <h4>ETHOFS BROWSER NODE INFORMATION</h4>
+                <br>
+              </center>
+              <div>
+                <h4>Ether-1 Address:</h4>
+                <pre class="etho-message" style="color:white; background-color: Black;"></pre>
+              </div>
+              <div>
+                <h4>ethoFS Node ID:</h4>
+                <pre class="node-id" style="color:white; background-color: Black;"></pre>
+              </div>
+              <div>
+                <h4>Status:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
+                <div>
+                  <pre id="logs" class="success">Initializing node...</pre>
+                </div>
+                <h4>Peer Health:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h4>
+                <div id="peer-count-div">
+                  <div id="myPeerBar"></div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link waves-effect" id="defaultModal-close">CLOSE</button>
+            <button type="button" class="btn btn-link waves-effect" id="defaultModal-next">NEXT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Upload Modal -->
+    <div class="modal fade" id="defaultModal2" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              Live Upload | ethoFS Browser Node</h4>
+          </div>
+          <div class="modal-body" style="width:100%; background-color: #840032;">
+            <div id="files" class="box" ondragover="event.preventDefault()">
+              <h4 align="center">Upload Your Files</h4>
+              <div id="drag-container" style="width:100%; background: #000000; background-color: #000;">
+                <br>
+                <center>
+                  <p>
+                    <b>Click here to upload a directory</b> or drag an individual file into this
+                    box to upload.
+                  </p>
+                </center>
+                <input type="file" id="fileUploadButton" webkitdirectory="true" mozdirectory="true" msdirectory="true" odirectory="true" directory="true" multiple="true">
+              </div>
+              <div id="progress-container">
+                <div id="progress-bar"></div>
+              </div>
+              <table id="file-history">
+                <thead>
+                  <tr>
+                    <th>Upload Path</th>
+                    <th>File Name</th>
+                    <th>File Size</th>
+                  </tr>
+                </thead>
+                <tbody id="file-history-div"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link waves-effect" id="defaultModal2-close">CLOSE</button>
+            <button type="button" class="btn btn-link waves-effect" id="confirm-files-button">NEXT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="defaultModal3" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              Live Upload | ethoFS Browser Node
+            </h4>
+          </div>
+          <div class="modal-body" style="width:100%; background: #000000;">
+            <main>
+              <table class="rwd-table" name="contract-detail-table" style="width:100%;">
+                <tr style="border-color:#000;">
+                  <th>Contract Name</th>
+                </tr>
+                <tr style="border-color:#000;">
+                  <td data-th="Contract Name">
+                    <input type="text" id="newcontractname" name="newcontractname" placeholder="Enter Contract Name" style="color:white;">
+                  </td>
+                </tr>
+                <tr>
+                  <th>ethoFS Upload Status</th>
+                  <td data-th="ethoFS Upload Hash">
+                    <span id="upload-hash"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Upload Size</th>
+                  <td data-th="Upload Size">
+                    <span id="upload-size">0</span> MB
+                  </td>
+                </tr>
+                <tr>
+                  <th>Contract Duration (Blocks)</th>
+                  <td data-th="Contract Duration (Blocks)">
+                    <select id="contract-duration">
+                      <option value="100000" selected="selected">100000</option>
+                      <option value="200000">200000</option>
+                      <option value="300000">300000</option>
+                      <option value="400000">400000</option>
+                      <option value="500000">500000</option>
+                      <option value="600000">600000</option>
+                      <option value="700000">700000</option>
+                      <option value="800000">800000</option>
+
+                      <option value="900000">900000</option>
+
+                      <option value="1000000">1000000</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr style="border-color:#0000;">
+                  <th>Total Contract Cost</th>
+                  <td data-th="Total Contract Cost">
+                    <span id="contract-cost">0</span> ETHO
+                  </td>
+                </tr>
+              </table>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" id="defaultModal3-close">CLOSE</button>
+                <button type="button" class="btn btn-link waves-effect" id="upload-confirm-button">CONFIRM</button>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="uploadTrackerModal" tabindex="-1" role="dialog" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              <br>
+              <center>
+                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+              </center>
+          </div>
+          <div class="modal-body">
+            <main>
+              <div class="box node" style="width:100%; background: #000000;">
+                <h3 style="padding: 10px;">ethoFS Upload Status:
+                  <span id="upload-status-message" style="color: #3CB371; text-align: center !important;">In
+                    Progress</span>
+                </h3>
+                <div>
+                  <h3 style="padding-left:10px;">Message Log:</h3>
+                  <span class="upload-message" style="color: #3CB371; font-size: 24px; padding: 10px"></span>
+                </div>
+                <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                  <div id="myBar">0%</div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+            <button type="button" class="btn btn-primary" id="upload-check-button" onclick="event.stopPropagation();">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="analyzeDataModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              <button type="button" class="close" data-dismiss="modal" id="analyze-close-button" aria-label="Close" style="color:#ffffff;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <br>
+              <center>
+                <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+              </center>
+
+              <div class="modal-body">
+              </div>
+              <main>
+                <div class="box node" style="width:100%; background: #000000;">
+                  <h4 style="padding: 20px;">Data Upload Status:
+                    <span id="analyze-status-message" style="color: #3CB371; font-size: 24px;">Analyzing Upload
+                      Data</span>
+                  </h4>
+                  <div>
+                    <h4 style="padding-left:10px;">Message Log:</h4>
+                    <pre class="analyze-message" style="color: #3CB371; font-size: 24px;"></pre>
+                  </div>
+                  <div class="summary" style="text-align: center !important; padding: 10px; width:100%; background: #000000;">
+                    <div id="myAnalyzeBar">0%</div>
+                  </div>
+                </div>
+
+
+                <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+                  <button type="button" class="btn btn-primary" id="upload-check-button" onclick="event.stopPropagation();">Close</button>
+                </div>
+              </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end analyze data modal -->
+
+    <!-- begin mined block checking modal -->
+    <div class="modal fade" id="minedBlockTrackerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Waiting
+              For Confirmation | ethoFS Block Tracker</h5>
+            <br>
+            <center>
+              <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+            </center>
+          </div>
+          <div class="modal-body">
+            <main>
+              <div class="box node" style="width:100%; background: #000000; background-color: #000;">
+                <h3 style="padding: 20px;">Ether-1 Transaction Status:
+                  <span id="mining-status-message" style="color: #3CB371; font-size: 24px; text-align: center !important;">In
+                    Progress</span>
+                </h3>
+                <div>
+                  <h3 style="padding-left:20px;">Message Log:</h3>
+                  <center>
+                    <span class="mining-message" id="mining-message" style="color: #3CB371; font-size: 24px;"></span>
+                  </center>
+                </div>
+                <div class="summary" style="text-align: center !important; padding: 20px; width:100%; background: #000000;">
+                  <h3 style="font-size: 24px;">Current Ether-1 Block Height:
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <span id="block-height" style="color: #3CB371; font-size: 24px;">0</span>
+                  </h3>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end mined block checking modal -->
+
+    <!-- begin preparing upload modal -->
+    <div class="modal fade" id="preparingUploadModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static" style="background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticModalLabel" style="font-weight:bold; color:#ffffff;">Preparing
+              Data Upload | ethoFS Block Tracker</h5>
+            <br>
+            <center>
+              <img src="assets/dashboard/images/ethofslogo.png" width="200" alt="Ether-1 ethoFS Logo">
+            </center>
+          </div>
+          <div class="modal-body">
+            <main>
+              <div class="box node" style="width:100%; background: #000000;">
+                <h3 style="padding: 20px;">ETHOFS UPLOAD STATUS:
+                  <span id="preparing-status-message" style="color: #3CB371; font-size: 24px;">PREPARING UPLOAD</span>
+                </h3>
+                <div>
+                  <h3 style="padding-left:20px;">Message Log:</h3>
+                  <span class="mining-message" id="preparing-message" style="color: #3CB371;">Preparing Data For
+                    Upload
+                  </span>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end preparing upload modal -->
+
+    <!-- begin contract detail modal -->
+    <div class="modal fade" id="contractDetailModal" tabindex="-1" role="dialog" style="padding-top:0px;background-color: #840032">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #840032;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="defaultModalLabel" style="color:white;">
+              ethoFS Hosting Contract Details
+            </h4>
+          </div>
+          <div class="modal-body">
+            <main>
+              <div class="box node" style="width:100%;">
+                <center>
+                  <h3>ETHOFS HOSTING CONTRACT DETAILS</h3>
+                </center>
+              </div>
+              <div class="summary" style="background: #000000; background-color: #000">
+                <div class="box node" style="width:100%; background: #000000;">
+                  <table class="rwd-table" id="contract-detail-table" name="contract-detail-table">
+                    <tr style="border-color:#000; word-break: break-word;">
+                      <th>Contract Name</th>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <td data-th="Contract Name">
+                        <span id="contract-detail-name" name="contract-detail-name"></span>
+                      </td>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <th>Contract Deployment Block Height</th>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <td data-th="Contract Deployment Block Height">
+                        <span id="contract-detail-startblock" name="contract-detail-startblock"></span>
+                      </td>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <th>Contract Expiration Block Height</th>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <td data-th="Contract Expiration Block Height">
+                        <span id="contract-detail-endblock" name="contract-detail-endblock"></span>
+                      </td>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <th>Contract Status</th>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <td data-th="Contract Status">
+                        <span id="contract-detail-status" name="contract-detail-status"></span>
+                      </td>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <th>Total Contract Size</th>
+                    </tr>
+                    <tr style="border-color:#000;">
+                      <td data-th="Total Contract Size">
+                        <span id="contract-detail-size" name="contract-detail-size"></span>
+                      </td>
+                    </tr>
+                    <tr style="word-break: break-word">
+                      <th>Content Hash</th>
+                    </tr>
+                  </table>
+                </div>
+                <table class="rwd-table" id="contract-detail-extension-table" name="contract-detail-table">
+                  <tr>
+                    <th>Contract Extension Duration (Blocks)</th>
+                    <th>Cost</th>
+                  </tr>
+                  <tr>
+                    <td data-th="Contract Duration (Blocks)">
+                      <select class="js-select22" name="extend-contract" id="extend-contract">
+                        <option value="100000" selected="selected">100000
+                          - 15 Days
+                        </option>
+                        <option value="200000">200000
+                          - 30 Days
+                        </option>
+                        <option value="300000">300000
+                          - 45 Days
+                        </option>
+                        <option value="400000">400000
+                          - 60 Days
+                        </option>
+                        <option value="500000">500000
+                          - 75 Days
+                        </option>
+                        <option value="600000">600000
+                          - 90 Days
+                        </option>
+                        <option value="700000">700000
+                          - 105 Days
+                        </option>
+                        <option value="800000">800000
+                          - 120 Days
+                        </option>
+                        <option value="900000">900000
+                          - 135 Days
+                        </option>
+                        <option value="1000000">1000000
+                          - 150 Days
+                        </option>
+                      </select>
+                    </td>
+                    <td data-th="Cost">
+                      <span id="contract-extension-cost">0</span> ETHO
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </main>
+          </div>
+          <div class="modal-footer" style="background-color: #840032; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-color:#000">
+            <div class="row clearfix">
+              <button class="btn btn-primary" id="contract-extension-button" type="button">Extend Hosting
+                Contract</button>
+              <button type="button" class="btn btn-primary" id="reset-table-button">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- END -->
+
+<script>
+  if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+  }
+</script>
+<script src="assets/dashboard/js/admin.js"></script>
+<script src="assets/dashboard/js/bundle.js"></script>
+<script src="assets/dashboard/js/demo.js"></script>
+<script src="assets/dashboard/js/medium.js"></script>
+<script>
+  MediumWidget.Init({
+    renderTo: '#medium-widget',
+    params: {
+      "resource": "https://medium.com/@Ether1Official",
+      "postsPerLine": 1,
+      "limit": 10,
+      "picture": "small",
+      "fields": ["description", "publishAt"],
+      "ratio": "landscape"
+    }
+  })
+</script>
+<script>
+  if (window.module)
+    module = window.module;
+</script>

@@ -1,87 +1,96 @@
 html {
-  color: #aaa;
-  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* hide / show the body when the loader is finished */
-body > .inner {
+body>.inner {
   display: none;
 }
 
-body.pg-loaded > .inner {
+body.pg-loaded>.inner {
   display: block;
+}
+
+.warning {
+  background-color: yellow;
+  color: black;
 }
 
 /* Style the sidebar - fixed full height */
 .sidebar {
   height: 100%;
-  width: 120px;
+  width: 160px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #000;
   overflow-x: hidden;
   padding-top: 16px;
 }
-  
+
 /* Style sidebar links */
 .sidebar a {
-  padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 20px;
-  color: #818181;
+  color: #840032;
   display: block;
 }
 
 /* Style links on mouse-over */
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: #786798;
 }
 
 #peerCount {
   bottom: 0;
   height: 20px;
-  color: #aaa;
+  color: #fff;
   position: absolute;
   font-size: 0.8em;
   padding-left: 5px;
 }
- 
-#syncProgress
-{
+
+#syncProgress {
   height: 20px;
   position: fixed;
   z-index: 1;
-  left: 120px;
+  left: 160px;
   right: 0;
   bottom: 0;
   background-color: #111;
   border-top: 1px solid #111;
 }
 
-#mainContent
-{
+#mainContent {
   position: fixed;
   z-index: 1;
-  left: 120px;
+  left: 160px;
   top: 0;
   right: 0;
   bottom: 20px;
   background-color: #212529;
+  overflow: auto;
 }
 
 /* Style the main content */
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 160px;
+  /* Same as the width of the sidenav */
   padding: 0px 10px;
 }
-  
+
 /* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
 }
 
 .sidebarIcon {
@@ -92,21 +101,21 @@ body.pg-loaded > .inner {
 
 .sidebarIconWrapper {
   width: 100%;
-  height: 80px;  
+  height: 80px;
   display: inline-block;
   text-align: center;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 
 #sumBalance {
   float: right;
-  line-height: 38px;  
+  line-height: 38px;
   margin-right: 10px;
 }
 
 .modalBody {
   margin: 20px;
-  color: #333;
+  color: #fff;
 }
 
 #dlgGeneralError .modalBody {
@@ -131,7 +140,7 @@ body.pg-loaded > .inner {
 
 #dlgCreateWalletPassword .modalBody,
 #dlgCreateAddressAndName .modalBody {
-    height: 200px;
+  height: 200px;
 }
 
 #dlgSendWalletPassword .modalBody,
@@ -157,11 +166,12 @@ body.pg-loaded > .inner {
 #dlgAddressListBody {
   margin: 0px;
   padding: 20px;
-  background-color: #333;
+  background-color: #fff;
 }
 
 #dlgAddressList .modalBody {
-  color: #aaa;
+  color: #fff;
+  background-color: #212529;
 }
 
 .btn-dialog-confirm {
@@ -193,15 +203,14 @@ body.pg-loaded > .inner {
   height: 60px;
 }
 
-
 #transactionsWrapper {
-  color: #aaa;
+  color: #fff;
   padding-top: 10px;
 }
 
 div.iconSelected {
   background-color: ivory;
-  border: 1px solid slategray;  
+  border: 1px solid slategray;
 }
 
 div.loadingText {
@@ -228,7 +237,7 @@ div.sidebar svg {
 }
 
 #tableTransactionsForAll_filter input {
-  width: 400px;  
+  width: 400px;
   color: #aaa;
   padding: 12px 10px;
   display: inline-block;
@@ -248,8 +257,7 @@ div.sidebar svg {
 }
 
 .sendWrapper,
-.settingsWrapper
-{
+.settingsWrapper {
   padding: 30px;
 }
 
@@ -291,7 +299,7 @@ div.sidebar svg {
   font-size: 1em;
 }
 
-.txInfo label + label {
+.txInfo label+label {
   color: #7A1336;
   margin-left: 0px;
 }
@@ -305,7 +313,7 @@ div.sidebar svg {
 #toAddressInfo,
 #valueToSendInfo,
 #feeToPayInfo {
-  color: #7A1336;
+  color: #ee6e73;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -330,7 +338,7 @@ div.sidebar svg {
   background-color: #212529;
   display: none;
   position: fixed;
-  left: 120px;
+  left: 160px;
   right: 0;
   bottom: 20px;
   top: 0;
@@ -376,7 +384,6 @@ div.sidebar svg {
 
 div.noWalletsWrapper,
 div.noAddressWrapper {
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -400,7 +407,7 @@ div.noAddressWrapper {
 
 .btnSendToolButton {
   width: 40px;
-  padding: 0px; 
+  padding: 0px;
 }
 
 #btnAddToAddressBook {

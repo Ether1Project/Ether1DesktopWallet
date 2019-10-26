@@ -1,12 +1,16 @@
 // Modules to control application life and create native browser window
-const {app, Menu, ipcMain, BrowserWindow} = require("electron");
+const {
+  app,
+  Menu,
+  ipcMain,
+  BrowserWindow
+} = require("electron");
 const singleInstance = require("single-instance");
 const path = require("path");
 const fs = require("fs");
-
 var locker = new singleInstance("Ether1DesktopWallet");
 
-locker.lock().then(function () {
+locker.lock().then(function() {
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   mainWindow = null;
@@ -19,7 +23,10 @@ locker.lock().then(function () {
       minWidth: 1100,
       minHeight: 700,
       backgroundColor: "#000000",
-      icon: "assets/images/icon.png"
+      icon: "assets/images/icon.png",
+      webPreferences: {
+        nodeIntegration: true
+        }
     });
 
     // and load the index.html of the app.
@@ -27,10 +34,10 @@ locker.lock().then(function () {
     EthoGeth.startGeth();
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
-    mainWindow.on("closed", function () {
+    mainWindow.on("closed", function() {
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
@@ -46,7 +53,7 @@ locker.lock().then(function () {
   app.on("ready", createWindow);
 
   // Quit when all windows are closed.
-  app.on("window-all-closed", function () {
+  app.on("window-all-closed", function() {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== "darwin") {
@@ -55,7 +62,7 @@ locker.lock().then(function () {
     }
   });
 
-  app.on("activate", function () {
+  app.on("activate", function() {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
@@ -76,7 +83,7 @@ locker.lock().then(function () {
   ipcMain.on("appQuit", (event, arg) => {
     app.quit();
   });
-}).catch(function (err) {
+}).catch(function(err) {
   app.quit();
 });
 

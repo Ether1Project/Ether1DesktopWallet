@@ -1,4 +1,6 @@
-const {ipcRenderer} = require("electron");
+const {
+  ipcRenderer
+} = require("electron");
 
 class tableTransactions {
   constructor() {
@@ -9,12 +11,10 @@ class tableTransactions {
     // register the sort datetime format
     $.fn.dataTable.moment("MMM Do YYYY HH:mm:ss");
 
-    var namesType = $.fn.dataTable.absoluteOrderNumber([
-      {
-        value: null,
-        position: "top"
-      }
-    ]);
+    var namesType = $.fn.dataTable.absoluteOrderNumber([{
+      value: null,
+      position: "top"
+    }]);
     // render the transactions
     $(id).DataTable({
       dom: "Bfrtip",
@@ -29,61 +29,63 @@ class tableTransactions {
       oSearch: {
         sSearch: EthoTransactions.getFilter()
       },
-      buttons: [
-        {
-          text: '<i class="fas fa-sync-alt"></i>',
-          action: function (e, dt, node, config) {
-            EthoTransactions.renderTransactions();
+      buttons: [{
+        text: '<i class="fas fa-sync-alt"></i>',
+        action: function(e, dt, node, config) {
+          EthoTransactions.renderTransactions();
+        }
+      }],
+      columnDefs: [{
+        targets: 0,
+        render: function(data, type, row) {
+          if (data == 0) {
+            var AccLogic1 = document.getElementById("txValue");
+            AccLogic1.style.color = "green";
+            return '<i class="fas fa-sign-out-alt"></i>';
+          } else if (data == 1) {
+            var AccLogic1 = document.getElementById("txValue");
+            AccLogic1.style.color = "red";
+            return '<i class="fas fa-sign-in-alt"></i>';
+          } else {
+            var AccLogic1 = document.getElementById("txValue");
+            AccLogic1.style.color = "red";
+            return '<i class="fas fa-sign-in-alt"></i>';
           }
         }
-      ],
-      columnDefs: [
-        {
-          targets: 0,
-          render: function (data, type, row) {
-            if (data == 0) {
-              return '<i class="fas fa-arrow-left"></i>';
-            } else if (data == 1) {
-              return '<i class="fas fa-arrow-right"></i>';
-            } else {
-              return '<i class="fas fa-arrows-alt-h"></i>';
-            }
-          }
-        }, {
-          className: "transactionsBlockNum",
-          type: namesType,
-          targets: 1
-        }, {
-          targets: 2,
-          render: function (data, type, row) {
-            return moment(data, "YYYY-MM-DD HH:mm:ss").format("MMM Do YYYY HH:mm:ss");
-          }
-        }, {
-          targets: 3,
-          visible: false
-        }, {
-          targets: 6,
-          render: function (data, type, row) {
-            return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), "ether")).toFixed(2);
-          }
-        }, {
-          targets: 7,
-          defaultContent: "",
-          render: function (data, type, row) {
-            if (row[1]) {
-              return '<i class="fas fa-check"></i>';
-            } else {
-              return '<i class="fas fa-question"></i>';
-            }
+      }, {
+        className: "transactionsBlockNum",
+        type: namesType,
+        targets: 1
+      }, {
+        targets: 2,
+        render: function(data, type, row) {
+          return moment(data, "YYYY-MM-DD HH:mm:ss").format("MMM Do YYYY HH:mm:ss");
+        }
+      }, {
+        targets: 3,
+        visible: false
+      }, {
+        targets: 6,
+        render: function(data, type, row) {
+          return parseFloat(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(data)).toString(), "ether")).toFixed(2);
+        }
+      }, {
+        targets: 7,
+        defaultContent: "",
+        render: function(data, type, row) {
+          if (row[1]) {
+            return '<i class="fas fa-check"></i>';
+          } else {
+            return '<i class="fas fa-times" style="color:red"></i>';
           }
         }
-      ],
-      drawCallback: function (settings) {
+      }],
+      drawCallback: function(settings) {
         $("#loadingTransactionsOverlay").css("display", "none");
       }
     });
 
-    $(id + " tbody").off("click").on("click", "td", function () {
+    $(id + " tbody").off("click").on("click", "td", function() {
       if ($(id).DataTable().cell(this).index().column == 1) {
         var rowIdx = $(id).DataTable().cell(this).index().row;
         var rowData = $(id).DataTable().rows(rowIdx).data()[0];
@@ -99,12 +101,12 @@ class tableTransactions {
         $("#txToAddress").attr("href", vsprintf("https://explorer.ether1.org/addr/%s", [rowData[5]]));
         $("#txValue").html(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(rowData[6])).toString(), "ether"));
 
-        $("#dlgTransactionInfo a").off("click").on("click", function (even) {
+        $("#dlgTransactionInfo a").off("click").on("click", function(even) {
           event.preventDefault();
           ipcRenderer.send("openURL", $(this).attr("href"));
         });
 
-        $("#btnTxInfoClose").off("click").on("click", function () {
+        $("#btnTxInfoClose").off("click").on("click", function() {
           $("#dlgTransactionInfo").iziModal("close");
         });
 
