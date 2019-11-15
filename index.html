@@ -67,13 +67,16 @@
 
   <script>
     var loading_screen = pleaseWait({
-      logo: "assets/images/logo.png",
+      logo: "assets/images/logo-glitch.gif",
       backgroundColor: '#000000',
       loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"
     });
 
     $(document).on("onGethReady", function() {
-      loading_screen.finish();
+      setTimeout(() => {
+        loading_screen.finish();
+      }, 4000);
+      
     });
 
     $(window).on("beforeunload", function() {
