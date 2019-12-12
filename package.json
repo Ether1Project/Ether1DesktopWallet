@@ -1,6 +1,6 @@
 {
   "name": "Ether1Wallet",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Desktop wallet for Ether-1 ($ETHO)",
   "main": "main.js",
   "scripts": {
@@ -22,7 +22,7 @@
       "index.html"
     ],
     "win": {
-      "target": "7z",
+      "target": "zip",
       "icon": "build/icon.png",
       "artifactName": "Windows-${productName}-${version}.${ext}",
       "extraResources": [
@@ -30,7 +30,7 @@
       ]
     },
     "linux": {
-      "target": "tar.gz",
+      "target": "zip",
       "icon": "build/icon.icns",
       "artifactName": "Linux-${productName}-${version}.${ext}",
       "extraResources": [
@@ -38,7 +38,7 @@
       ]
     },
     "mac": {
-      "target": "pkg",
+      "target": "zip",
       "icon": "build/icon.icns",
       "artifactName": "MacOS-${productName}-${version}.${ext}",
       "extraResources": [
