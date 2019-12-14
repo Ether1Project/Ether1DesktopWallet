@@ -62,7 +62,8 @@ class Geth {
         "--wsapi",
         "admin,db,eth,net,miner,personal,web3",
         "--networkid",
-        "1313114"
+        "1313114",
+        "--allow-insecure-unlock"
       ]);
 
       if (!this.gethProcess) {
