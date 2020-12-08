@@ -178,6 +178,20 @@ $(document).on("render_wallets", function () {
       $("#dlgShowAddressQRCode").iziModal("close");
     });
   });
+  
+  $(".btnDeleteAddress").off("click").on("click", function () {
+    const address = $(this).attr("data-wallet");
+    EthoMainGUI.showGeneralConfirmation(
+      `Do you really want to delete Wallet with Address: ${address}? This action can not be reversed.`,
+      function (result) {
+        if (result) {
+          const deleteResult = ipcRenderer.sendSync('deteteAccount', address);
+          if (deleteResult !== true) EthoMainGUI.showGeneralError(deleteResult);
+          setTimeout(EthoWallets.renderWalletsState, 1000); 
+        }
+      },
+    );
+  });
 
   $(".btnChangWalletName").off("click").on("click", function () {
     var walletAddress = $(this).attr("data-wallet");
