@@ -13,7 +13,7 @@ class Accounts {
         return path.join(os.homedir(), "Library", "Ether1", "keystore");
         break;
       default:
-        return path.join(process.env.APPDATA, "Ether1", "keystore");
+        return path.join(process.env.APPDATA.replace('Roaming', 'Local'), "Ether1", "keystore");
     }
   }
 
