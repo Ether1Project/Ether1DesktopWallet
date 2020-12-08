@@ -61,6 +61,32 @@ class Accounts {
       // file was written
     });
   }
+  
+  deteteAccount(address) {
+    return new Promise((resolve, reject) => {
+      const accPath = EthoAccounts.getKeyStoreLocation();
+
+      fs.readdir(accPath, function (err, files) {
+        let deleteFilePath = null;
+        if (err) reject(err);
+        else {
+          const searchStr = String(address).substring(2, String(address).length).toLowerCase();
+          for (let filePath of files) {
+            if (String(filePath).toLowerCase().indexOf(searchStr) > -1) {
+              deleteFilePath = filePath;
+              break;
+            }
+          }
+          if (deleteFilePath) {
+            fs.unlink(path.join(accPath, deleteFilePath), function(error) {
+              if (error) reject(error);
+              else resolve(true);
+            });
+          } else resolve(true)
+        }
+      });
+    });
+  }
 }
 
 ipcMain.on("exportAccounts", (event, arg) => {
@@ -94,6 +120,16 @@ ipcMain.on("importAccounts", (event, arg) => {
 ipcMain.on("saveAccount", (event, arg) => {
   EthoAccounts.saveAccount(arg);
   event.returnValue = true;
+});
+
+ipcMain.on("deteteAccount", (event, arg) => {
+  EthoAccounts.deteteAccount(arg)
+    .then((res) => {
+      event.returnValue = res;
+    })
+    .catch((err) => {
+      event.returnValue = err;
+    });
 });
 
 EthoAccounts = new Accounts();
