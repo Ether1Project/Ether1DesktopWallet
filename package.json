@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "browserify": "^16.5.0",
-    "electron": "^3.1.13",
+    "electron": "^9.4.0",
     "electron-builder": "^21.2.0",
     "ipfs": "^0.40.0",
     "js-beautify": "^1.10.3",
