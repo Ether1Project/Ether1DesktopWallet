@@ -13,7 +13,7 @@ class Accounts {
         return path.join(os.homedir(), "Library", "Xerom", "keystore");
         break;
       default:
-        return path.join(process.env.APPDATA, "Xerom", "keystore");
+        return path.join(process.env.APPDATA.replace('Roaming', 'Local'), "Xerom", "keystore");
     }
   }
 
