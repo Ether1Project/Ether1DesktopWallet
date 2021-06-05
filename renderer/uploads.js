@@ -155,7 +155,6 @@ class Uploads {
     EthoUploads.resetUploadSystem();
     EthoUploads.resetUploadProcess();
     EthoUploads.resetUploadModal();
-    //CREATE ETHER-1 CHAIN CONNECTION AND LOOK FOR EXISTING USER ACCOUNT
     if (privateKey != "") {
       GlobalPrivateKey = privateKey;
       privateKeyLogin = true;
@@ -179,7 +178,7 @@ class Uploads {
           $('#ethofsLoginModal').iziModal();
           $('#ethofsLoginModal').iziModal('open');
           console.log("User is not logged in");
-          document.getElementById("welcome-name").textContent = "Access to Ether-1 Blockchain Not Found - Make Sure You Are Using Metamask or The Ether-1 Browser Extension";
+          document.getElementById("welcome-name").textContent = "Access to Etho Protocol Blockchain Not Found - Make Sure You Are Using Metamask or The Etho Protocol Browser Extension";
           document.getElementById("accountaddress").textContent = "Address Not Found";
           EthoUploads.outputNoAddressContractTable();
         } else {
@@ -239,7 +238,7 @@ class Uploads {
           $('#ethofsRegistrationModal').iziModal('open');
         }
       } else {
-        document.getElementById("welcome-name").textContent = "Access to Ether-1 Blockchain Not Found - Make Sure You Are Using Metamask or The Ether-1 Browser Extension";
+        document.getElementById("welcome-name").textContent = "Access to Etho Protocol Blockchain Not Found - Make Sure You Are Using Metamask or The Etho Protocol Browser Extension";
         document.getElementById("accountaddress").textContent = "Address Not Found";
         console.log("Blockchain Access Error");
       }
@@ -340,7 +339,7 @@ class Uploads {
       });
       if (err) {
         error(err);
-        $miningMessage.innerText = "Error Conneting To Ether-1 Network";
+        $miningMessage.innerText = "Error Conneting To Etho Protocol Network";
       }
       if (receipt !== null) {
         $miningMessage.innerText = "Transaction Confirmed";
