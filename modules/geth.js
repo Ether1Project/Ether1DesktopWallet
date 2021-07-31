@@ -53,13 +53,13 @@ class Geth {
       const gethPath = path.join(this.binaries, "geth");
       this.gethProcess = child_process.spawn(gethPath, [
         "--ws",
-        "--wsorigins",
+        "--ws.origins",
         "*",
-        "--wsaddr",
+        "--ws.addr",
         "127.0.0.1",
-        "--wsport",
+        "--ws.port",
         "8546",
-        "--wsapi",
+        "--ws.api",
         "admin,db,eth,net,miner,personal,web3",
         "--networkid",
         "1313114",
