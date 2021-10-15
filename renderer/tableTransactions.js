@@ -94,11 +94,11 @@ class tableTransactions {
         $("#txBlockHeight").html(rowData[1]);
         $("#txTimestamp").html(rowData[2]);
         $("#txHash").html(rowData[3]);
-        $("#txHash").attr("href", vsprintf("https://explorer.ether1.org/tx/%s", [rowData[3]]));
+        $("#txHash").attr("href", vsprintf("https://explorer.ethoprotocol.com/tx/%s", [rowData[3]]));
         $("#txFromAddress").html(rowData[4]);
-        $("#txFromAddress").attr("href", vsprintf("https://explorer.ether1.org/addr/%s", [rowData[4]]));
+        $("#txFromAddress").attr("href", vsprintf("https://explorer.ethoprotocol.com/address/%s", [rowData[4]]));
         $("#txToAddress").html(rowData[5]);
-        $("#txToAddress").attr("href", vsprintf("https://explorer.ether1.org/addr/%s", [rowData[5]]));
+        $("#txToAddress").attr("href", vsprintf("https://explorer.ethoprotocol.com/address/%s", [rowData[5]]));
         $("#txValue").html(web3Local.utils.fromWei(EthoUtils.toFixed(parseFloat(rowData[6])).toString(), "ether"));
 
         $("#dlgTransactionInfo a").off("click").on("click", function(even) {
