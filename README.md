@@ -1,8 +1,8 @@
-# Ether1 Desktop Wallet
+# Etho Protocol Desktop Wallet
 
 **Clone and run to see it in action.**
 
-This is a desktop wallet for the [Ether1](https://ether1.org/) project.
+This is a desktop wallet for the [Etho Protocol](https://ethoprotocol.com/) project.
 
 ## To Use
 
@@ -10,13 +10,13 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 ```bash
 # Clone this repository
-git clone https://github.com/taeguscromis/Ether1DesktopWallet
+git clone https://github.com/Ether1Project/Ether1DesktopWallet.git
 # Go into the repository
 cd Ether1DesktopWallet
 # Install dependencies
-npm install
+yarn install
 # Run the app
-npm start
+yarn run start
 ```
 
 Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.

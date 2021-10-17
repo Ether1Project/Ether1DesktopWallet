@@ -1,7 +1,7 @@
 {
-  "name": "Ether1Wallet",
-  "version": "2.4.0",
-  "description": "Desktop wallet for Ether-1 ($ETHO)",
+  "name": "EthoWallet",
+  "version": "2.4.1",
+  "description": "Desktop wallet for Etho Protocol ($ETHO)",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -12,7 +12,7 @@
     "bundle": "browserify assets/dashboard/js/node.js > assets/dashboard/js/bundle.js"
   },
   "build": {
-    "appId": "Ether1DesktopWallet",
+    "appId": "EthoDesktopWallet",
     "files": [
       "modules/*",
       "assets/**/*",
@@ -46,13 +46,13 @@
       ]
     }
   },
-  "repository": "https://github.com/taeguscromis/Ether1DesktopWallet",
+  "repository": "https://github.com/Ether1Project/Ether1DesktopWallet",
   "keywords": [
-    "Ether1",
+    "Etho",
     "Desktop",
     "Wallet"
   ],
-  "author": "Ether1",
+  "author": "Etho",
   "license": "CC0-1.0",
   "dependencies": {
     "@unibeautify/beautifier-js-beautify": "^0.4.0",

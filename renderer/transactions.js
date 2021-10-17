@@ -46,7 +46,7 @@ class Transactions {
         lastBlock
       ]);
 
-      $.getJSON("https://richlist.ether1.org/transactions_list.php" + params, function (result) {
+      $.getJSON("https://richlist.ethoprotocol.io/transactions_list.php" + params, function (result) {
         result.data.forEach(element => {
           if (element.fromaddr && element.toaddr) {
             ipcRenderer.send("storeTransaction", {

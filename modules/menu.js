@@ -78,7 +78,7 @@ const template = [
     role: "help",
     submenu: [
       {
-        label: "About Ether1 wallet",
+        label: "About Etho Protocol wallet",
         click() {
           var infoData = {};
           infoData.version = app.getVersion();
@@ -87,12 +87,12 @@ const template = [
       }, {
         label: "Ether1 documentation",
         click() {
-          shell.openExternal("https://docs.ether1.org");
+          shell.openExternal("https://docs.ethoprotocol.com/");
         }
       }, {
         label: "Report issue on GitHub",
         click() {
-          shell.openExternal("https://github.com/taeguscromis/Ether1DesktopWallet/issues");
+          shell.openExternal("https://github.com/Ether1Project/Ether1DesktopWallet/issues");
         }
       }
     ]
