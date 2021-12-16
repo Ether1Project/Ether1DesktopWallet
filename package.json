@@ -1,6 +1,6 @@
 {
   "name": "EthoWallet",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Desktop wallet for Etho Protocol ($ETHO)",
   "main": "main.js",
   "scripts": {

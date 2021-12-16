@@ -85,7 +85,7 @@ const template = [
           mainWindow.webContents.send("showAboutDialog", infoData);
         }
       }, {
-        label: "Ether1 documentation",
+        label: "Etho Protocol documentation",
         click() {
           shell.openExternal("https://docs.ethoprotocol.com/");
         }
