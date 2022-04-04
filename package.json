@@ -69,12 +69,11 @@
     "node-fetch": "^3.2.3",
     "pull-file-reader": "^1.0.2",
     "single-instance": "0.0.1"
-	
   },
   "devDependencies": {
     "browserify": "^17.0.0",
     "electron": "3.1.13",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^22.14.13",
     "ipfs": "^0.62.1",
     "js-beautify": "^1.14.2",
     "libp2p-pnet": "^0.1.0",
