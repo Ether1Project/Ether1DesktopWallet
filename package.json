@@ -66,7 +66,7 @@
     "keythereum": "^1.0.0",
     "moment": "^2.29.2",
     "nedb": "^1.8.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "pull-file-reader": "^1.0.2",
     "single-instance": "0.0.1"
   },
