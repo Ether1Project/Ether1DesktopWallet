@@ -1,4 +1,5 @@
 const {ipcRenderer} = require("electron");
+const moment = require("moment");
 
 class Transactions {
   constructor() {
@@ -46,19 +47,22 @@ class Transactions {
         lastBlock
       ]);
 
-      $.getJSON("https://richlist.ethoprotocol.com/transactions_list.php" + params, function (result) {
-        result.data.forEach(element => {
-          if (element.fromaddr && element.toaddr) {
-            ipcRenderer.send("storeTransaction", {
-              block: element.block.toString(),
-              txhash: element.txhash.toLowerCase(),
-              fromaddr: element.fromaddr.toLowerCase(),
-              timestamp: element.timestamp,
-              toaddr: element.toaddr.toLowerCase(),
-              value: element.value
+      $.getJSON("https://explorer1.ethoprotocol.com/api?module=account&action=txlist&address=" + addressList[counter].toLowerCase(), function (result) {
+
+          if (result.result) {
+            result.result.forEach(element => {
+              if (element.from && element.to && startBlock <= parseInt(element.blockNumber) && lastBlock >= parseInt(element.blockNumber)) {
+                ipcRenderer.send("storeTransaction", {
+                  block: element.blockNumber.toString(),
+                  txhash: element.hash.toLowerCase(),
+                  fromaddr: element.from.toLowerCase(),
+                  timestamp: moment.unix(parseInt(element.timeStamp)).format("YYYY-MM-DD HH:mm:ss"),
+                  toaddr: element.to.toLowerCase(),
+                  value: element.value
+                });
+              }
             });
           }
-        });
 
         // call the transaction sync for the next address
         EthoTransactions.syncTransactionsForSingleAddress(addressList, counters, lastBlock, counter + 1);
