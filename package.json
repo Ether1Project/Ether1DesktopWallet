@@ -52,7 +52,9 @@
     "Desktop",
     "Wallet"
   ],
-  "author": "Etho",
+  "author": "Etho <admin@ethoprotocol.com>",
+  "url" : "https://ethoprotocol.com",
+  "email" : "admin@ethoprotocol.com",
   "license": "CC0-1.0",
   "dependencies": {
     "@unibeautify/beautifier-js-beautify": "^0.4.0",
