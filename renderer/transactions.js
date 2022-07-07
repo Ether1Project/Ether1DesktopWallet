@@ -47,7 +47,7 @@ class Transactions {
         lastBlock
       ]);
 
-      $.getJSON("https://explorer1.ethoprotocol.com/api?module=account&action=txlist&address=" + addressList[counter].toLowerCase(), function (result) {
+      $.getJSON("https://explorer.ethoprotocol.com/api?module=account&action=txlist&address=" + addressList[counter].toLowerCase(), function (result) {
 
           if (result.result) {
             result.result.forEach(element => {
