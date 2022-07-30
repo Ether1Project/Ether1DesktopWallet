@@ -1,6 +1,6 @@
 {
   "name": "EthoWallet",
-  "version": "2.4.6",
+  "version": "2.4.7",
   "description": "Desktop wallet for Etho Protocol ($ETHO)",
   "main": "main.js",
   "scripts": {
@@ -53,10 +53,11 @@
     "Wallet"
   ],
   "author": "Etho <admin@ethoprotocol.com>",
-  "url" : "https://ethoprotocol.com",
-  "email" : "admin@ethoprotocol.com",
+  "url": "https://ethoprotocol.com",
+  "email": "admin@ethoprotocol.com",
   "license": "CC0-1.0",
   "dependencies": {
+    "@ethereumjs/common": "^2.6.5",
     "@unibeautify/beautifier-js-beautify": "^0.4.0",
     "adm-zip": "^0.5.9",
     "app-root-path": "^3.0.0",
@@ -66,7 +67,7 @@
     "fs-extra": "^10.0.1",
     "handlebars": "^4.7.2",
     "keythereum": "^1.0.0",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "nedb": "^1.8.0",
     "node-fetch": "^3.2.3",
     "pull-file-reader": "^1.0.2",
