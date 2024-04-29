@@ -73,6 +73,7 @@ locker.lock().then(function() {
   // In this file you can include the rest of your app's specific main process
   // code. You can also put them in separate files and require them here.
   // listen for request to get template
+  
 
   // get the template content from file
   ipcMain.on("getTemplateContent", (event, arg) => {

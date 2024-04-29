@@ -5,8 +5,8 @@
 .dt-button {
   margin-left: 10px !important;
   color: #ffffff !important;
-  background-color: #7A1336 !important;
-  border: 1px solid #450118 !important;
+  background-color: #13737a !important;
+  border: 1px solid #012c45 !important;
   background-image: none !important;
 }
 
@@ -15,8 +15,8 @@
 .dt-button.active,
 .open .dropdown-toggle.dt-button {
   color: #ffffff !important;
-  background-color: #B01549 !important;
-  border: 1px solid #450118 !important;
+  background-color: #1594b0 !important;
+  border: 1px solid #012445 !important;
   background-image: none !important;
 }
 
@@ -40,12 +40,12 @@ fieldset[disabled] .dt-button:active,
 .dt-button.disabled.active,
 .dt-button[disabled].active,
 fieldset[disabled] .dt-button.active {
-  background-color: #7A1336 !important;
-  border-color: #450118 !important;
+  background-color: #28709F !important;
+  border-color: #013045 !important;
 }
 
 .dt-button .badge {
-  color: #7A1336 !important;
+  color: #28709F !important;
   background-color: #ffffff !important;
 }
 
@@ -410,3 +410,4 @@ table.dataTable td {
     text-align: center; }
   .dataTables_wrapper .dataTables_filter {
     margin-top: 0.5em; } }
+
