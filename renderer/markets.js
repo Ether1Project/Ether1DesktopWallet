@@ -13,10 +13,10 @@ class Markets {
       $("#marketcap").html(data.market_data.market_cap.usd.toFixed(0) + " $ (" + data.market_cap_rank + ")");
       $("#dailyVolume").html(data.market_data.total_volume.usd.toFixed(0) + " $");
 
-      $("#changeUSD").html("7 days change: " + data.market_data.price_change_percentage_7d_in_currency.usd.toFixed(2) + "%");
-      $("#changeBTC").html("7 days change: " + data.market_data.price_change_percentage_7d_in_currency.btc.toFixed(2) + "%");
-      $("#changeMarketcap").html("high 24h: " + data.market_data.high_24h.usd.toFixed(5) + " $");
-      $("#changeVolume").html("all time high: " + data.market_data.ath.usd.toFixed(5) + " $");
+      $("#changeUSD").html(data.market_data.price_change_percentage_7d_in_currency.usd.toFixed(2) + "%");
+      $("#changeBTC").html(data.market_data.price_change_percentage_7d_in_currency.btc.toFixed(2) + "%");
+      $("#changeMarketcap").html(data.market_data.high_24h.usd.toFixed(5) + "$");
+      $("#changeVolume").html(data.market_data.ath.usd.toFixed(5) + "$");
 
       new Chart(document.getElementById("chartMarketPriceCanvas"), {
         type: "line",
@@ -29,7 +29,7 @@ class Markets {
               fill: true,
               borderWidth: 3,
               pointRadius: 0,
-              borderColor: "#7A1336"
+              borderColor: "#25D4DC"
             }
           ]
         },
@@ -55,7 +55,7 @@ class Markets {
                   }
                 },
                 gridLines: {
-                  color: "rgba(255,255,255,.08)"
+                  color: "rgba(255,255,255,.35)"
                 }
               }
             ],

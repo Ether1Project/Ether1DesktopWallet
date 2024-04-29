@@ -1,6 +1,6 @@
 html {
   color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Fira Mono', monospace;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -21,7 +21,7 @@ body.pg-loaded>.inner {
 /* Style the sidebar - fixed full height */
 .sidebar {
   height: 100%;
-  width: 160px;
+  width: 200px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -34,8 +34,8 @@ body.pg-loaded>.inner {
 /* Style sidebar links */
 .sidebar a {
   text-decoration: none;
-  font-size: 20px;
-  color: #840032;
+  font-size: 18px;
+  color: #25D4DC;
   display: block;
 }
 
@@ -67,11 +67,11 @@ body.pg-loaded>.inner {
 #mainContent {
   position: fixed;
   z-index: 1;
-  left: 160px;
+  left: 184px;
   top: 0;
   right: 0;
   bottom: 20px;
-  background-color: #212529;
+  background-color: #293838;
   overflow: auto;
 }
 
@@ -188,12 +188,12 @@ body.pg-loaded>.inner {
 
 .modalDialog {
   display: none;
-  border-bottom: 3px solid #7A1336 !important;
+  border-bottom: 3px solid #28709F !important;
   border-radius: 0px !important;
 }
 
 .iziModal-header {
-  background: #7A1336 !important;
+  background: #28709F !important;
 }
 
 #walletsToolbar {
@@ -223,7 +223,7 @@ div.loadingText {
 }
 
 div.sidebar svg {
-  color: #7A1336;
+  color: #28709F;
 }
 
 #tableTransactionsForAll_filter {
@@ -252,7 +252,7 @@ div.sidebar svg {
 }
 
 .dataTables_scrollBody .transactionsBlockNum {
-  color: #f92472;
+  color: #24f9dd;
   cursor: pointer;
 }
 
@@ -286,11 +286,12 @@ div.sidebar svg {
 
 .sendTXInfo {
   height: 30px;
+  color:#b1aa58;
 }
 
 .sendTXInfo label {
   line-height: 30px;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 .txInfo label {
@@ -300,7 +301,7 @@ div.sidebar svg {
 }
 
 .txInfo label+label {
-  color: #7A1336;
+  color: #28709F;
   margin-left: 0px;
 }
 
@@ -313,13 +314,13 @@ div.sidebar svg {
 #toAddressInfo,
 #valueToSendInfo,
 #feeToPayInfo {
-  color: #ee6e73;
+  color: #24f9dd;
   margin-left: 5px;
   margin-right: 5px;
 }
 
 .accountName {
-  color: #7A1336;
+  color: #28709F;
 }
 
 .accountAddr {
@@ -430,7 +431,7 @@ div.noAddressWrapper {
 }
 
 .etho-red {
-  background-color: #7A1336 !important;
+  background-color: #28709F !important;
 }
 
 #chartMarketPrice {
@@ -440,3 +441,4 @@ div.noAddressWrapper {
 #addrQRCode {
   text-align: center;
 }
+

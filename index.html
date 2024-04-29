@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>$ETHO Desktop Wallet</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/styles/materialize.min.css">
   <link rel="stylesheet" href="./assets/styles/datatables.min.css">
   <link rel="stylesheet" href="./assets/styles/iziModal.min.css">
@@ -65,24 +65,43 @@
 
 <body>
 
-  <script>
+<script>
+    var loadingHtml = "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText' id='startextEL'>Loading Resources...</div>";
     var loading_screen = pleaseWait({
-      logo: "assets/images/logo-glitch.gif",
-      backgroundColor: '#000000',
-      loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"
+        logo: "assets/images/logo-glitch.gif",
+        backgroundColor: '#000000',
+        loadingHtml: loadingHtml
     });
 
-    $(document).on("onGethReady", function() {
-      setTimeout(() => {
-        loading_screen.finish();
-      }, 4000);
+    var timeouts = [
+        { text: "Starting Node...", delay: 1250 },
+        { text: "Connecting to Network...", delay: 6400 },
+        { text: "Updating...", delay: 7320 },
+        { text: "Launching...", delay: 7400 }
+    ];
 
+    timeouts.forEach((item, index) => {
+        setTimeout(() => {
+            document.getElementById('startextEL').innerHTML = item.text;
+        }, item.delay + Math.random() * 50 * index);
     });
 
-    $(window).on("beforeunload", function() {
-      EthoBlockchain.closeConnection();
-    })
-  </script>
+    $(document).on("onGethReady", function () {
+        setTimeout(() => {
+            loading_screen.finish();
+        }, 5500);
+    });
+
+    $(window).on("beforeunload", function () {
+        EthoBlockchain.closeConnection();
+    });
+</script>
+
+
+
+
+
+
   <div class="inner">
     <!-- The sidebar -->
     <div class="ui left demo vertical inverted sidebar labeled icon menu">

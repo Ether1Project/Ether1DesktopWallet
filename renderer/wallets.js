@@ -114,7 +114,7 @@ class Wallets {
       $(document).trigger("render_wallets");
       EthoWallets.enableButtonTooltips();
 
-      $("#labelSumDollars").html(vsprintf("/ %.2f $ / %.4f $ per ETHO", [
+      $("#labelSumDollars").html(vsprintf("= %.2f 💵 | %.4f 💵 per", [
         data.sumBalance * EthoWallets._getPrice(),
         EthoWallets._getPrice()
       ]));
@@ -231,15 +231,23 @@ $(document).on("render_wallets", function () {
     ipcRenderer.send("exportAccounts", {});
   });
 
-  $("#btnImportAccounts").off("click").on("click", function () {
-    var ImportResult = ipcRenderer.sendSync("importAccounts", {});
+$("#btnImportAccounts").off("click").on("click", function () {
+    ipcRenderer.send("importAccounts");
 
-    if (ImportResult.success) {
-      iziToast.success({title: "Imported", message: ImportResult.text, position: "topRight", timeout: 2000});
-    } else if (ImportResult.success == false) {
-      EthoMainGUI.showGeneralError(ImportResult.text);
-    }
-  });
+    ipcRenderer.once("importAccountsReply", (event, importResult) => {
+        if (importResult.success) {
+            iziToast.success({ title: "Imported", message: importResult.text, position: "topRight", timeout: 2000 });
+            // Reload wallets after successful import
+            setTimeout(() => {
+            	EthoWallets.renderWalletsState();
+            }, 500);
+        } else {
+            EthoMainGUI.showGeneralError(importResult.text);
+        }
+    });
+});
+
+
 
   $("#btnImportFromPrivateKey").off("click").on("click", function () {
     $("#dlgImportFromPrivateKey").iziModal();
