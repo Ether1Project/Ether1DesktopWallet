@@ -25,16 +25,25 @@ locker.lock().then(function() {
       backgroundColor: "#000000",
       icon: "assets/images/icon.png",
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: false
         }
     });
 
     // and load the index.html of the app.
     mainWindow.loadFile("index.html");
-    EthoGeth.startGeth();
+    
+    // Only start Geth if in local mode
+    // Add a small delay to ensure connection module is loaded
+    setTimeout(() => {
+      if (EthoConnection && EthoConnection.getConnectionMode() === 'local') {
+        EthoGeth.startGeth();
+      }
+    }, 1000);
 
-    // Open the DevTools.
-    //mainWindow.webContents.openDevTools()
+    // Open the DevTools (commented out for production).
+    // mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on("closed", function() {
@@ -57,7 +66,9 @@ locker.lock().then(function() {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== "darwin") {
-      EthoGeth.stopGeth();
+      if (EthoConnection.getConnectionMode() === 'local') {
+        EthoGeth.stopGeth();
+      }
       app.quit();
     }
   });
@@ -73,6 +84,7 @@ locker.lock().then(function() {
   // In this file you can include the rest of your app's specific main process
   // code. You can also put them in separate files and require them here.
   // listen for request to get template
+  
 
   // get the template content from file
   ipcMain.on("getTemplateContent", (event, arg) => {
@@ -88,5 +100,6 @@ locker.lock().then(function() {
 });
 
 require("./modules/geth.js");
+require("./modules/connection.js");
 require("./modules/accounts.js");
 require("./modules/database.js");

@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' ws: wss: https:;">
   <title>$ETHO Desktop Wallet</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/styles/materialize.min.css">
   <link rel="stylesheet" href="./assets/styles/datatables.min.css">
   <link rel="stylesheet" href="./assets/styles/iziModal.min.css">
@@ -29,7 +30,7 @@
   <span id="nodestorage" style="display:none;">Loading</span>
 
   <!-- normal script imports etc -->
-  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.8.0/dist/web3.min.js"></script>
   <script src="./assets/scripts/jquery.min.js"></script>
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   <script src="./assets/scripts/handlebars.js"></script>
@@ -65,24 +66,61 @@
 
 <body>
 
-  <script>
+<script>
+    var loadingHtml = "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText' id='startextEL'>Loading Resources...</div>";
     var loading_screen = pleaseWait({
-      logo: "assets/images/logo-glitch.gif",
-      backgroundColor: '#000000',
-      loadingHtml: "<div class='spinner'><div class='bounce bounce1'></div><div class='bounce bounce2'></div><div class='bounce bounce3'></div></div><div class='loadingText'>Starting the node and loading app, please wait...</div>"
+        logo: "assets/images/logo-glitch.gif",
+        backgroundColor: '#000000',
+        loadingHtml: loadingHtml
     });
 
-    $(document).on("onGethReady", function() {
-      setTimeout(() => {
-        loading_screen.finish();
-      }, 4000);
+    // Check connection mode to determine loading text
+    var connectionMode = 'rpc'; // Default to RPC
+    try {
+        const { ipcRenderer } = require('electron');
+        connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+        // Fallback to RPC if there's an error
+    }
 
+    var timeouts = [];
+    if (connectionMode === 'rpc') {
+        timeouts = [
+            { text: "Connecting to RPC...", delay: 1250 },
+            { text: "Connecting to Network...", delay: 3400 },
+            { text: "Launching...", delay: 4400 }
+        ];
+    } else {
+        timeouts = [
+            { text: "Starting Node...", delay: 1250 },
+            { text: "Connecting to Network...", delay: 6400 },
+            { text: "Updating...", delay: 7320 },
+            { text: "Launching...", delay: 7400 }
+        ];
+    }
+
+    timeouts.forEach((item, index) => {
+        setTimeout(() => {
+            document.getElementById('startextEL').innerHTML = item.text;
+        }, item.delay + Math.random() * 50 * index);
     });
 
-    $(window).on("beforeunload", function() {
-      EthoBlockchain.closeConnection();
-    })
-  </script>
+    $(document).on("onGethReady", function () {
+        setTimeout(() => {
+            loading_screen.finish();
+        }, connectionMode === 'rpc' ? 2500 : 5500);
+    });
+
+    $(window).on("beforeunload", function () {
+        EthoBlockchain.closeConnection();
+    });
+</script>
+
+
+
+
+
+
   <div class="inner">
     <!-- The sidebar -->
     <div class="ui left demo vertical inverted sidebar labeled icon menu">

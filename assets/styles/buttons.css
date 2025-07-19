@@ -1,12 +1,12 @@
 .btn-etho {
   color: #ffffff;
-  background-color: #840032;
+  background-color: #25D4DC;
   border-color: #103024;
 }
 
 .btn-etho:hover {
   background: #fff;
-  box-shadow: 0px 2px 10px 5px #840032;
+  box-shadow: 0px 2px 10px 5px #25D4DC;
   color: #000;
 }
 
@@ -41,12 +41,12 @@ fieldset[disabled] .btn-etho:active,
 .btn-etho.disabled.active,
 .btn-etho[disabled].active,
 fieldset[disabled] .btn-etho.active {
-  background-color: #840032;
+  background-color: #25D4DC;
   border-color: #450118;
 }
 
 .btn-etho .badge {
-  color: #840032;
+  color: #25D4DC;
   background-color: #ffffff;
 }
 
@@ -57,7 +57,7 @@ fieldset[disabled] .btn-etho.active {
   font-size: 12px;
   letter-spacing: 2px;
   position: relative;
-  background-color: #840032;
+  background-color: #25D4DC;
   border: none;
   color: #fff;
   padding: 2px;
@@ -71,13 +71,13 @@ fieldset[disabled] .btn-etho.active {
 
 .button2:hover {
   background: #fff;
-  box-shadow: 0px 2px 10px 5px #840032;
+  box-shadow: 0px 2px 10px 5px #25D4DC;
   color: #000;
 }
 
 .button2:after {
   content: "";
-  background: #840032;
+  background: #25D4DC;
   display: block;
   position: absolute;
   padding-top: 300%;
@@ -106,7 +106,7 @@ fieldset[disabled] .btn-etho.active {
   font-size: 10px;
   letter-spacing: 1px;
   position: relative;
-  background-color: #840032;
+  background-color: #25D4DC;
   border: none;
   color: #fff;
   width: 110px;
@@ -119,13 +119,13 @@ fieldset[disabled] .btn-etho.active {
 
 .button3:hover {
   background: #fff;
-  box-shadow: 0px 2px 10px 5px #840032;
+  box-shadow: 0px 2px 10px 5px #25D4DC;
   color: #000;
 }
 
 .button3:after {
   content: "";
-  background: #840032;
+  background: #25D4DC;
   display: block;
   position: absolute;
   padding-top: 300%;
@@ -154,7 +154,7 @@ fieldset[disabled] .btn-etho.active {
   font-size: 12px;
   letter-spacing: 2px;
   position: relative;
-  background-color: #840032;
+  background-color: #25D4DC;
   border: none;
   color: #fff;
   padding: 8px;
@@ -167,13 +167,13 @@ fieldset[disabled] .btn-etho.active {
 
 .button4:hover {
   background: #fff;
-  box-shadow: 0px 2px 10px 5px #840032;
+  box-shadow: 0px 2px 10px 5px #25D4DC;
   color: #000;
 }
 
 .button4:after {
   content: "";
-  background: #840032;
+  background: #25D4DC;
   display: block;
   position: absolute;
   padding-top: 300%;
@@ -194,3 +194,4 @@ fieldset[disabled] .btn-etho.active {
 .button4:focus {
   outline: 0;
 }
+

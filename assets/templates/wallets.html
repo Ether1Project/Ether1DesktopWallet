@@ -16,8 +16,10 @@
   </button>
   <div id="sumBalance">
     <span class="sumBalance" id="labelSumBalance">{{sumBalance}}</span>
-    <span class="sumCurrency" id="labelSumCurrency">ETHO</span>
-    <span class="sumDollars" id="labelSumDollars">/ 0.00 $ / 0.00 $ per ETHO</span></div>
+    <span class="sumCurrency" id="labelSumCurrency"><img height="22px" width="22px" style="margin-bottom: -6px;margin-left:-7px;margin-right:-2px;" src="https://raw.githubusercontent.com/Ether1Project/ETHO-Protocol-Branding/master/NewLogo2024/newethologo_32.png" alt="ETHO" />
+</span>
+    <span class="sumDollars" id="labelSumDollars">= 0.00 💵 | 0.00 💵 per
+</span><img height="22px" width="22px" style="margin-bottom: -6px;margin-left:8px;margin-right:2px;" src="https://raw.githubusercontent.com/Ether1Project/ETHO-Protocol-Branding/master/NewLogo2024/newethologo_32.png" alt="ETHO" />ETHO</div>
 </div>
 <div id="addressList" class="{{#if addressData.length}}walletsWrapper{{else}}noWalletsWrapper{{/if}}">
   {{#if addressData.length}}
@@ -51,7 +53,7 @@
                 <i class="fas fa-times"></i>
               </button>
             </td>
-            <td>{{balance}}</td>
+            <td>{{balance}} <img height="22px" width="22px" style="margin-bottom: -6px;margin-left:-5px;" src="https://raw.githubusercontent.com/Ether1Project/ETHO-Protocol-Branding/master/NewLogo2024/newethologo_32.png" alt="ETHO" /></td>
           </tr>
         {{/addressData}}
       </tbody>

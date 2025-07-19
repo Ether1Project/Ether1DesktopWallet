@@ -57,17 +57,29 @@ class SendTransaction {
 
 $(document).on("render_send", function () {
   //$("select").formSelect({classes: "fromAddressSelect"});
+	setTimeout(() => {
+	    var optionText = $("#sendFromAddress").find("option:selected").text();
+	    var selectedAddressBalance = optionText.substr(0, optionText.indexOf("|"));
+	    
+	    console.log("selectedAddressBalance", selectedAddressBalance);
+	    $("#sendMaxAmmount").html(parseFloat(selectedAddressBalance));
+	    //$("#sendAmmount").val(selectedAddressBalance);
+	}, 500);
+
+
 
   $("#sendFromAddress").on("change", function () {
     var optionText = $(this).find("option:selected").text();
-    var addrName = optionText.substr(0, optionText.indexOf("-"));
-    var addrValue = optionText.substr(optionText.indexOf("-") + 1);
-    $(".fromAddressSelect input").val(addrValue.trim());
-    $("#sendFromAddressName").html(addrName.trim());
 
-    web3Local.eth.getBalance(this.value, function (error, balance) {
-      $("#sendMaxAmmount").html(parseFloat(web3Local.utils.fromWei(balance, "ether")));
-    });
+    var addrBalance = optionText.substr(0, optionText.indexOf("|"));
+    var addrName = optionText.substr(optionText.indexOf("|")+1);
+    var addrValue = addrName.substr(addrName.indexOf("|")+1);
+    
+
+    $(".fromAddressSelect input").val(addrValue.trim());
+
+    $("#sendMaxAmmount").html(parseFloat(addrBalance));
+	
   });
 
   $("#btnSendAll").off("click").on("click", function () {
@@ -98,9 +110,27 @@ $(document).on("render_send", function () {
           var adddressObject = {};
           adddressObject.address = key;
           adddressObject.name = addressBook[key];
+          adddressObject.balance = 0;
+
           addressList.addressData.push(adddressObject);
+          
+	       web3Local.eth.getBalance(key, function (error, balance) {
+		    if (error) {
+			console.error("Error fetching balance:", error);
+			return;
+		    }
+
+		    // Update the balance display
+		    var etherBalance = web3Local.utils.fromWei(balance, "ether");
+		    //$("#sendFromAddressBalance").text("Balance: " + etherBalance + " ETHO");
+		    adddressObject.balance = parseFloat(etherBalance)
+	
+		    
+		});  
+          
         }
       }
+      
 
       $("#dlgAddressList").iziModal({width: "800px"});
       EthoMainGUI.renderTemplate("addresslist.html", addressList, $("#dlgAddressListBody"));

@@ -44,6 +44,8 @@ class Geth {
     if (this.logGethEvents) {
       this.logStream.write(text);
     }
+    // Print log messages to the console
+    //console.log("geth..."+text);
   }
 
   startGeth() {
