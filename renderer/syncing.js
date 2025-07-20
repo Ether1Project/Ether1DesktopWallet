@@ -68,6 +68,19 @@ function StartSyncProcess() {
           
           // Enable the keep in sync feature
           EthoTransactions.enableKeepInSync();
+          
+          // In RPC mode, ensure we sync recent transactions more aggressively
+          const counters = EthoDatatabse.getCounters();
+          const lastSyncedBlock = counters.transactions || 0;
+          
+          // If we haven't synced in a while, sync from at least the last 50,000 blocks
+          // or from the last synced position, whichever is more recent
+          const blocksToScan = 50000; // Scan last ~7 days of blocks (assuming ~10 second blocks)
+          const startFromBlock = Math.max(lastSyncedBlock, localBlock.number - blocksToScan);
+          
+          console.log(`RPC Mode: Syncing transactions from block ${startFromBlock} to ${localBlock.number} (${localBlock.number - startFromBlock} blocks)`);
+          SyncProgress.setText("Syncing recent transactions...");
+          
           // Sync all the transactions to the current block
           EthoTransactions.syncTransactionsForAllAddresses(localBlock.number);
           

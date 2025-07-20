@@ -41,7 +41,7 @@ class Wallets {
 
   enableButtonTooltips() {
     EthoUtils.createToolTip("#btnNewAddress", "Create New Address");
-    EthoUtils.createToolTip("#btnRefreshAddress", "Refresh Address List");
+    EthoUtils.createToolTip("#btnRefreshAddress", "Refresh wallets and check for new transactions");
     EthoUtils.createToolTip("#btnExportAccounts", "Export Accounts");
     EthoUtils.createToolTip("#btnImportAccounts", "Import Accounts");
     EthoUtils.createToolTip("#btnImportFromPrivateKey", "Import From Private Key");
@@ -225,6 +225,13 @@ $(document).on("render_wallets", function () {
 
   $("#btnRefreshAddress").off("click").on("click", function () {
     EthoWallets.renderWalletsState();
+    
+    // Also refresh transactions when refreshing wallets
+    if (typeof EthoTransactions !== 'undefined' && EthoTransactions.refreshTransactions) {
+      setTimeout(() => {
+        EthoTransactions.refreshTransactions();
+      }, 500); // Small delay to let wallet refresh complete
+    }
   });
 
   $("#btnExportAccounts").off("click").on("click", function () {

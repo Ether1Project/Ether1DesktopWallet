@@ -22,12 +22,14 @@
       "index.html"
     ],
     "win": {
-      "target": "zip",
+      "target": "portable",
       "icon": "build/icon.png",
       "artifactName": "Windows-${productName}-${version}.${ext}",
       "extraResources": [
         "bin/win/*"
-      ]
+      ],
+      "signAndEditExecutable": false,
+      "signDlls": false
     },
     "linux": {
       "target": "zip",
