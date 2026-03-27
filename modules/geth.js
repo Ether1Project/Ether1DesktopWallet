@@ -208,4 +208,6 @@ ipcMain.on("stopGeth", (event, arg) => {
   EthoGeth.stopGeth();
 });
 
-EthoGeth = new Geth();
+const EthoGeth = new Geth();
+
+module.exports = EthoGeth;

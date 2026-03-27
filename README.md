@@ -14,9 +14,9 @@ git clone https://github.com/Ether1Project/Ether1DesktopWallet.git
 # Go into the repository
 cd Ether1DesktopWallet
 # Install dependencies
-yarn install
+npm install
 # Run the app
-yarn run start
+npm run start
 # Add the recommended peers manually while the wallet is running
 npm run add-peers
 ```
