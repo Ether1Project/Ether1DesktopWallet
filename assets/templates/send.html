@@ -6,7 +6,7 @@
         	<label for="sendToAddress" class="active">Sender:</label>
           <select id="sendFromAddress">
             {{#addressData}}
-              <option value="{{address}}">{{balance}} | {{name}} | {{address}}</option>
+              <option value="{{address}}" data-balance-eth="{{balanceExact}}" data-balance-wei="{{balanceWei}}">{{balance}} | {{name}} | {{address}}</option>
             {{/addressData}}
           </select>
 
@@ -27,11 +27,10 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-		<label for="sendAmmount" style="display:flex">
-		    <img height="22px" width="22px" style="margin: 11px 6px 0 2px;" src="https://raw.githubusercontent.com/Ether1Project/ETHO-Protocol-Branding/master/NewLogo2024/newethologo_32.png" alt="ETHO" />
-		    <input id="sendAmmount" placeholder="0" type="number">
-		</label>
-
+          <div style="display:flex; align-items:center;">
+            <img height="22px" width="22px" style="margin: 0 8px 0 2px;" src="https://raw.githubusercontent.com/Ether1Project/ETHO-Protocol-Branding/master/NewLogo2024/newethologo_32.png" alt="ETHO" />
+            <input id="sendAmmount" placeholder="0" type="text" inputmode="decimal" autocomplete="off" spellcheck="false">
+          </div>
           <label for="sendAmmount" class="active">Amount:</label>
         </div>
         <div class="input-field col s6">

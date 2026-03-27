@@ -11,9 +11,20 @@ const fs = require("fs");
 var locker = new singleInstance("Ether1DesktopWallet");
 
 locker.lock().then(function() {
+  let isQuitting = false;
+
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
   mainWindow = null;
+
+  function shutdownNode() {
+    if (isQuitting) {
+      return;
+    }
+
+    isQuitting = true;
+    EthoGeth.stopGeth();
+  }
 
   function createWindow() {
     // Create the browser window.
@@ -57,9 +68,13 @@ locker.lock().then(function() {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== "darwin") {
-      EthoGeth.stopGeth();
+      shutdownNode();
       app.quit();
     }
+  });
+
+  app.on("before-quit", function () {
+    shutdownNode();
   });
 
   app.on("activate", function() {
@@ -82,6 +97,7 @@ locker.lock().then(function() {
 
   // quit the app on coomand
   ipcMain.on("appQuit", (event, arg) => {
+    shutdownNode();
     app.quit();
   });
 }).catch(function(err) {

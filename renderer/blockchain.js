@@ -148,6 +148,8 @@ class Blockchain {
 
           var addressInfo = {};
           addressInfo.balance = 0;
+          addressInfo.balanceExact = "0";
+          addressInfo.balanceWei = "0";
           addressInfo.address = res[i];
           addressInfo.name = walletName;
           rendererData.addressData.push(addressInfo);
@@ -163,8 +165,11 @@ class Blockchain {
 
     function updateBalance(index) {
       web3Local.eth.getBalance(rendererData.addressData[index].address, function(error, balance) {
-        rendererData.addressData[index].balance = parseFloat(web3Local.utils.fromWei(balance, "ether")).toFixed(2);
-        rendererData.sumBalance = rendererData.sumBalance + parseFloat(web3Local.utils.fromWei(balance, "ether"));
+        var exactBalance = web3Local.utils.fromWei(balance, "ether");
+        rendererData.addressData[index].balanceWei = balance.toString();
+        rendererData.addressData[index].balanceExact = exactBalance;
+        rendererData.addressData[index].balance = parseFloat(exactBalance).toFixed(2);
+        rendererData.sumBalance = rendererData.sumBalance + parseFloat(exactBalance);
 
         if (counter < rendererData.addressData.length - 1) {
           counter++;

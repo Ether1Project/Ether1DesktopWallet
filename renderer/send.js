@@ -4,6 +4,70 @@ const {ipcRenderer} = require("electron");
 class SendTransaction {
   constructor() {}
 
+  normalizeAmountValue(value) {
+    var normalized = String(value || "").replace(/,/g, ".").replace(/[^0-9.]/g, "");
+    var firstDot = normalized.indexOf(".");
+
+    if (firstDot > -1) {
+      normalized = normalized.slice(0, firstDot + 1) + normalized.slice(firstDot + 1).replace(/\./g, "");
+    }
+
+    if (normalized.startsWith(".")) {
+      normalized = "0" + normalized;
+    }
+
+    return normalized;
+  }
+
+  getNormalizedAmount() {
+    return this.normalizeAmountValue($("#sendAmmount").val());
+  }
+
+  getSelectedFromOption() {
+    return $("#sendFromAddress").find("option:selected");
+  }
+
+  getSelectedBalanceWei() {
+    var option = this.getSelectedFromOption();
+    var balanceWei = option.attr("data-balance-wei") || "0";
+
+    return web3Local.utils.toBN(balanceWei);
+  }
+
+  getSelectedBalanceEth() {
+    return this.normalizeAmountValue(this.getSelectedFromOption().attr("data-balance-eth") || "0");
+  }
+
+  formatAmountForDisplay(value, maxDecimals) {
+    var normalized = this.normalizeAmountValue(value);
+
+    if (!normalized) {
+      return "0";
+    }
+
+    if (normalized.indexOf(".") === -1) {
+      return normalized;
+    }
+
+    var parts = normalized.split(".");
+    var whole = parts[0] || "0";
+    var fraction = (parts[1] || "").slice(0, maxDecimals).replace(/0+$/, "");
+
+    return fraction ? `${whole}.${fraction}` : whole;
+  }
+
+  updateSelectedMaxAmount() {
+    $("#sendMaxAmmount").html(this.formatAmountForDisplay(this.getSelectedBalanceEth(), 8));
+  }
+
+  syncAmountInput() {
+    var normalized = this.getNormalizedAmount();
+
+    if ($("#sendAmmount").val() !== normalized) {
+      $("#sendAmmount").val(normalized);
+    }
+  }
+
   renderSendState() {
     EthoBlockchain.getAccountsData(function (error) {
       EthoMainGUI.showGeneralError(error);
@@ -15,6 +79,8 @@ class SendTransaction {
 
   validateSendForm() {
     if (EthoMainGUI.getAppState() == "send") {
+      var amount = this.getNormalizedAmount();
+
       if (!$("#sendFromAddress").val()) {
         EthoMainGUI.showGeneralError("Sender address must be specified!");
         return false;
@@ -35,8 +101,17 @@ class SendTransaction {
         return false;
       }
 
-      if (Number($("#sendAmmount").val()) <= 0) {
+      if (!amount || Number(amount) <= 0) {
         EthoMainGUI.showGeneralError("Send ammount must be greater then zero!");
+        return false;
+      }
+
+      $("#sendAmmount").val(amount);
+
+      var amountWei = web3Local.utils.toBN(web3Local.utils.toWei(amount, "ether"));
+
+      if (amountWei.gt(this.getSelectedBalanceWei())) {
+        EthoMainGUI.showGeneralError("Send ammount exceeds the selected wallet balance!");
         return false;
       }
 
@@ -50,41 +125,72 @@ class SendTransaction {
     if (EthoMainGUI.getAppState() == "send") {
       $("#sendToAddressName").html("");
       $("#sendToAddress").val("");
-      $("#sendAmmount").val(0);
+      $("#sendAmmount").val("0");
     }
+  }
+
+  fillMaxAmount() {
+    if (!$("#sendFromAddress").val()) {
+      EthoMainGUI.showGeneralError("Sender address must be specified!");
+      return;
+    }
+
+    if (!$("#sendToAddress").val() || !EthoBlockchain.isAddress($("#sendToAddress").val())) {
+      EthoMainGUI.showGeneralError("Recipient address must be a valid address before using ALL.");
+      return;
+    }
+
+    var balanceWei = this.getSelectedBalanceWei();
+
+    if (balanceWei.lte(web3Local.utils.toBN("0"))) {
+      EthoMainGUI.showGeneralError("Selected wallet has no spendable balance.");
+      return;
+    }
+
+    EthoBlockchain.getTranasctionFee($("#sendFromAddress").val(), $("#sendToAddress").val(), "0", function (error) {
+      EthoMainGUI.showGeneralError(error);
+    }, function (feeWei) {
+      var fee = web3Local.utils.toBN(feeWei.toString());
+
+      if (balanceWei.lte(fee)) {
+        EthoMainGUI.showGeneralError("Selected wallet balance is not enough to cover the transaction fee.");
+        return;
+      }
+
+      var maxSpendableWei = balanceWei.sub(fee);
+      var maxSpendableEth = web3Local.utils.fromWei(maxSpendableWei, "ether");
+
+      $("#sendAmmount").focus();
+      $("#sendAmmount").val(EthoSend.formatAmountForDisplay(maxSpendableEth, 18));
+    });
   }
 }
 
 $(document).on("render_send", function () {
-  //$("select").formSelect({classes: "fromAddressSelect"});
-	setTimeout(() => {
-	    var optionText = $("#sendFromAddress").find("option:selected").text();
-	    var selectedAddressBalance = optionText.substr(0, optionText.indexOf("|"));
-	    
-	    console.log("selectedAddressBalance", selectedAddressBalance);
-	    $("#sendMaxAmmount").html(parseFloat(selectedAddressBalance));
-	    //$("#sendAmmount").val(selectedAddressBalance);
-	}, 500);
+  setTimeout(() => {
+    EthoSend.updateSelectedMaxAmount();
+  }, 500);
 
 
 
   $("#sendFromAddress").on("change", function () {
     var optionText = $(this).find("option:selected").text();
 
-    var addrBalance = optionText.substr(0, optionText.indexOf("|"));
     var addrName = optionText.substr(optionText.indexOf("|")+1);
     var addrValue = addrName.substr(addrName.indexOf("|")+1);
     
 
     $(".fromAddressSelect input").val(addrValue.trim());
-
-    $("#sendMaxAmmount").html(parseFloat(addrBalance));
+    EthoSend.updateSelectedMaxAmount();
 	
   });
 
   $("#btnSendAll").off("click").on("click", function () {
-    $("#sendAmmount").focus();
-    $("#sendAmmount").val($("#sendMaxAmmount").html());
+    EthoSend.fillMaxAmount();
+  });
+
+  $("#sendAmmount").off("input").on("input", function () {
+    EthoSend.syncAmountInput();
   });
 
   $("#sendToAddress").off("input").on("input", function () {
@@ -189,7 +295,7 @@ $(document).on("render_send", function () {
         $("#walletPassword").val("");
         $("#fromAddressInfo").html($("#sendFromAddress").val());
         $("#toAddressInfo").html($("#sendToAddress").val());
-        $("#valueToSendInfo").html($("#sendAmmount").val());
+        $("#valueToSendInfo").html(EthoSend.getNormalizedAmount());
         $("#feeToPayInfo").html(parseFloat(web3Local.utils.fromWei(data.toString(), "ether")));
         $("#dlgSendWalletPassword").iziModal("open");
 

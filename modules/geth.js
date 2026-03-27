@@ -4,11 +4,21 @@ const appRoot = require("app-root-path");
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
+const peers = require("./gethPeers");
+const {
+  callRpc,
+  createRpcClient,
+  disconnect,
+  waitForConnection
+} = require("./gethRpc");
 
 class Geth {
   constructor() {
     this.isRunning = false;
+    this.isStopping = false;
     this.gethProcess = null;
+    this.autoAddPeersTimer = null;
+    this.forceKillTimer = null;
     this.logGethEvents = false;
     // create the user data dir (needed for MacOS)
     if (!fs.existsSync(app.getPath("userData"))) {
@@ -44,14 +54,74 @@ class Geth {
     if (this.logGethEvents) {
       this.logStream.write(text);
     }
+    if (process.env.ETHO_DEBUG_START === "1") {
+      process.stdout.write(`[geth] ${text}`);
+    }
     // Print log messages to the console
     //console.log("geth..."+text);
+  }
+
+  _clearAutoAddPeersTimer() {
+    if (this.autoAddPeersTimer) {
+      clearTimeout(this.autoAddPeersTimer);
+      this.autoAddPeersTimer = null;
+    }
+  }
+
+  _clearForceKillTimer() {
+    if (this.forceKillTimer) {
+      clearTimeout(this.forceKillTimer);
+      this.forceKillTimer = null;
+    }
+  }
+
+  _schedulePeerBootstrap(attempt = 0) {
+    this._clearAutoAddPeersTimer();
+
+    if (!this.isRunning) {
+      return;
+    }
+
+    this.autoAddPeersTimer = setTimeout(async () => {
+      const success = await this._addStartupPeers();
+
+      if (!success && this.isRunning && attempt < 14) {
+        this._schedulePeerBootstrap(attempt + 1);
+      } else {
+        this._clearAutoAddPeersTimer();
+      }
+    }, 2000);
+  }
+
+  async _addStartupPeers() {
+    const client = createRpcClient();
+
+    try {
+      await waitForConnection(client, 5000);
+
+      for (const peer of peers) {
+        await callRpc(client, "admin_addPeer", [peer]);
+      }
+
+      this._writeLog(`startup peers configured (${peers.length})\n`);
+      return true;
+    } catch (err) {
+      this._writeLog(`startup peers not ready: ${err.message}\n`);
+      return false;
+    } finally {
+      disconnect(client);
+    }
   }
 
   startGeth() {
     // get the path of get and execute the child process
     try {
+      if (this.gethProcess && this.gethProcess.exitCode === null && !this.gethProcess.killed) {
+        return;
+      }
+
       this.isRunning = true;
+      this.isStopping = false;
       const gethPath = path.join(this.binaries, "geth");
       this.gethProcess = child_process.spawn(gethPath, [
         "--ws",
@@ -67,17 +137,30 @@ class Geth {
         "1313114",
         "--allow-insecure-unlock"
       ]);
+      this._schedulePeerBootstrap();
 
       if (!this.gethProcess) {
         dialog.showErrorBox("Error starting application", "Geth failed to start!");
         app.quit();
       } else {
-        this.gethProcess.on("error", function (err) {
-          dialog.showErrorBox("Error starting application", "Geth failed to start!");
-          app.quit();
+        this.gethProcess.on("error", (err) => {
+          if (!this.isStopping) {
+            console.error(`Geth failed to start: ${err.message}`);
+            dialog.showErrorBox("Error starting application", "Geth failed to start!");
+            app.quit();
+          }
         });
-        this.gethProcess.on("close", function (err) {
-          if (this.isRunning) {
+        this.gethProcess.on("close", () => {
+          const wasStopping = this.isStopping;
+
+          this._clearAutoAddPeersTimer();
+          this._clearForceKillTimer();
+          this.isRunning = false;
+          this.isStopping = false;
+          this.gethProcess = null;
+
+          if (!wasStopping) {
+            console.error("Geth exited unexpectedly during wallet startup or runtime.");
             dialog.showErrorBox("Error running the node", "The node stoped working. Wallet will close!");
             app.quit();
           }
@@ -97,12 +180,26 @@ class Geth {
 
   stopGeth() {
     this.isRunning = false;
+    this.isStopping = true;
+    this._clearAutoAddPeersTimer();
+    this._clearForceKillTimer();
+
+    if (!this.gethProcess || this.gethProcess.exitCode !== null || this.gethProcess.killed) {
+      this.gethProcess = null;
+      this.isStopping = false;
+      return;
+    }
 
     if (os.type() == "Windows_NT") {
       const gethWrapePath = path.join(this.binaries, "WrapGeth.exe");
       child_process.spawnSync(gethWrapePath, [this.gethProcess.pid]);
     } else {
       this.gethProcess.kill("SIGTERM");
+      this.forceKillTimer = setTimeout(() => {
+        if (this.gethProcess && this.gethProcess.exitCode === null && !this.gethProcess.killed) {
+          this.gethProcess.kill("SIGKILL");
+        }
+      }, 5000);
     }
   }
 }

@@ -52,7 +52,7 @@ class MainGUI {
     $("#dlgGeneralError").iziModal();
     $("#dlgGeneralError").iziModal("open");
 
-    $("#btnGeneralErrorOK").click(function () {
+    $("#btnGeneralErrorOK").off("click").on("click", function () {
       $("#dlgGeneralError").iziModal("close");
     });
   }
@@ -64,12 +64,12 @@ class MainGUI {
     $("#dlgGeneralConfirm").iziModal();
     $("#dlgGeneralConfirm").iziModal("open");
 
-    $("#btnGeneralConfirmYes").click(function () {
+    $("#btnGeneralConfirmYes").off("click").on("click", function () {
       $("#dlgGeneralConfirm").iziModal("close");
       callback(true);
     });
 
-    $("#btnGeneralConfirmNo").click(function () {
+    $("#btnGeneralConfirmNo").off("click").on("click", function () {
       $("#dlgGeneralConfirm").iziModal("close");
       callback(false);
     });
