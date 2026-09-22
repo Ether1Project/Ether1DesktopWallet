@@ -4,7 +4,7 @@ const appRoot = require("app-root-path");
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
-const peers = require("./gethPeers");
+const { getPeers } = require("./gethPeers");
 const {
   callRpc,
   createRpcClient,
@@ -99,11 +99,13 @@ class Geth {
     try {
       await waitForConnection(client, 5000);
 
-      for (const peer of peers) {
+      const peerList = await getPeers(app.getPath("userData"));
+
+      for (const peer of peerList) {
         await callRpc(client, "admin_addPeer", [peer]);
       }
 
-      this._writeLog(`startup peers configured (${peers.length})\n`);
+      this._writeLog(`startup peers configured (${peerList.length})\n`);
       return true;
     } catch (err) {
       this._writeLog(`startup peers not ready: ${err.message}\n`);

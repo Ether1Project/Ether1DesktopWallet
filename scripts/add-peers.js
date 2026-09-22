@@ -1,6 +1,6 @@
 "use strict";
 
-const peers = require("../modules/gethPeers");
+const { getPeers } = require("../modules/gethPeers");
 const {
   DEFAULT_WS_URL,
   callRpc,
@@ -14,6 +14,9 @@ const client = createRpcClient(DEFAULT_WS_URL);
 async function main() {
   try {
     await waitForConnection(client);
+
+    // Resolve the latest peer list (remote → cache → bundled → hardcoded)
+    const peers = await getPeers();
 
     const results = [];
 

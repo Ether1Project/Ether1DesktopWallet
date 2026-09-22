@@ -1,6 +1,6 @@
 const {app, dialog, ipcMain} = require("electron");
 const storage = require("electron-storage");
-const datastore = require("nedb");
+const datastore = require("@seald-io/nedb");
 const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
