@@ -80,7 +80,7 @@
   },
   "devDependencies": {
     "browserify": "^17.0.1",
-    "electron": "11.5.0",
+    "electron": "41.10.6",
     "electron-builder": "^22.14.13",
     "ipfs": "^0.64.2",
     "js-beautify": "^1.15.4",
