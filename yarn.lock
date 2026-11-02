@@ -10311,7 +10311,7 @@ undeclared-identifiers@^1.1.2:
     simple-concat "^1.0.0"
     xtend "^4.0.1"
 
-undici@*, undici@^5.29.0:
+undici@*:
   version "5.29.0"
   resolved "https://registry.npmjs.org/undici/-/undici-5.29.0.tgz"
   integrity sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==
