@@ -315,14 +315,16 @@ $(document).on("render_send", function () {
               EthoBlockchain.getTransaction(data, function (error) {
                 EthoMainGUI.showGeneralError(error);
               }, function (transaction) {
-                ipcRenderer.send("storeTransaction", {
-                  block: transaction.blockNumber,
-                  txhash: transaction.hash.toLowerCase(),
-                  fromaddr: transaction.from.toLowerCase(),
-                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                  toaddr: transaction.to.toLowerCase(),
-                  value: transaction.value
-                });
+                if (transaction) {
+                  ipcRenderer.send("storeTransaction", {
+                    block: transaction.blockNumber,
+                    txhash: transaction.hash.toLowerCase(),
+                    fromaddr: transaction.from.toLowerCase(),
+                    timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    toaddr: transaction.to.toLowerCase(),
+                    value: transaction.value
+                  });
+                }
               });
             });
           });

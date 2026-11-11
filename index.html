@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' ws: wss: https:;">
   <title>$ETHO Desktop Wallet</title>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/styles/materialize.min.css">
@@ -29,7 +30,7 @@
   <span id="nodestorage" style="display:none;">Loading</span>
 
   <!-- normal script imports etc -->
-  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.8.0/dist/web3.min.js"></script>
   <script src="./assets/scripts/jquery.min.js"></script>
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   <script src="./assets/scripts/handlebars.js"></script>
@@ -73,12 +74,30 @@
         loadingHtml: loadingHtml
     });
 
-    var timeouts = [
-        { text: "Starting Node...", delay: 1250 },
-        { text: "Connecting to Network...", delay: 6400 },
-        { text: "Updating...", delay: 7320 },
-        { text: "Launching...", delay: 7400 }
-    ];
+    // Check connection mode to determine loading text
+    var connectionMode = 'rpc'; // Default to RPC
+    try {
+        const { ipcRenderer } = require('electron');
+        connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+        // Fallback to RPC if there's an error
+    }
+
+    var timeouts = [];
+    if (connectionMode === 'rpc') {
+        timeouts = [
+            { text: "Connecting to RPC...", delay: 1250 },
+            { text: "Connecting to Network...", delay: 3400 },
+            { text: "Launching...", delay: 4400 }
+        ];
+    } else {
+        timeouts = [
+            { text: "Starting Node...", delay: 1250 },
+            { text: "Connecting to Network...", delay: 6400 },
+            { text: "Updating...", delay: 7320 },
+            { text: "Launching...", delay: 7400 }
+        ];
+    }
 
     timeouts.forEach((item, index) => {
         setTimeout(() => {
@@ -89,7 +108,7 @@
     $(document).on("onGethReady", function () {
         setTimeout(() => {
             loading_screen.finish();
-        }, 5500);
+        }, connectionMode === 'rpc' ? 2500 : 5500);
     });
 
     $(window).on("beforeunload", function () {
@@ -106,7 +125,7 @@
     <!-- The sidebar -->
     <div class="ui left demo vertical inverted sidebar labeled icon menu">
       <a class="item">
-        <img src="assets/images/EthoFS-Glitch.gif" alt="ethoFS Logo" style="width: 90%;padding-left: 5px;">
+        <img src="assets/images/logo.png" alt="ETHO Logo" style="width: 90%;padding-left: 5px;">
         <a class="item" style="padding-top: 30px; padding-left: 13px" id="mainNavBtnWallets" href="#" data-tippy="Wallets" data-tippy-delay="100">
           <i class="fas fa-wallet fa-1x"></i>
           <span class="walletID"> Wallets </span>

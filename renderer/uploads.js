@@ -2,8 +2,6 @@ const {
   ipcRenderer
 } = require("electron");
 const privateKeyToAddress = require('ethereum-private-key-to-address');
-const os = require("os");
-const path = require("path");
 const Buf = require('buffer').Buffer;
 const Common = require('ethereumjs-common');
 const fetch = require("node-fetch");
@@ -1440,13 +1438,12 @@ $(document).on("render_uploads", function () {
 });
 
 function getKeyStoreLocation() {
-  switch (os.type()) {
-    case "Darwin":
-      return path.join(os.homedir(), "Library", "Ether1");
-      break;
-    default:
-      return path.join(process.env.APPDATA, "Ether1");
+  const result = ipcRenderer.sendSync("getGethDataDir");
+  if (!result || result.error) {
+    throw new Error(result && result.error || "The node data directory is not ready yet.");
   }
+  // keythereum.importFromFile expects the data directory, and appends keystore.
+  return result.dataDir;
 }
 
 $(document).on("dragenter", "#drag-container", function (event) {

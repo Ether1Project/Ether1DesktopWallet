@@ -8,15 +8,28 @@ class Markets {
     $(document).trigger("render_markets");
 
     $.getJSON("https://api.coingecko.com/api/v3/coins/ether-1?sparkline=true", function (data) {
-      $("#ETHOToUSD").html(data.market_data.current_price.usd.toFixed(5) + " $");
-      $("#ETHOToBTC").html(data.market_data.current_price.btc.toFixed(8)) + " sats";
-      $("#marketcap").html(data.market_data.market_cap.usd.toFixed(0) + " $ (" + data.market_cap_rank + ")");
-      $("#dailyVolume").html(data.market_data.total_volume.usd.toFixed(0) + " $");
+      // Check if data and required properties exist
+      if (data && data.market_data && data.market_data.current_price) {
+        $("#ETHOToUSD").html((data.market_data.current_price.usd || 0).toFixed(5) + " $");
+        $("#ETHOToBTC").html((data.market_data.current_price.btc || 0).toFixed(8) + " sats");
+        $("#marketcap").html((data.market_data.market_cap?.usd || 0).toFixed(0) + " $ (" + (data.market_cap_rank || "N/A") + ")");
+        $("#dailyVolume").html((data.market_data.total_volume?.usd || 0).toFixed(0) + " $");
 
-      $("#changeUSD").html(data.market_data.price_change_percentage_7d_in_currency.usd.toFixed(2) + "%");
-      $("#changeBTC").html(data.market_data.price_change_percentage_7d_in_currency.btc.toFixed(2) + "%");
-      $("#changeMarketcap").html(data.market_data.high_24h.usd.toFixed(5) + "$");
-      $("#changeVolume").html(data.market_data.ath.usd.toFixed(5) + "$");
+        $("#changeUSD").html((data.market_data.price_change_percentage_7d_in_currency?.usd || 0).toFixed(2) + "%");
+        $("#changeBTC").html((data.market_data.price_change_percentage_7d_in_currency?.btc || 0).toFixed(2) + "%");
+        $("#changeMarketcap").html((data.market_data.high_24h?.usd || 0).toFixed(5) + "$");
+        $("#changeVolume").html((data.market_data.ath?.usd || 0).toFixed(5) + "$");
+      } else {
+        console.error("Invalid market data received:", data);
+        $("#ETHOToUSD").html("N/A");
+        $("#ETHOToBTC").html("N/A");
+        $("#marketcap").html("N/A");
+        $("#dailyVolume").html("N/A");
+        $("#changeUSD").html("N/A");
+        $("#changeBTC").html("N/A");
+        $("#changeMarketcap").html("N/A");
+        $("#changeVolume").html("N/A");
+      }
 
       new Chart(document.getElementById("chartMarketPriceCanvas"), {
         type: "line",

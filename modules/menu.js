@@ -1,4 +1,4 @@
-const {app, Menu, ipcMain, shell} = require("electron");
+const {app, BrowserWindow, Menu, ipcMain, shell} = require("electron");
 
 const template = [
   {
@@ -79,10 +79,13 @@ const template = [
     submenu: [
       {
         label: "About Etho Protocol wallet",
-        click() {
+        click(item, focusedWindow) {
           var infoData = {};
           infoData.version = app.getVersion();
-          mainWindow.webContents.send("showAboutDialog", infoData);
+          const targetWindow = focusedWindow || global.mainWindow || BrowserWindow.getAllWindows()[0];
+          if (targetWindow && targetWindow.webContents) {
+            targetWindow.webContents.send("showAboutDialog", infoData);
+          }
         }
       }, {
         label: "Etho Protocol documentation",

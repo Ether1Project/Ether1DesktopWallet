@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 const { getPeers } = require("./gethPeers");
+const {resolveDataDir, getDataDir} = require("./gethDataDir");
 const {
   callRpc,
   createRpcClient,
@@ -115,6 +116,11 @@ class Geth {
     }
   }
 
+  ensureDataDir() {
+    const gethPath = path.join(this.binaries, "geth");
+    return resolveDataDir(gethPath);
+  }
+
   startGeth() {
     // get the path of get and execute the child process
     try {
@@ -125,7 +131,10 @@ class Geth {
       this.isRunning = true;
       this.isStopping = false;
       const gethPath = path.join(this.binaries, "geth");
+      const dataDir = resolveDataDir(gethPath);
       this.gethProcess = child_process.spawn(gethPath, [
+        "--datadir",
+        dataDir,
         "--ws",
         "--ws.origins",
         "*",
@@ -208,6 +217,20 @@ class Geth {
 
 ipcMain.on("stopGeth", (event, arg) => {
   EthoGeth.stopGeth();
+});
+
+ipcMain.on("getGethDataDir", (event) => {
+  try {
+    let dataDir;
+    try {
+      dataDir = getDataDir();
+    } catch (err) {
+      dataDir = EthoGeth.ensureDataDir();
+    }
+    event.returnValue = {dataDir};
+  } catch (error) {
+    event.returnValue = {error: error.message};
+  }
 });
 
 const EthoGeth = new Geth();

@@ -9,6 +9,148 @@ class Blockchain {
     this.bhSubscribe = null;
   }
 
+  migrateAccountsFromLocalNode(localAccounts, wallets, callback) {
+    console.log("Attempting to import keystores from local node for full RPC compatibility...");
+    
+    // First, debug keystore paths - but do it asynchronously
+    setTimeout(function() {
+      try {
+        var keystorePaths = ipcRenderer.sendSync("findKeystorePaths");
+        console.log("=== KEYSTORE PATH DEBUG ===");
+        for (var i = 0; i < keystorePaths.length; i++) {
+          var pathInfo = keystorePaths[i];
+          if (pathInfo.exists) {
+            console.log("✓ Found:", pathInfo.path, "- Files:", pathInfo.fileCount);
+            if (pathInfo.files && pathInfo.files.length > 0) {
+              console.log("  Sample files:", pathInfo.files);
+            }
+          } else {
+            console.log("✗ Missing:", pathInfo.path);
+          }
+        }
+        console.log("=== END DEBUG ===");
+      } catch (debugError) {
+        console.error("Debug error:", debugError);
+      }
+    }, 50);
+    
+    // Get keystores from local node
+    try {
+      var localKeystores = ipcRenderer.sendSync("getLocalKeystores");
+      console.log("Found", localKeystores.length, "keystore files");
+      
+      if (!wallets) wallets = { names: {}, keys: {} };
+      if (!wallets.names) wallets.names = {};
+      if (!wallets.keys) wallets.keys = {};
+      
+      var migratedCount = 0;
+      var viewOnlyCount = 0;
+      
+      // Process each account
+      for (var i = 0; i < localAccounts.length; i++) {
+        var accountAddress = localAccounts[i].toLowerCase();
+        var accountName = "Account " + (i + 1);
+        
+        // Try to find corresponding keystore
+        var foundKeystore = false;
+        for (var j = 0; j < localKeystores.length; j++) {
+          if (localKeystores[j].address === accountAddress) {
+            // Found matching keystore - import with full functionality
+            wallets.names[localAccounts[i]] = wallets.names[localAccounts[i]] || accountName;
+            wallets.keys[localAccounts[i]] = localKeystores[j].keystore;
+            foundKeystore = true;
+            migratedCount++;
+            console.log("Migrated account with keystore:", localAccounts[i]);
+            break;
+          }
+        }
+        
+        if (!foundKeystore) {
+          // No keystore found - add as view-only
+          wallets.names[localAccounts[i]] = wallets.names[localAccounts[i]] || (accountName + " (View Only)");
+          viewOnlyCount++;
+          console.log("Added view-only account:", localAccounts[i]);
+        }
+      }
+      
+      // Save to database
+      EthoDatatabse.setWallets(wallets);
+      
+      if (migratedCount > 0) {
+        console.log("Successfully migrated", migratedCount, "accounts with full functionality");
+      }
+      if (viewOnlyCount > 0) {
+        console.log("Added", viewOnlyCount, "view-only accounts (no keystore found)");
+        console.warn("View-only accounts cannot send transactions in RPC mode");
+      }
+      
+      // Call callback asynchronously to not block UI
+      setTimeout(callback, 50);
+      
+    } catch (keystoreError) {
+      console.error("Error accessing keystores:", keystoreError);
+      console.log("Falling back to view-only migration");
+      
+      // Fallback to view-only migration
+      if (!wallets) wallets = { names: {}, keys: {} };
+      if (!wallets.names) wallets.names = {};
+      if (!wallets.keys) wallets.keys = {};
+      
+      for (var i = 0; i < localAccounts.length; i++) {
+        var accountName = "Account " + (i + 1) + " (View Only)";
+        wallets.names[localAccounts[i]] = wallets.names[localAccounts[i]] || accountName;
+      }
+      
+      EthoDatatabse.setWallets(wallets);
+      console.log("Accounts synced as view-only due to keystore access error");
+      
+      // Call callback asynchronously
+      setTimeout(callback, 50);
+    }
+  }
+
+  syncLocalKeystoresToWallets() {
+    try {
+      var wallets = EthoDatatabse.getWallets() || { names: {}, keys: {} };
+      if (!wallets.names) wallets.names = {};
+      if (!wallets.keys) wallets.keys = {};
+
+      var localKeystores = ipcRenderer.sendSync("getLocalKeystores") || [];
+      var updated = false;
+      var existingLowerMap = {};
+
+      Object.keys(wallets.names).forEach(function(addr) {
+        existingLowerMap[addr.toLowerCase()] = addr;
+      });
+
+      for (var i = 0; i < localKeystores.length; i++) {
+        var ksAddr = localKeystores[i].address;
+        var canonicalKey = existingLowerMap[ksAddr] || ksAddr;
+
+        if (!wallets.names[canonicalKey]) {
+          var nextIdx = Object.keys(wallets.names).length + 1;
+          wallets.names[canonicalKey] = "Account " + nextIdx;
+          existingLowerMap[ksAddr] = canonicalKey;
+          updated = true;
+        }
+
+        if (!wallets.keys[canonicalKey]) {
+          wallets.keys[canonicalKey] = localKeystores[i].keystore;
+          updated = true;
+        }
+      }
+
+      if (updated) {
+        EthoDatatabse.setWallets(wallets);
+      }
+
+      return wallets;
+    } catch (err) {
+      console.warn("Could not sync local keystores:", err);
+      return EthoDatatabse.getWallets();
+    }
+  }
+
   getBlock(blockToGet, includeData, clbError, clbSuccess) {
     web3Local.eth.getBlock(blockToGet, includeData, function(error, block) {
       if (error) {
@@ -20,6 +162,18 @@ class Blockchain {
   }
 
   getAccounts(clbError, clbSuccess) {
+    var connectionMode = 'local';
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {}
+
+    if (connectionMode === 'rpc') {
+      var wallets = this.syncLocalKeystoresToWallets();
+      var addresses = (wallets && wallets.names) ? Object.keys(wallets.names) : [];
+      clbSuccess(addresses);
+      return;
+    }
+
     web3Local.eth.getAccounts(function(err, res) {
       if (err) {
         clbError(err);
@@ -75,47 +229,137 @@ class Blockchain {
   }
 
   prepareTransaction(password, fromAddress, toAddress, value, clbError, clbSuccess) {
-    web3Local.eth.personal.unlockAccount(fromAddress, password, function(error, result) {
-      if (error) {
-        clbError("Wrong password for the selected address!");
-      } else {
-        web3Local.eth.getTransactionCount(fromAddress, "pending", function(error, result) {
+    // Check connection mode
+    var connectionMode = 'local';
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+      console.log("Failed to get connection mode, defaulting to local");
+    }
+
+    if (connectionMode === 'rpc') {
+      // In RPC mode, use keystore-based signing
+      var wallets = this.syncLocalKeystoresToWallets();
+      var keystore = null;
+      if (wallets && wallets.keys) {
+        keystore = wallets.keys[fromAddress] || wallets.keys[fromAddress.toLowerCase()];
+        if (!keystore) {
+          var matchingKey = Object.keys(wallets.keys).find(function(k) {
+            return k.toLowerCase() === fromAddress.toLowerCase();
+          });
+          if (matchingKey) {
+            keystore = wallets.keys[matchingKey];
+          }
+        }
+      }
+
+      if (!keystore) {
+        var isViewOnly = wallets && wallets.names && wallets.names[fromAddress] && wallets.names[fromAddress].includes("(View Only)");
+        if (isViewOnly) {
+          clbError("This is a view-only account migrated from local node. To send transactions in RPC mode, please:\n\n1. Export the private key from your local node\n2. Use 'Import Wallet' to import it with the private key\n3. Then you can send transactions\n\nAlternatively, switch back to local node mode to use this account.");
+        } else {
+          clbError("No keystore found for address " + fromAddress + ". Please import this wallet first using 'Import Wallet' with the private key.");
+        }
+        return;
+      }
+
+      // Decrypt the keystore
+      try {
+        var privateKey = web3Local.eth.accounts.decrypt(keystore, password);
+        console.log("Successfully decrypted keystore for address:", fromAddress);
+
+        // Get transaction parameters
+        web3Local.eth.getTransactionCount(fromAddress, "pending", function(error, nonce) {
           if (error) {
             clbError(error);
-          } else {
-            var amountToSend = web3Local.utils.toWei(value, "ether"); //convert to wei value
-            var RawTransaction = {
-              from: fromAddress,
-              to: toAddress,
-              value: amountToSend,
-              nonce: result
-            };
+            return;
+          }
 
-            web3Local.eth.estimateGas(RawTransaction, function(error, result) {
+          var amountToSend = web3Local.utils.toWei(value, "ether");
+          var transactionObject = {
+            from: fromAddress,
+            to: toAddress,
+            value: amountToSend,
+            nonce: nonce
+          };
+
+          // Estimate gas
+          web3Local.eth.estimateGas(transactionObject, function(error, gasEstimate) {
+            if (error) {
+              clbError(error);
+              return;
+            }
+
+            // Get gas price
+            web3Local.eth.getGasPrice(function(error, gasPrice) {
               if (error) {
                 clbError(error);
-              } else {
-                RawTransaction.gas = result + 1;
-                web3Local.eth.getGasPrice(function(error, result) {
-                  if (error) {
-                    clbError(error);
-                  } else {
-                    RawTransaction.gasPrice = result;
-                    web3Local.eth.signTransaction(RawTransaction, fromAddress, function(error, result) {
-                      if (error) {
-                        clbError(error);
-                      } else {
-                        clbSuccess(result);
-                      }
-                    });
-                  }
-                });
+                return;
               }
+
+              // Prepare final transaction object
+              transactionObject.gas = gasEstimate;
+              transactionObject.gasPrice = gasPrice;
+
+              // Sign transaction with private key
+              web3Local.eth.accounts.signTransaction(transactionObject, privateKey.privateKey, function(error, signedTx) {
+                if (error) {
+                  clbError(error);
+                } else {
+                  console.log("Transaction signed successfully");
+                  clbSuccess({ raw: signedTx.rawTransaction });
+                }
+              });
             });
-          }
+          });
         });
+      } catch (error) {
+        clbError("Failed to decrypt wallet. Please check your password.");
       }
-    });
+    } else {
+      // Local node mode - use Personal API
+      web3Local.eth.personal.unlockAccount(fromAddress, password, function(error, result) {
+        if (error) {
+          clbError("Wrong password for the selected address!");
+        } else {
+          web3Local.eth.getTransactionCount(fromAddress, "pending", function(error, result) {
+            if (error) {
+              clbError(error);
+            } else {
+              var amountToSend = web3Local.utils.toWei(value, "ether"); //convert to wei value
+              var RawTransaction = {
+                from: fromAddress,
+                to: toAddress,
+                value: amountToSend,
+                nonce: result
+              };
+
+              web3Local.eth.estimateGas(RawTransaction, function(error, result) {
+                if (error) {
+                  clbError(error);
+                } else {
+                  RawTransaction.gas = result + 1;
+                  web3Local.eth.getGasPrice(function(error, result) {
+                    if (error) {
+                      clbError(error);
+                    } else {
+                      RawTransaction.gasPrice = result;
+                      web3Local.eth.signTransaction(RawTransaction, fromAddress, function(error, result) {
+                        if (error) {
+                          clbError(error);
+                        } else {
+                          clbSuccess(result);
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
   }
 
   sendTransaction(rawTransaction, clbError, clbSuccess) {
@@ -135,41 +379,79 @@ class Blockchain {
 
     var wallets = EthoDatatabse.getWallets();
     var counter = 0;
+    var connectionMode = 'local'; // default
+    
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+      console.log("Failed to get connection mode, defaulting to local");
+    }
 
-    web3Local.eth.getAccounts(function(err, res) {
-      if (err) {
-        clbError(err);
-      } else {
-        for (var i = 0; i < res.length; i++) {
-          var walletName = vsprintf("Account %d", [i + 1]);
-          if (wallets) {
-            walletName = wallets.names[res[i]] || walletName;
-          }
+    if (connectionMode === 'rpc') {
+      wallets = this.syncLocalKeystoresToWallets();
 
+      if (wallets && wallets.names) {
+        var addresses = Object.keys(wallets.names);
+        for (var i = 0; i < addresses.length; i++) {
           var addressInfo = {};
           addressInfo.balance = 0;
           addressInfo.balanceExact = "0";
           addressInfo.balanceWei = "0";
-          addressInfo.address = res[i];
-          addressInfo.name = walletName;
+          addressInfo.address = addresses[i];
+          addressInfo.name = wallets.names[addresses[i]] || ("Account " + (i + 1));
           rendererData.addressData.push(addressInfo);
         }
-
-        if (rendererData.addressData.length > 0) {
-          updateBalance(counter);
-        } else {
-          clbSuccess(rendererData);
-        }
       }
-    });
+
+      if (rendererData.addressData.length > 0) {
+        updateBalance(counter);
+      } else {
+        clbSuccess(rendererData);
+      }
+    } else {
+      // Local node mode - use original web3.eth.getAccounts
+      web3Local.eth.getAccounts(function(err, res) {
+        if (err) {
+          clbError(err);
+        } else {
+          for (var i = 0; i < res.length; i++) {
+            var walletName = vsprintf("Account %d", [i + 1]);
+            if (wallets && wallets.names) {
+              walletName = wallets.names[res[i]] || wallets.names[res[i].toLowerCase()] || walletName;
+            }
+
+            var addressInfo = {};
+            addressInfo.balance = 0;
+            addressInfo.balanceExact = "0";
+            addressInfo.balanceWei = "0";
+            addressInfo.address = res[i];
+            addressInfo.name = walletName;
+            rendererData.addressData.push(addressInfo);
+          }
+
+          if (rendererData.addressData.length > 0) {
+            updateBalance(counter);
+          } else {
+            clbSuccess(rendererData);
+          }
+        }
+      });
+    }
 
     function updateBalance(index) {
       web3Local.eth.getBalance(rendererData.addressData[index].address, function(error, balance) {
-        var exactBalance = web3Local.utils.fromWei(balance, "ether");
-        rendererData.addressData[index].balanceWei = balance.toString();
-        rendererData.addressData[index].balanceExact = exactBalance;
-        rendererData.addressData[index].balance = parseFloat(exactBalance).toFixed(2);
-        rendererData.sumBalance = rendererData.sumBalance + parseFloat(exactBalance);
+        if (!error && balance !== undefined && balance !== null) {
+          var exactBalance = web3Local.utils.fromWei(balance, "ether");
+          rendererData.addressData[index].balanceWei = balance.toString();
+          rendererData.addressData[index].balanceExact = exactBalance;
+          rendererData.addressData[index].balance = parseFloat(exactBalance).toFixed(2);
+          rendererData.sumBalance = rendererData.sumBalance + parseFloat(exactBalance);
+        } else {
+          console.log("Error getting balance for", rendererData.addressData[index].address, error);
+          rendererData.addressData[index].balanceWei = "0";
+          rendererData.addressData[index].balanceExact = "0";
+          rendererData.addressData[index].balance = "0.00";
+        }
 
         if (counter < rendererData.addressData.length - 1) {
           counter++;
@@ -187,50 +469,166 @@ class Blockchain {
     rendererData.addressData = [];
 
     var wallets = EthoDatatabse.getWallets();
-    var counter = 0;
 
-    web3Local.eth.getAccounts(function(err, res) {
-      if (err) {
-        clbError(err);
-      } else {
-        for (var i = 0; i < res.length; i++) {
-          var walletName = vsprintf("Account %d", [i + 1]);
-          if (wallets) {
-            walletName = wallets.names[res[i]] || walletName;
-          }
+    // Check connection mode
+    var connectionMode = 'local';
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+      console.log("Failed to get connection mode, defaulting to local");
+    }
 
+    if (connectionMode === 'rpc') {
+      wallets = this.syncLocalKeystoresToWallets();
+      if (wallets && wallets.names) {
+        var addresses = Object.keys(wallets.names);
+        for (var i = 0; i < addresses.length; i++) {
           var addressInfo = {};
-          addressInfo.address = res[i];
-          addressInfo.name = walletName;
+          addressInfo.address = addresses[i];
+          addressInfo.name = wallets.names[addresses[i]] || ("Account " + (i + 1));
           rendererData.addressData.push(addressInfo);
         }
-
-        clbSuccess(rendererData);
       }
-    });
+      clbSuccess(rendererData);
+    } else {
+      // Local node mode - use original web3.eth.getAccounts
+      web3Local.eth.getAccounts(function(err, res) {
+        if (err) {
+          clbError(err);
+        } else {
+          for (var i = 0; i < res.length; i++) {
+            var walletName = vsprintf("Account %d", [i + 1]);
+            if (wallets && wallets.names) {
+              walletName = wallets.names[res[i]] || wallets.names[res[i].toLowerCase()] || walletName;
+            }
+
+            var addressInfo = {};
+            addressInfo.address = res[i];
+            addressInfo.name = walletName;
+            rendererData.addressData.push(addressInfo);
+          }
+
+          clbSuccess(rendererData);
+        }
+      });
+    }
   }
 
   createNewAccount(password, clbError, clbSuccess) {
-    web3Local.eth.personal.newAccount(password, function(error, account) {
-      if (error) {
-        clbError(error);
-      } else {
-        clbSuccess(account);
+    // Check connection mode
+    var connectionMode = 'local';
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+      console.log("Failed to get connection mode, defaulting to local");
+    }
+
+    if (connectionMode === 'rpc') {
+      // In RPC mode, create account using web3.eth.accounts and store keystore
+      try {
+        var account = web3Local.eth.accounts.create();
+        var keystore = web3Local.eth.accounts.encrypt(account.privateKey, password);
+        
+        // Store in database
+        var wallets = EthoDatatabse.getWallets();
+        if (!wallets) wallets = { names: {}, keys: {} };
+        if (!wallets.names) wallets.names = {};
+        if (!wallets.keys) wallets.keys = {};
+        
+        var accountIndex = Object.keys(wallets.names).length + 1;
+        var accountName = "Account " + accountIndex;
+        
+        wallets.names[account.address] = accountName;
+        wallets.keys[account.address] = keystore;
+        
+        EthoDatatabse.setWallets(wallets);
+        try {
+          ipcRenderer.sendSync("saveAccount", keystore);
+        } catch (saveErr) {
+          console.warn("Could not save keystore file to disk:", saveErr);
+        }
+        console.log("New account created and stored in database for RPC mode:", account.address);
+        
+        clbSuccess(account.address);
+      } catch (error) {
+        clbError("Failed to create new account: " + error.message);
       }
-    });
+    } else {
+      // Local node mode - use Personal API
+      web3Local.eth.personal.newAccount(password, function(error, account) {
+        if (error) {
+          clbError(error);
+        } else {
+          clbSuccess(account);
+        }
+      });
+    }
   }
 
   importFromPrivateKey(privateKey, keyPassword, clbError, clbSuccess) {
-    web3Local.eth.personal.importRawKey(privateKey, keyPassword, function(error, account) {
-      if (error) {
-        clbError(error);
-      } else {
-        clbSuccess(account);
+    // Check connection mode
+    var connectionMode = 'local';
+    try {
+      connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    } catch (e) {
+      console.log("Failed to get connection mode, defaulting to local");
+    }
+
+    if (connectionMode === 'rpc') {
+      // In RPC mode, import account using web3.eth.accounts and store keystore
+      try {
+        // Ensure private key has 0x prefix
+        if (!privateKey.startsWith('0x')) {
+          privateKey = '0x' + privateKey;
+        }
+        
+        var account = web3Local.eth.accounts.privateKeyToAccount(privateKey);
+        var keystore = web3Local.eth.accounts.encrypt(privateKey, keyPassword);
+        
+        // Store in database
+        var wallets = EthoDatatabse.getWallets();
+        if (!wallets) wallets = { names: {}, keys: {} };
+        if (!wallets.names) wallets.names = {};
+        if (!wallets.keys) wallets.keys = {};
+        
+        var accountIndex = Object.keys(wallets.names).length + 1;
+        var accountName = "Imported Account " + accountIndex;
+        
+        wallets.names[account.address] = accountName;
+        wallets.keys[account.address] = keystore;
+        
+        EthoDatatabse.setWallets(wallets);
+        try {
+          ipcRenderer.sendSync("saveAccount", keystore);
+        } catch (saveErr) {
+          console.warn("Could not save keystore file to disk:", saveErr);
+        }
+        console.log("Account imported and stored in database for RPC mode:", account.address);
+        
+        clbSuccess(account.address);
+      } catch (error) {
+        clbError("Failed to import account: " + error.message);
       }
-    });
+    } else {
+      // Local node mode - use Personal API
+      web3Local.eth.personal.importRawKey(privateKey, keyPassword, function(error, account) {
+        if (error) {
+          clbError(error);
+        } else {
+          clbSuccess(account);
+        }
+      });
+    }
   }
 
   subsribePendingTransactions(clbError, clbSuccess, clbData) {
+    var connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    if (connectionMode === 'rpc') {
+      // RPC mode doesn't support subscriptions, call success immediately
+      clbSuccess(null);
+      return;
+    }
+    
     this.txSubscribe = web3Local.eth.subscribe("pendingTransactions", function(error, result) {
       if (error) {
         clbError(error);
@@ -257,6 +655,13 @@ class Blockchain {
   }
 
   subsribeNewBlockHeaders(clbError, clbSuccess, clbData) {
+    var connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    if (connectionMode === 'rpc') {
+      // RPC mode doesn't support subscriptions, call success immediately
+      clbSuccess(null);
+      return;
+    }
+    
     this.bhSubscribe = web3Local.eth.subscribe("newBlockHeaders", function(error, result) {
       if (error) {
         clbError(error);
@@ -283,7 +688,10 @@ class Blockchain {
   }
 
   closeConnection() {
-    web3Local.currentProvider.connection.close();
+    var connectionMode = ipcRenderer.sendSync("getConnectionMode");
+    if (connectionMode === 'local' && web3Local && web3Local.currentProvider && web3Local.currentProvider.connection) {
+      web3Local.currentProvider.connection.close();
+    }
   }
 }
 

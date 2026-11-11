@@ -41,7 +41,7 @@ class Wallets {
 
   enableButtonTooltips() {
     EthoUtils.createToolTip("#btnNewAddress", "Create New Address");
-    EthoUtils.createToolTip("#btnRefreshAddress", "Refresh Address List");
+    EthoUtils.createToolTip("#btnRefreshAddress", "Refresh wallets and check for new transactions");
     EthoUtils.createToolTip("#btnExportAccounts", "Export Accounts");
     EthoUtils.createToolTip("#btnImportAccounts", "Import Accounts");
     EthoUtils.createToolTip("#btnImportFromPrivateKey", "Import From Private Key");
@@ -187,6 +187,24 @@ $(document).on("render_wallets", function () {
         if (result) {
           const deleteResult = ipcRenderer.sendSync('deteteAccount', address);
           if (deleteResult !== true) EthoMainGUI.showGeneralError(deleteResult);
+          var wallets = EthoDatatabse.getWallets();
+          if (wallets) {
+            if (wallets.names) {
+              Object.keys(wallets.names).forEach(function (k) {
+                if (k.toLowerCase() === String(address).toLowerCase()) {
+                  delete wallets.names[k];
+                }
+              });
+            }
+            if (wallets.keys) {
+              Object.keys(wallets.keys).forEach(function (k) {
+                if (k.toLowerCase() === String(address).toLowerCase()) {
+                  delete wallets.keys[k];
+                }
+              });
+            }
+            EthoDatatabse.setWallets(wallets);
+          }
           setTimeout(EthoWallets.renderWalletsState, 1000); 
         }
       },
@@ -225,6 +243,13 @@ $(document).on("render_wallets", function () {
 
   $("#btnRefreshAddress").off("click").on("click", function () {
     EthoWallets.renderWalletsState();
+
+    // Also refresh transactions when refreshing wallets
+    if (typeof EthoTransactions !== 'undefined' && EthoTransactions.refreshTransactions) {
+      setTimeout(() => {
+        EthoTransactions.refreshTransactions();
+      }, 500);
+    }
   });
 
   $("#btnExportAccounts").off("click").on("click", function () {

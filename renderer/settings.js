@@ -11,6 +11,30 @@ class Settings {
 }
 
 $(document).on("render_settings", function () {
+  // Initialize connection mode toggle
+  var connectionMode = ipcRenderer.sendSync("getConnectionMode");
+  console.log("Settings page loaded, connection mode:", connectionMode);
+  $("#connectionModeToggle").prop("checked", connectionMode === 'local');
+  
+  $("#connectionModeToggle").off("change").on("change", function() {
+    var isLocalMode = $(this).is(":checked");
+    var newMode = isLocalMode ? 'local' : 'rpc';
+    console.log("User changing connection mode to:", newMode);
+    
+    EthoMainGUI.showGeneralConfirmation("Connection mode change requires restart. Do you want to continue?", function(result) {
+      if (result) {
+        console.log("User confirmed connection mode change to:", newMode);
+        var setResult = ipcRenderer.sendSync("setConnectionMode", newMode);
+        console.log("setConnectionMode result:", setResult);
+        ipcRenderer.send("appQuit");
+      } else {
+        console.log("User cancelled connection mode change");
+        // Reset checkbox if user cancels
+        $("#connectionModeToggle").prop("checked", !isLocalMode);
+      }
+    });
+  });
+
   $("#btnSettingsCleanTransactions").off("click").on("click", function () {
     if (isFullySynced) {
       EthoMainGUI.showGeneralConfirmation("Do you really want to resync transactions?", function (result) {

@@ -7,6 +7,7 @@ const {
 const path = require("path");
 const fs = require("fs");
 const EthoGeth = require("./modules/geth.js");
+const EthoConnection = require("./modules/connection.js");
 
 if (process.platform === "linux") {
   process.env.ELECTRON_DISABLE_SANDBOX = "1";
@@ -58,15 +59,26 @@ if (!gotSingleInstanceLock) {
       backgroundColor: "#000000",
       icon: "assets/images/icon.png",
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: false
       }
     });
+    global.mainWindow = mainWindow;
 
     mainWindow.loadFile("index.html");
-    EthoGeth.startGeth();
+    try {
+      EthoGeth.ensureDataDir();
+    } catch (err) {
+      console.warn("Could not pre-resolve geth data directory:", err.message);
+    }
+    if (EthoConnection.getConnectionMode() === "local") {
+      EthoGeth.startGeth();
+    }
 
     mainWindow.on("closed", function() {
       mainWindow = null;
+      global.mainWindow = null;
     });
 
     require("./modules/menu.js");

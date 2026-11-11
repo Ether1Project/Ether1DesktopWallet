@@ -4,7 +4,7 @@ const datastore = require("@seald-io/nedb");
 const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
-const os = require("os");
+const {getDataDir} = require("./gethDataDir");
 
 const dbPath = path.join(app.getPath("userData"), "storage.db");
 const db = new datastore({filename: dbPath});
@@ -145,17 +145,7 @@ ipcMain.on("deleteBlockchainData", (event, arg) => {
     }
   };
 
-  function getBlockchainDataLocation() {
-    switch (os.type()) {
-      case "Darwin":
-        return path.join(os.homedir(), "Library", "Ether1", "geth");
-        break;
-      default:
-        return path.join(process.env.APPDATA, "Ether1", "geth");
-    }
-  }
-
   // delete folder in a synchronous recursive maner
-  deleteFolderRecursive(getBlockchainDataLocation());
+  deleteFolderRecursive(path.join(getDataDir(), "geth"));
   event.returnValue = true;
 });

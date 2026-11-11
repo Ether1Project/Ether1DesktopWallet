@@ -57,11 +57,12 @@ body.pg-loaded>.inner {
   height: 20px;
   position: fixed;
   z-index: 1;
-  left: 160px;
+  left: 184px;
   right: 0;
   bottom: 0;
   background-color: #111;
   border-top: 1px solid #111;
+  overflow: hidden;
 }
 
 #mainContent {
